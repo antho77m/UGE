@@ -70,6 +70,13 @@ switch ($request) {
         ];
         loadPage("index");
         break;
+    case "/login":
+        $og = (object) [
+            "title" => "Connexion",
+            "description" => "Connexion au site"
+        ];
+        loadPage("login");
+        break;
     default:
         // retourner le fichier par défaut
         return false;

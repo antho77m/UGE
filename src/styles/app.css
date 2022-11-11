@@ -1,6 +1,7 @@
 :root {
     --blue: #20234A;
     --red: #D6404E;
+    --blue75: #20234A75;
 }
 
 * {
@@ -29,10 +30,51 @@
         'opsz' 40
 }
 
-p {
+p, label, a {
     font: 400 16px Outfit, sans-serif;
     color: var(--blue);
 }
+
+label {
+    font-weight: 500;
+}
+
+.important {
+    font-weight: 700;
+    color: var(--red);
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.big_text {
+    font-size: 24px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+    font: 400 16px Outfit, sans-serif;
+    padding: 8px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    caret-color: var(--red);
+}
+
+input[type="text"]::placeholder, input[type="password"]::placeholder, input[type="email"]::placeholder {
+    color: var(--blue75);
+}
+
 
 body,
 html {
@@ -41,5 +83,34 @@ html {
     padding: 0;
 }
 
+.logo {
+    display: flex;
+    justify-content: center;
+    margin-top: 20%;
+    margin-bottom: 30px;
+}
+
+.btn {
+    background-color: var(--red);
+    color: white;
+    border: none;
+    border-radius: 0 20px 0 20px;
+    padding: 10px 50px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.connection {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
 
 

@@ -1,0 +1,67 @@
+body {
+    overflow: hidden;
+}
+
+.connection__form {
+    padding: 0 20px;
+}
+
+.form__group {
+    width: 100%;
+}
+
+.pass__group {
+    position: relative;
+}
+
+.pass__group .input__container {
+    padding-right: 10px;
+}
+
+.input__container {
+    border: 1px solid #eee;
+    background: #fdfdfd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 4px 0px 10px;
+    padding: 0 0 0 10px;
+    color: var(--blue);
+    border-radius: 10px;
+}
+
+.icon {
+    color: var(--blue75);
+}
+
+.input__container:has(input:focus) {
+    border: 1px solid var(--red);
+}
+
+.connection {
+    background: none;
+    border: 3px solid var(--red);
+    color: var(--blue75);
+}
+
+.forgot__password {
+    color: var(--red);
+    font-size: 14px;
+    position: absolute;
+    right: 0;
+}
+
+.active {
+    color: var(--blue);
+}
+
+.active-btn {
+    background: var(--red);
+    color: #fff;
+    transition: all 0.2s ease;
+}
+
+#togglePassword {
+    display: none;
+}
+
