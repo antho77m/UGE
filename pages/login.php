@@ -1,10 +1,12 @@
 <?php
-
+    if (isset($_GET['error']) && $_GET['error'] == 1){
+        echo "mot de passe ou identifiant incorrect";
+    }
 ?>
 
 <?php include "includes/components/logo.php" ?>
 
-<form class="connection__form" action="" method="post">
+<form class="connection__form" action="php_proc/verify_login.php" method="post">
 
     <div class="form__group">
         <label for="email">Adresse e-mail</label>
