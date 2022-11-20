@@ -1,4 +1,10 @@
 <?php
+session_start();
+if (!isset($_SESSION['niveau']) || $_SESSION['niveau']==1) {
+    header('Location: ./home.php');
+    exit();
+}
+
 if (isset($_POST["name"])&&isset($_POST["siren"])&&isset($_POST["password"])){
     $name = $_POST["name"];
     $siren = $_POST["siren"];
