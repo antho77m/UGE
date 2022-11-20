@@ -1,26 +1,28 @@
 <?php
-    if (isset($_GET['error']) && $_GET['error'] == 1){
-        echo "mot de passe ou identifiant incorrect";
-    }
+
+if (isset($_GET['error']) && $_GET['error'] == 1) {
+    echo "<p class=\"incorrect_pass\">mot de passe ou identifiant incorrect</p>";
+    echo "
+    <script>
+        setTimeout(function() {
+            document.querySelector('.incorrect_pass').remove();
+        }, 1500)
+    </script>";
+}
+
 ?>
+
+
 
 <?php include "includes/components/logo.php" ?>
 
-<form class="connection__form" action="php_proc/verify_login.php" method="post">
+<form class="connection__form" action="/verify_login" method="post">
 
     <div class="form__group">
-        <label for="email">Adresse e-mail</label>
-        <div class="input__container">
-            <span class="material-symbols-outlined icon">mail</span>
-            <input type="email" name="email" id="email" placeholder="monadresse@xyz.com" required>
-        </div>
-    </div>
-
-    <div class="form__group">
-        <label for="login">Login</label>
+        <label for="id">Identifiant</label>
         <div class="input__container">
             <span class="material-symbols-outlined icon">Login</span>
-            <input type="text" name="login" id="login" placeholder="monidentifiant" required>
+            <input type="text" name="login" id="id" placeholder="monidentifiant" required>
         </div>
     </div>
 
@@ -71,13 +73,12 @@
 
     // si chaque champs sont remplis, on affiche le bouton de connexion en rouge
     const connectionBtn = document.querySelector(".connection");
-    const email_input = document.querySelector("#email");
-    const login_input = document.querySelector("#login");
+    const id_input = document.querySelector("#id");
     const password_input = document.querySelector("#password");
     const form = document.querySelector(".connection__form");
 
     form.addEventListener("input", () => {
-        if (email_input.value.length > 0 && login_input.value.length > 0 && password_input.value.length > 0) {
+        if (id_input.value.length > 0 && password_input.value.length > 0) {
             connectionBtn.classList.add("active-btn");
             connectionBtn.disabled = false;
         } else {
@@ -85,5 +86,4 @@
             connectionBtn.disabled = true;
         }
     })
-
 </script>

@@ -2,6 +2,7 @@
     --blue: #20234A;
     --red: #D6404E;
     --blue75: #20234A75;
+    --red50: #D6404E50;
 }
 
 * {
@@ -54,6 +55,29 @@ label {
     font-size: 24px;
 }
 
+.incorrect_pass {
+    color: #000;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(202, 2, 2, 0.3);
+}
+
+.privileges {
+    background: var(--red50);
+    height: 15px;
+}
+
+.privileges p {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-size: 12px;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -61,7 +85,7 @@ form {
     align-items: center;
 }
 
-input[type="text"], input[type="password"], input[type="email"] {
+input[type="text"], input[type="password"], input[type="email"], input[type="number"] {
     font: 400 16px Outfit, sans-serif;
     padding: 8px;
     width: 100%;
@@ -71,7 +95,7 @@ input[type="text"], input[type="password"], input[type="email"] {
     caret-color: var(--red);
 }
 
-input[type="text"]::placeholder, input[type="password"]::placeholder, input[type="email"]::placeholder {
+input[type="text"]::placeholder, input[type="password"]::placeholder, input[type="email"]::placeholder, input[type="number"]::placeholder {
     color: var(--blue75);
 }
 
@@ -113,4 +137,153 @@ a {
     color: inherit;
 }
 
+nav {
+    /* border: 1px solid #000; */
+    height: 80px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    border-bottom: 1px solid #eee;
+}
 
+nav .logo {
+    margin: 0;
+}
+
+nav .logo img {
+    height: 50px;
+}
+
+nav .privileges__title {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.user {
+    /* border: 1px solid #000; */
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.user__pic {
+    /* border: 1px solid #000; */
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #BDEEB4;
+}
+
+.user__pic p {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.clients_manage {
+    padding: 0 15px;
+}
+
+.clients_manage p {
+    font-size: 18px;
+}
+
+.actions_btn {
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    color: #fff;
+    padding: 0px 10px;
+    gap: 5px;
+    height: 40px;
+    width: 230px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+}
+
+.btn__add {
+    background: var(--blue);
+}
+
+.btn__edit {
+    background: #f9f9f9;
+    border: 2px solid var(--blue);
+    color: var(--blue);
+}
+
+.btn__delete {
+    background: var(--red)
+}
+
+.actions_btn .icon {
+    font-size: 32px;
+}
+
+.actions__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form__group {
+    width: 100%;
+}
+
+.input__container {
+    border: 1px solid #eee;
+    background: #fdfdfd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 4px 0px 10px;
+    padding: 0 0 0 10px;
+    color: var(--blue);
+    border-radius: 10px;
+}
+
+.clients_manage .input__container {
+    padding: 0;
+}
+
+.form__action {
+    position: absolute;
+    bottom: 50px;
+    padding: 0 30px;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.btn__confirm, .btn__cancel {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.btn__confirm {
+    background: var(--blue);
+}
+
+.btn__delete {
+    background: var(--red);
+}
+
+.btn__cancel {
+    background: #F9F9F9;
+    color: var(--blue);
+    border: 2px solid var(--blue);
+}
+
+.form__action .actions_btn .icon {
+    font-size: 24px;
+}
