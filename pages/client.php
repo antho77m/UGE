@@ -9,13 +9,24 @@ $actions_title = [
 ];
 
 include(dirname(__FILE__, 2) . "/includes/components/nav.php");
+
+require_once("../includes/functions/client.php");
+if ($action == 'add'){
+    if(isset($_POST["name"])&&isset($_POST["siren"]) && isset($_POST["password"])){
+        add_account($_POST["name"], $_POST["siren"], $_POST["password"],$_POST["id"]);
+    }
+}
+
+
+
+
 ?>
 
 <section class="clients_manage">
 
     <p><?= $actions_title[$action] ?></p>
 
-    <form action="" method="get" class="client__form">
+    <form action="" method="POST" class="client__form">
         <div class="form__group">
             <label for="name">Nom du client</label>
             <div class="input__container">
