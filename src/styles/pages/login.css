@@ -64,4 +64,37 @@ body {
 #togglePassword {
     display: none;
 }
+@media (min-width: 1500px){
 
+    img{
+        height: 150px;
+        width: 150px;
+    }
+    .logo{
+        margin-top:10%;
+        margin-right: 55%;
+    }
+    
+    .connection__form{
+        padding-left: 50%;
+        padding-bottom: 23%;
+        height: 400px;
+    }
+
+    .form__group{
+        width: 60%;
+        margin: 0.25em;
+    }
+
+    .input__container{
+        height: 45px;
+    }
+
+    .btn{
+        position: relative;
+        top: 100%;
+        width: 75%;
+    }
+
+
+}
