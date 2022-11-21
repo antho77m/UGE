@@ -95,6 +95,9 @@ body {
         top: 100%;
         width: 75%;
     }
+    .incorrect_pass{
+        text-align: center;
+    }
 
 
 }
