@@ -77,6 +77,31 @@ switch ($request) {
         ];
         loadPage("login");
         break;
+    case "/verify_login":
+        $og = (object) [
+            "title" => "Authentification...",
+            "description" => "Authentification de l'utilisateur"
+        ];
+        loadPage("verify_login");
+        break;
+    case "/home":
+        session_start();
+        if (isset($_SESSION['niveau'])) {
+            (($_SESSION['niveau'] == 1) ? $level = 'Mon compte' : (($_SESSION['niveau'] == 2) ? $level = 'Gestion des comptes' : $level = 'Acceuil'));
+        }
+        $og = (object) [
+            "title" => $level,
+            "description" => "Acceuil du site"
+        ];
+        loadPage("home");
+        break;
+    case "/client":
+        $og = (object) [
+            "title" => "Gestion des comptes",
+            "description" => "Gestion des comptes"
+        ];
+        loadPage("client");
+        break;
     default:
         // retourner le fichier par défaut
         return false;
