@@ -10,11 +10,14 @@ $actions_title = [
 
 include(dirname(__FILE__, 2) . "/includes/components/nav.php");
 
-require_once("../includes/functions/client.php");
+require_once(dirname(__FILE__, 2) . "/includes/functions/client.php");
 if ($action == 'add'){
     if(isset($_POST["name"])&&isset($_POST["siren"]) && isset($_POST["password"])){
         add_account($_POST["name"], $_POST["siren"], $_POST["password"],$_POST["id"]);
     }
+}
+if($action == 'delete'){
+    
 }
 
 

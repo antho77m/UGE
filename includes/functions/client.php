@@ -7,7 +7,7 @@
             echo "Le numéro de SIREN doit contenir 9 chiffres";
         }
         else{
-            require_once("../includes/cnx.inc.php");
+            require_once(dirname(__FILE__,2).'/cnx.inc.php');
             
             $req = $cnx->prepare("SELECT * FROM commercant WHERE siren = :siren");
             $req->bindParam(":siren", $siren);
@@ -57,5 +57,31 @@
     
     }
 
+    function delete_account($name,$siren,$id){
+        require_once(dirname(__FILE__,2).'/cnx.inc.php');
+        $req = $cnx->prepare("SELECT * FROM commercant WHERE id = :id AND siren = :siren AND name = :name");
+        $req->bindParam(":id", $id);
+        $req->bindParam(":siren", $siren);
+        $req->bindParam(":name", $name);
+        $result = $req->execute();
+        if(!$result){
+            echo "Le compte n'existe pas";
+        }else{
+            $cnx->exec("START TRANSACTION");
+            $req = $cnx->prepare("DELETE FROM impaye,percevoir,commercant 
+            WHERE impaye.num_autorisation=percevoir.num_autorisation 
+              AND percevoir.siren=commercant.siren
+              AND transaction.num_autorisation=impaye.num_autorisation
+              AND id = :id 
+              AND siren = :siren 
+              AND name = :name");
+        }
+
+
+
+
+
+
+    }
 
 ?>
