@@ -102,6 +102,13 @@ switch ($request) {
         ];
         loadPage("client");
         break;
+    case "/product_owner":
+        $og = (object) [
+            "title" => "Acceuil",
+            "description" => "Acceuil du site"
+        ];
+        loadPage("product_owner");
+        break;
     default:
         // retourner le fichier par défaut
         return false;

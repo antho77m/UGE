@@ -287,3 +287,28 @@ nav .privileges__title {
 .form__action .actions_btn .icon {
     font-size: 24px;
 }
+
+.clients_manage__search {
+    /* border: 1px solid #000; */
+    display: flex;
+    justify-content: space-between;
+}
+
+.clients_manage__search form {
+    width: 150px;
+}
+
+#search {
+    display: flex;
+    height: 25px;
+}
+
+.form__group .po_search {
+    padding-left: 8px;
+    border-radius: 50px;
+}
+
+.po_search .icon {
+    font-size: 20px;
+    color: var(--blue75);
+}
