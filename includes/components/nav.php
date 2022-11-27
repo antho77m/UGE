@@ -1,6 +1,5 @@
 <?php
 // debug($_SESSION);
-
 $permissions = [
     1 => [
         'status' => 'commercant',

@@ -1,35 +1,17 @@
 <?php 
-include("cnx.inc.php");
-session_start();
-if (!isset($_SESSION['niveau'])) {
-    exit("Erreur 401");
-}
+include(dirname(__FILE__, 2) . "/includes/cnx.inc.php");
+include (dirname(__FILE__, 2) . "/includes/components/nav2.php") ;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Remises</title>
-</head>
-<body>
-    <form action="search_remittance.php" method="post">
-        <?php
-        if ($_SESSION['niveau'] == 3) {
-            echo '<label for="name">SIREN :</label>
-              <input type="text" id="siren" name="siren">
-              <label for="name">Raison Sociale :</label>
-              <input type="text" id="rsociale" name="rsociale">';
-        }
-        ?>
-        <label for="start">date de début:</label>
-        <input type="date" id="dd" name="dd" value="2010-01-01">
-        <label for="start">date de fin:</label>
-        <input type="date" id="df" name="df" value="2022-12-30">
-        <input type="submit" name="submit" value="Validez" class = "boutton_formulaire"/>
-    </form>
-
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Remises</title>
+    </head>
+    <body>
+    
 <?php
     if ((isset($_POST['dd']) && isset($_POST['df']))) {
         $SIREN;
@@ -58,7 +40,7 @@ if (!isset($_SESSION['niveau'])) {
         } else {
             exit("Erreur 401");
         }
-
+        
         if (isset($_POST['rsociale'])) {
             $remises = $cnx -> prepare("SELECT DISTINCT SIREN, date_traitement FROM Commercant NATURAL JOIN percevoir NATURAL JOIN Transaction WHERE SIREN LIKE :siren AND Raison_sociale LIKE :raison_sociale AND date_traitement BETWEEN :dd AND :df");
             $remises -> bindParam(':siren', $SIREN);
@@ -74,7 +56,7 @@ if (!isset($_SESSION['niveau'])) {
         $verif = $remises -> execute();
         $remises = $remises -> fetchAll();
         echo "<b>Résultat: ".count($remises)."</b><br>";
-
+        
         $array_remises = array();
         $array_remises_detailles = array();
         foreach($remises AS $ligne) { // un par un
@@ -100,7 +82,7 @@ if (!isset($_SESSION['niveau'])) {
                 }
                 echo "$montant_total</b><br>";
                 array_push($array_remises, [$total_remises['SIREN'], $total_remises['Raison_sociale'], $total_remises['num_remise'], $total_remises['date_traitement'], $total_remises['nb_transactions'], "EUR", $montant_total]);
-
+                
                 $details_remises = $cnx -> prepare("SELECT SIREN, date_vente, date_traitement, num_carte, reseau, num_autorisation, montant, sens FROM Commercant NATURAL JOIN percevoir NATURAL JOIN Transaction WHERE SIREN = :siren AND date_traitement = :date");
                 $details_remises -> bindParam(':siren', $ligne['SIREN']);
                 $details_remises -> bindParam(':date', $ligne['date_traitement']);
@@ -123,7 +105,32 @@ if (!isset($_SESSION['niveau'])) {
         echo "<button onclick=\"window.open('exports/export_remittance.php?format=CSV&detail=1', '_blank');\">CSV détaillé</button>";
         echo "<button onclick=\"window.open('exports/export_remittance.php?format=XLSX&detail=1', '_blank');\">XLSX détaillé</button>";
     }
-?>
+    else{
+        ?>
+            <div class="form">
+            <form action="" method="post">
+                <?php
+                if ($_SESSION['niveau'] == 3) {?>
+                    
+                      <label for="name">SIREN :</label>
+                      <input type="text" id="siren" name="siren" class="input_siren">
+                      <label for="name">Raison Sociale :</label>
+                      <input type="text" id="rsociale" name="rsociale" class="input_siren">
+                      <?php
+                }
+                ?>
+                <div class="form_options">
+                <label for="start">date de début:</label>
+                <input type="date" id="dd" name="dd" value="2010-01-01">
+                <label for="start">date de fin:</label>
+                <input type="date" id="df" name="df" value="2022-12-30">
+                <input type="submit" name="submit" value="Validez" class = "boutton_formulaire"/>
+            </form>
+            </div>
+            </div>
+        <?php
+    }
+        ?>
 
 </body>
 </html>
