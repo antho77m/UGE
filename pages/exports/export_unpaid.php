@@ -18,7 +18,7 @@
         } 
         else if ($format == 'XLSX') 
         {
-            require_once("xlsxwriter.class.php");
+            require_once("../extensions/xlsxwriter.class.php");
             $header = array(
                 'SIREN'=>'string',
                 'Date vente'=>'string',
