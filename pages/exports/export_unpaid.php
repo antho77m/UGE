@@ -1,7 +1,7 @@
 <?php
     session_start();
     if (isset($_GET['format']) && isset($_SESSION['tab'])) {
-        $tab = $_SESSION['tab'];
+        $tab = $_SESSION['tab_unpaids'];
         $format = $_GET['format'];
 
         if ($format == 'CSV') 

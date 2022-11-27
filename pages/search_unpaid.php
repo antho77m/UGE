@@ -58,7 +58,7 @@ if (!isset($_SESSION['niveau'])) {
         foreach($impayes AS $ligne) {
             echo $ligne['SIREN']." ".$ligne['date_vente']." ".$ligne['date_traitement']." ".$ligne['num_carte']." ".$ligne['reseau']." ".$ligne['num_dos']." EUR ".$ligne['montant']." ".$ligne['libelle']."<br>";
         }
-        $_SESSION['tab'] = $impayes;
+        $_SESSION['tab_unpaids'] = $impayes;
         echo "<button onclick=\"window.open('exports/export_unpaid.php?format=CSV', '_blank');\">CSV</button>";
         echo "<button onclick=\"window.open('exports/export_unpaid.php?format=XLSX', '_blank');\">XLSX</button>";
     }

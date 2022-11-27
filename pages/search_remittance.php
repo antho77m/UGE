@@ -116,8 +116,8 @@ if (!isset($_SESSION['niveau'])) {
             }
             echo "<br>";
         }
-        $_SESSION['tab1'] = $array_remises;
-        $_SESSION['tab2'] = $array_remises_detailles;
+        $_SESSION['tab_remises'] = $array_remises;
+        $_SESSION['tab_remises_detailled'] = $array_remises_detailles;
         echo "<button onclick=\"window.open('exports/export_remittance.php?format=CSV&detail=0', '_blank');\">CSV</button>";
         echo "<button onclick=\"window.open('exports/export_remittance.php?format=XLSX&detail=0', '_blank');\">XLSX</button>";
         echo "<button onclick=\"window.open('exports/export_remittance.php?format=CSV&detail=1', '_blank');\">CSV détaillé</button>";

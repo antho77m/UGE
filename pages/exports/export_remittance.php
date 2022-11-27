@@ -1,8 +1,8 @@
 <?php
     session_start();
     if (isset($_GET['format']) && isset($_GET['detail']) && isset($_SESSION['tab1']) && isset($_SESSION['tab2'])) {
-        $tab1 = $_SESSION['tab1'];
-        $tab2 = $_SESSION['tab2'];
+        $tab1 = $_SESSION['tab_remises'];
+        $tab2 = $_SESSION['tab_remises_detailled'];
         $format = $_GET['format'];
         $detail = $_GET['detail'];
 
