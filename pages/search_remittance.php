@@ -78,7 +78,7 @@ if (!isset($_SESSION['niveau'])) {
         $array_remises = array();
         $array_remises_detailles = array();
         foreach($remises AS $ligne) { // un par un
-            $total_remises = $cnx->prepare("SELECT SIREN, Raison_sociale, num_remise, date_traitement, count(num_autorisation) AS nb_transactions, SUM(montant) AS montant_p, (SELECT SUM(montant)*2 FROM Transaction WHERE num_remise = R.num_remise AND sens = '-') AS montant_n
+            $total_remises = $cnx->prepare("SELECT SIREN, Raison_sociale, num_remise, date_traitement, count(num_autorisation) AS nb_transactions, SUM(montant) AS montant_total, (SELECT SUM(montant)*2 FROM Transaction WHERE num_remise = R.num_remise AND sens = '-') AS montant_impayes
             FROM Commercant 
             NATURAL JOIN percevoir 
             NATURAL JOIN Transaction AS R
@@ -94,7 +94,7 @@ if (!isset($_SESSION['niveau'])) {
             
             if (!empty($total_remises)) {
                 echo "<b>".$total_remises['SIREN']." ".$total_remises['Raison_sociale']." ".$total_remises['num_remise']." ".$total_remises['date_traitement']." ".$total_remises['nb_transactions']." EUR ";
-                $montant_total = $total_remises['montant_p']-$total_remises['montant_n'];
+                $montant_total = $total_remises['montant_total']-$total_remises['montant_impayes'];
                 if ($montant_total >= 0) {
                     echo "+";
                 }
