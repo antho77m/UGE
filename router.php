@@ -109,7 +109,35 @@ switch ($request) {
         ];
         loadPage("product_owner");
         break;
+    case "/remittance":
+        $og = (object) [
+            "title" => "Remises",
+            "description" => "Remises"
+        ];
+        loadPage("search_remittance");
+        break;
+    case "/unpaid":
+        $og = (object) [
+            "title" => "Impayés",
+            "description" => "Impayés"
+        ];
+        loadPage("search_unpaid");
+        break;
+    case "/graphics":
+        $og = (object) [
+            "title" => "Graphiques",
+            "description" => "Graphiques"
+        ];
+        loadPage("user_graphics");
+        break;
+    case "/export":
+        $og = (object) [
+            "title" => "Remises",
+            "description" => "Remises"
+        ];
+        loadPage("exports/export_remittance");
+        break;
     default:
-        // retourner le fichier par défaut
+        http_response_code(404);
         return false;
 }

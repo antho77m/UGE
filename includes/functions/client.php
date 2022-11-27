@@ -153,12 +153,32 @@ function delete_account($name, $siren, $id)
 
 function count_clients()
 {
-    require_once(dirname(__FILE__, 2) . '/cnx.inc.php');
-    $sql = "SELECT COUNT(*) FROM commercant";
+    require (dirname(__FILE__, 2) . '/cnx.inc.php');
+    $sql = "SELECT COUNT(id) FROM commercant";
     
     $req = $cnx->prepare($sql);
     $req->execute();
     $result = $req->fetch();
     return $result[0];
+}
+
+function load_clients() {
+    require (dirname(__FILE__, 2) . '/cnx.inc.php');
+    // $sql = "SELECT ANY_VALUE(SIREN), ANY_VALUE(Raison_sociale), count(num_autorisation) AS nb_transactions, SUM(montant) AS montant_p, (SELECT SUM(montant)*2 FROM Transaction WHERE num_remise = R.num_remise AND sens = '-') AS montant_n
+    // FROM Commercant 
+    // NATURAL JOIN percevoir 
+    // NATURAL JOIN Transaction AS R
+    // GROUP BY num_remise";
+
+    $sql = "SELECT SIREN, Raison_sociale, count(num_autorisation) AS nbTransactions, SUM(montant) AS montant_total, (SELECT SUM(montant)*2 FROM Commercant NATURAL JOIN percevoir NATURAL JOIN Transaction WHERE SIREN = T.SIREN AND sens = '-') AS montant_impayes
+    FROM Commercant
+    NATURAL JOIN percevoir AS T
+    NATURAL JOIN Transaction
+    GROUP BY SIREN";
+
+    $req = $cnx->prepare($sql);
+    $req->execute();
+    $result = $req->fetchAll();
+    return $result;
 }
 

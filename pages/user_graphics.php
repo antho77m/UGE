@@ -1,5 +1,6 @@
-<?php 
-include("cnx.inc.php");
+<?php
+// include("cnx.inc.php");
+include (dirname(__FILE__, 2) . "/includes/cnx.inc.php");
 session_start();
 if (!isset($_SESSION['SIREN']) || !isset($_SESSION['niveau']) || $_SESSION['niveau'] != 1) {
     exit("Erreur 401");

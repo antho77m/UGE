@@ -2,10 +2,15 @@
 session_start();
 if (isset($_GET['error']) && $_GET['error'] == 1) {
     $try = $_SESSION['try'];
-    
-    echo '<p class=\"incorrect_pass\">mot de passe ou identifiant incorrect, plus que '. 3-$try.' essais</p>';
+
+    // $_SESSION['try'] = 0;
+    // setcookie('blocked', '', 1);
+
+    echo '<p class="incorrect_pass">mot de passe ou identifiant incorrect, plus que '. (3 - $try) .' essais</p>';
     echo "
     <script>
+
+        console.log('test');
         setTimeout(function() {
             document.querySelector('.incorrect_pass').remove();
         }, 1500)
@@ -17,6 +22,9 @@ if (isset($_GET['error']) && $_GET['error'] == 1) {
 
 
 <?php include "includes/components/logo.php";
+
+// setcookie('blocked', '', 1);
+
 if(!isset($_COOKIE['blocked'])){
 
 ?>
@@ -49,7 +57,7 @@ if(!isset($_COOKIE['blocked'])){
 </form>
 <?php 
 }else{ 
-    echo"<p class=\"blocked\">Vous avez été bloqué pour 1 heure</p>";
+    echo '<p class="blocked">Vous avez été bloqué pour 1 heure</p>';
 }
 ?>
 <script>
