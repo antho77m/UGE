@@ -1,5 +1,6 @@
 <?php
-include("cnx.inc.php");
+// include("cnx.inc.php");
+include (dirname(__FILE__, 2) . "/includes/cnx.inc.php");
 session_start();
 if (!isset($_SESSION['niveau'])) {
     exit("Erreur 401");
@@ -23,7 +24,7 @@ if (!isset($_SESSION['niveau'])) {
         <label for="">décroissant</label>
         <input type="radio" id="asc" name="sens" value="ASC" required>
         <label for="">croissant</label>
-        <input type="submit" name="submit" value="Validez" class = "boutton_formulaire"/>
+        <input type="submit" name="submit" value="Validez" class="boutton_formulaire"/>
     </form>
 <?php
     if ((isset($_POST['dd']) && isset($_POST['df'])) && isset($_POST['sens'])) {
@@ -58,7 +59,7 @@ if (!isset($_SESSION['niveau'])) {
         foreach($impayes AS $ligne) {
             echo $ligne['SIREN']." ".$ligne['date_vente']." ".$ligne['date_traitement']." ".$ligne['num_carte']." ".$ligne['reseau']." ".$ligne['num_dos']." EUR ".$ligne['montant']." ".$ligne['libelle']."<br>";
         }
-        $_SESSION['tab'] = $impayes;
+        $_SESSION['tab_unpaids'] = $impayes;
         echo "<button onclick=\"window.open('exports/export_unpaid.php?format=CSV', '_blank');\">CSV</button>";
         echo "<button onclick=\"window.open('exports/export_unpaid.php?format=XLSX', '_blank');\">XLSX</button>";
     }
