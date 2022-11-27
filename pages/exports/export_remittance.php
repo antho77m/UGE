@@ -38,7 +38,7 @@
         } 
         else if ($format == 'XLSX') 
         {
-            require_once("xlsxwriter.class.php");
+            require_once("../extensions/xlsxwriter.class.php");
             $writer = new XLSXWriter();
             if ($detail == 1) 
             {
