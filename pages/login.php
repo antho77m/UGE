@@ -1,7 +1,9 @@
 <?php
-
+session_start();
 if (isset($_GET['error']) && $_GET['error'] == 1) {
-    echo "<p class=\"incorrect_pass\">mot de passe ou identifiant incorrect</p>";
+    $try = $_SESSION['try'];
+    
+    echo '<p class=\"incorrect_pass\">mot de passe ou identifiant incorrect, plus que '. 3-$try.' essais</p>';
     echo "
     <script>
         setTimeout(function() {
@@ -14,7 +16,10 @@ if (isset($_GET['error']) && $_GET['error'] == 1) {
 
 
 
-<?php include "includes/components/logo.php" ?>
+<?php include "includes/components/logo.php";
+if(!isset($_COOKIE['blocked'])){
+
+?>
 
 <form class="connection__form" action="/verify_login" method="post">
 
@@ -42,7 +47,11 @@ if (isset($_GET['error']) && $_GET['error'] == 1) {
 
 
 </form>
-
+<?php 
+}else{ 
+    echo"<p class=\"blocked\">Vous avez été bloqué pour 1 heure</p>";
+}
+?>
 <script>
     const inputs = document.querySelectorAll("input");
     inputs.forEach(input => {

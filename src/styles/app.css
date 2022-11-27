@@ -313,6 +313,11 @@ nav .privileges__title {
     color: var(--blue75);
 }
 
+.logos{
+    display: none;
+    visibility: collapse;
+}
+
 @media (min-width: 1500px){
 
     .privileges{
@@ -332,12 +337,21 @@ nav .privileges__title {
     }
 
    .clients_manage__search {
-       margin-right: 36%;
+       width: 100%;
 
    }
 
    .clients_manage__search form{
-        width: 45%;
+        width: 30%;
         margin-top: 0.5%;
+        margin-left: 4%;
+   }
+
+   .logos{
+    display:flex;
+    visibility: visible;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 10%;
    }
 }

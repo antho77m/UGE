@@ -1,4 +1,6 @@
-<?php include "includes/components/nav.php" ?>
+<?php include "includes/components/nav.php" ;
+$_SESSION['try'] = 0;
+?>
 
 <?php
 
@@ -24,12 +26,20 @@
                     <span class="material-symbols-outlined icon">search</span>
                     <input type="text" name="search" id="search" placeholder="Recherche">
                 </div>
+        
             </div>
         </form>
+        <div class="logos">
+            <picture>
+                <source srcset="<?= $basepath ?>/src/img/remittanceIcon.svg" type="image/svg">
+                <img src="<?= $basepath ?>/src/img/remittanceIcon.svg" alt="Logo UGE">
+            </picture>
+            <picture>
+                <source srcset="<?= $basepath ?>/src/img/leaderboard.svg" type="image/svg">
+                <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Logo UGE">
+            </picture>
+            </div>
     </div>
-<?php
-include("includes/components/admin__clients_manage.php");
-?>
 
 
 

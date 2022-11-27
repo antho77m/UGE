@@ -18,9 +18,15 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
     $req->execute();
 
     $result = $req->fetch();
+    session_start();
+    if (!isset($_SESSION['try'])) {
+        $_SESSION['try'] = 1;
+    }else{
+        $_SESSION['try']++;
+    }
+    
 
     if ($result) {
-        session_start();
         $_SESSION['niveau'] = $result[0];
 
         $req = $cnx->prepare("SELECT SIREN FROM Commercant NATURAL JOIN Compte WHERE Compte.id = :login AND Compte.mdp = :password");
@@ -36,16 +42,14 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
         header('Location: /home');    // si connecté, on redirige vers la page d'accueil
         exit();
     } else {
-        $number_try;
-        if(isset($_GET['try'])){
-            $try = $_GET['try'];
-            $number_try = $try + 1;
-        }else{
-            $number_try =0;
-            
-        }
 
-        header('Location: /login?error=1&try='.$number_try);   // si erreur, on redirige vers la page de connexion
+
+        if($_SESSION['try'] >= 3){
+            setcookie('blocked', true, time() + 3600);
+        }
+        
+
+        header('Location: /login?error=1');   // si erreur, on redirige vers la page de connexion
         exit();
     }
 }
