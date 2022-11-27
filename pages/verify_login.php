@@ -3,6 +3,7 @@
 // include("/Laragon/www/Tran/includes/cnx.inc.php");
 include(dirname(__FILE__, 2) . "/includes/cnx.inc.php");
 
+
 if (isset($_POST['login']) && isset($_POST['password'])) {
     $login = htmlspecialchars($_POST['login']);
     $password = htmlspecialchars($_POST['password']);
@@ -35,7 +36,16 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
         header('Location: /home');    // si connecté, on redirige vers la page d'accueil
         exit();
     } else {
-        header('Location: /login?error=1');   // si erreur, on redirige vers la page de connexion
+        $number_try;
+        if(isset($_GET['try'])){
+            $try = $_GET['try'];
+            $number_try = $try + 1;
+        }else{
+            $number_try =0;
+            
+        }
+
+        header('Location: /login?error=1&try='.$number_try);   // si erreur, on redirige vers la page de connexion
         exit();
     }
 }

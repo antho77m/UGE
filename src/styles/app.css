@@ -312,3 +312,32 @@ nav .privileges__title {
     font-size: 20px;
     color: var(--blue75);
 }
+
+@media (min-width: 1500px){
+
+    .privileges{
+        height:22px;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+
+    }
+
+    .privileges p{
+        font-size: 15px;
+    }
+
+    nav .privileges__title {
+        font-size: 30px;
+    }
+
+   .clients_manage__search {
+       margin-right: 36%;
+
+   }
+
+   .clients_manage__search form{
+        width: 45%;
+        margin-top: 0.5%;
+   }
+}

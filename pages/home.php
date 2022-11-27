@@ -27,6 +27,9 @@
             </div>
         </form>
     </div>
+<?php
+include("includes/components/admin__clients_manage.php");
+?>
 
 
 

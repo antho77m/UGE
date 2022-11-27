@@ -104,8 +104,8 @@ switch ($request) {
         break;
     case "/product_owner":
         $og = (object) [
-            "title" => "Acceuil",
-            "description" => "Acceuil du site"
+            "title" => "Accueil",
+            "description" => "Accueil du site"
         ];
         loadPage("product_owner");
         break;

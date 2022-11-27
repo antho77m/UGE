@@ -12,7 +12,7 @@ $permissions = [
     ],
     3 => [
         'status' => 'product owner',
-        'titre' => 'Acceuil',
+        'titre' => 'Accueil',
     ],
 ];
 
