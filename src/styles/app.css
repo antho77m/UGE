@@ -469,7 +469,7 @@ input[type="date"] {
     font-weight: bold;
 }
 
-.remittance_results {
+.remittance_results, .unpaid_results{
     /* border: 1px solid var(--blue); */
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -479,7 +479,14 @@ input[type="date"] {
     margin-top: 10px;
 }
 
-.remittance_result {
+.unpaid_results{
+    margin-top: 20px;
+    border-bottom: 1px solid;
+    padding-bottom: 25px;
+    border-radius: 0;
+}
+
+.remittance_result, .unpaid_result{
     border: 1px solid var(--blue);
     display: flex;
     flex-direction: column;
