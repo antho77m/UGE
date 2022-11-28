@@ -4,6 +4,7 @@ session_start();
 if (!isset($_SESSION['niveau'])) {
     exit("Erreur 401");
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -55,8 +56,6 @@ if (!isset($_SESSION['niveau'])) {
             exit("Erreur lors de la sélection");
         }
         $impayes = $impayes -> fetchAll();
-<<<<<<< Updated upstream
-=======
         echo '
             <p style="margin-left: 18px;">Exporter les résultats en :</p>
             <div class="export_wrap_2">
@@ -64,13 +63,50 @@ if (!isset($_SESSION['niveau'])) {
             <button class="export" onclick="window.open(\'/export?format=XLSX&detail=0\', \'_blank\');">XLSX</button>
             </div>
             ';
->>>>>>> Stashed changes
         foreach($impayes AS $ligne) {
-            echo $ligne['SIREN']." ".$ligne['date_vente']." ".$ligne['date_traitement']." ".$ligne['num_carte']." ".$ligne['reseau']." ".$ligne['num_dos']." EUR ".$ligne['montant']." ".$ligne['libelle']."<br>";
+            echo '<div class="unpaid_results">
+                <div class="unpaid_result">
+                <p style="font-size: 16px;">SIREN</p>
+                <p style="font-size: 18px;">' .$ligne['SIREN'] .'</p>
+                </div>
+
+                <div class="unpaid_result">
+                <p style="font-size: 16px;">Date de Vente</p>
+                <p style="font-size: 18px;">' .$ligne['date_vente'] .'</p>
+                </div>
+
+                <div class="unpaid_result">
+                <p style="font-size: 16px;">Date de Traitement</p>
+                <p style="font-size: 18px;">' .$ligne['date_traitement'] .'</p>
+                </div>
+
+                <div class="unpaid_result">
+                <p style="font-size: 16px;">Numéro de Carte</p>
+                <p style="font-size: 18px;">' .$ligne['num_carte'] .'</p>
+                </div>
+
+                <div class="unpaid_result">
+                <p style="font-size: 16px;">Réseau</p>
+                <p style="font-size: 18px;">' .$ligne['reseau'] .'</p>
+                </div>
+
+                <div class="unpaid_result">
+                <p style="font-size: 16px;">Numéro de Dossier</p>
+                <p style="font-size: 18px;">' .$ligne['num_dos'] .'</p>
+                </div>
+
+                <div class="unpaid_result">
+                <p style="font-size: 16px;">Montant</p>
+                <p style="font-size: 18px;">' .$ligne['montant'] .'</p>
+                </div>
+
+                <div class="unpaid_result">
+                <p style="font-size: 16px;">Libelle</p>
+                <p style="font-size: 18px;">' .$ligne['libelle'] .'</p>
+                </div>
+                </div>';
         }
         $_SESSION['tab'] = $impayes;
-        echo "<button onclick=\"window.open('exports/export_unpaid.php?format=CSV', '_blank');\">CSV</button>";
-        echo "<button onclick=\"window.open('exports/export_unpaid.php?format=XLSX', '_blank');\">XLSX</button>";
     }
 ?>
 </body>
