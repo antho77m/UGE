@@ -88,6 +88,10 @@ label {
     font-size: 12px;
 }
 
+.hidden {
+    display: none !important;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -470,24 +474,36 @@ input[type="date"] {
     font-weight: bold;
 }
 
-.remittance_results {
-    /* border: 1px solid var(--blue); */
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 5px;
-    padding: 5px;
-    border-radius: 5px;
-    margin-top: 10px;
+.remittance_results_wrap {
+    /* border: 1px solid #000; */
+    margin-bottom: 10px;
 }
 
-.remittance_result {
+.remittance_results {
     border: 1px solid var(--blue);
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 5px;
     padding: 5px;
     border-radius: 5px;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    margin: 20px 10px 20px 10px;
+    transition: all 0.1s ease;
+}
+
+.remittance_results-active {
+    outline: 1px solid var(--red);
+    border: 1px solid var(--red);
+    background: #fafafa;
+}
+
+.remittance_results__details {
+    /* border: 1px solid #000; */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: #F6F6F6;
+    margin: 5px 0 10px 0;
+    padding: 10px;
 }
 
 .positive .montant {

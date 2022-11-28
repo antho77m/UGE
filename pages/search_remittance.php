@@ -145,8 +145,10 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
             </div>
             ';
         }
+
         $array_remises = array();
         $array_remises_detailles = array();
+        echo '<p style="margin-top: 10px; text-align: center; display: flex; align-items: center; justify-content: center;">Cliquez pour avoir les détails <span class="material-symbols-outlined">touch_app</span></p>';
         foreach ($remises as $ligne) { // un par un
             $total_remises = $cnx->prepare("SELECT SIREN, Raison_sociale, num_remise, date_traitement, count(num_autorisation) AS nb_transactions, SUM(montant) AS montant_total, (SELECT SUM(montant)*2 FROM Transaction WHERE num_remise = R.num_remise AND sens = '-') AS montant_impayes
             FROM Commercant 
@@ -163,56 +165,47 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
             $total_remises = $total_remises->fetch();
 
             if (!empty($total_remises)) {
-                echo "<b>" . $total_remises['SIREN'] . " " . $total_remises['Raison_sociale'] . " " . $total_remises['num_remise'] . " " . $total_remises['date_traitement'] . " " . $total_remises['nb_transactions'] . " EUR ";
+                // echo "<b>" . $total_remises['SIREN'] . " " . $total_remises['Raison_sociale'] . " " . $total_remises['num_remise'] . " " . $total_remises['date_traitement'] . " " . $total_remises['nb_transactions'] . " EUR ";
                 $montant_total = $total_remises['montant_total'] - $total_remises['montant_impayes'];
                 
-                // echo '
-                // <div class="remittance_results">
-                //     <div class="remittance_result">
-                //         <p style="font-size: 16px;">SIREN</p>
-                //         <p style="font-size: 18px;">' . $total_remises['SIREN'] . '</p>
-                //     </div>
+                echo '
+                <section class="remittance_results_wrap">
+                    <div class="remittance_results">
+                        <div class="remittance_result">
+                            <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
+                            <p style="font-size: 18px; font-weight: 500;">' . $total_remises['SIREN'] . '</p>
+                        </div>
 
-                //     <div class="remittance_result">
-                //         <p style="font-size: 16px;">Raison sociale</p>
-                //         <p style="font-size: 18px;">' . $total_remises['Raison_sociale'] . '</p>
-                //     </div>
+                        <div class="remittance_result">
+                            <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
+                            <p style="font-size: 18px; font-weight: 500;">' . $total_remises['Raison_sociale'] . '</p>
+                        </div>
 
-                //     <div class="remittance_result">
-                //         <p style="font-size: 16px;">Numéro de remise</p>
-                //         <p style="font-size: 18px;">' . $total_remises['num_remise'] . '</p>
-                //     </div>
+                        <div class="remittance_result">
+                            <p style="font-size: 14px; color: var(--blue75);">N° de remise</p>
+                            <p style="font-size: 18px; font-weight: 500;">' . $total_remises['num_remise'] . '</p>
+                        </div>
 
-                //     <div class="remittance_result">
-                //         <p style="font-size: 16px;">Date de traitement</p>
-                //         <p style="font-size: 18px;">' . $total_remises['date_traitement'] . '</p>
-                //     </div>
+                        <div class="remittance_result">
+                            <p style="font-size: 14px; color: var(--blue75);">Date de traitement</p>
+                            <p style="font-size: 18px; font-weight: 500;">' . $total_remises['date_traitement'] . '</p>
+                        </div>
 
-                //     <div class="remittance_result">
-                //         <p style="font-size: 16px;">Nombre de transactions</p>
-                //         <p style="font-size: 18px;">' . $total_remises['nb_transactions'] . '</p>
-                //     </div>
+                        <div class="remittance_result">
+                            <p style="font-size: 14px; color: var(--blue75);">Nb transac.</p>
+                            <p style="font-size: 18px; font-weight: 500;">' . $total_remises['nb_transactions'] . '</p>
+                        </div>
+                        
+                        <div class="remittance_result' . ($montant_total >= 0 ? ' positive' : ' negative') . '">
+                            <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
+                            <p class="montant" style="font-size: 18px; font-weight: 500;">' . ($montant_total >= 0 ? ('+' . $montant_total) : $montant_total) . '</p>
+                        </div>
+                    </div>';
 
-                //     <div class="remittance_result">
-                //         <p style="font-size: 16px;">Montant</p>
-                //         <p style="font-size: 18px;">' . $total_remises['montant_total'] . '</p>
-                //     </div>
-
-                //     <div class="remittance_result">
-                //         <p style="font-size: 16px;">Montant impayés</p>
-                //         <p style="font-size: 18px;">' . ($total_remises['montant_impayes'] == 0 ? "0" : $total_remises['montant_impayes']) . '</p>
-                //     </div>
-                    
-                //     <div class="remittance_result' . ($montant_total >= 0 ? ' positive' : ' negative') . '">
-                //         <p style="font-size: 16px;">Montant total</p>
-                //         <p class="montant" style="font-size: 18px;">' . ($montant_total >= 0 ? ('+' . $montant_total) : $montant_total) . '</p>
-                //     </div>
-                // </div>';
-
-                if ($montant_total >= 0) {
-                    echo "+";
-                }
-                echo "$montant_total</b><br>";
+                // if ($montant_total >= 0) {
+                //     echo "+";
+                // }
+                // echo "$montant_total</b><br>";
                 array_push($array_remises, [$total_remises['SIREN'], $total_remises['Raison_sociale'], $total_remises['num_remise'], $total_remises['date_traitement'], $total_remises['nb_transactions'], "EUR", $montant_total]);
 
                 $details_remises = $cnx->prepare("SELECT SIREN, date_vente, date_traitement, num_carte, reseau, num_autorisation, montant, sens FROM Commercant NATURAL JOIN percevoir NATURAL JOIN Transaction WHERE SIREN = :siren AND date_traitement = :date");
@@ -225,59 +218,74 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
                 $details_remises = $details_remises->fetchAll();
                 array_push($array_remises_detailles, $details_remises);
                 foreach ($details_remises as $ligne) {
-                    echo $ligne['SIREN'] . " " . $ligne['date_vente'] . " " . $ligne['num_carte'] . " " . $ligne['reseau'] . " " . $ligne['num_autorisation'] . " EUR " . $ligne['sens'] . $ligne['montant'] . "<br>";
+                    // echo $ligne['SIREN'] . " " . $ligne['date_vente'] . " " . $ligne['num_carte'] . " " . $ligne['reseau'] . " " . $ligne['num_autorisation'] . " EUR " . $ligne['sens'] . $ligne['montant'] . "<br>";
 
-                    // echo '
-                    // <div class="remittance_results">
-                    //     <div class="remittance_result">
-                    //         <p style="font-size: 16px;">Date de vente</p>
-                    //         <p style="font-size: 18px;">' . $ligne['date_vente'] . '</p>
-                    //     </div>
+                    echo '
+                        <div class="remittance_results__details hidden">
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Date de vente</p>
+                                <p style="font-size: 16px;">' . $ligne['date_vente'] . '</p>
+                            </div>
 
-                    //     <div class="remittance_result">
-                    //         <p style="font-size: 16px;">N° de carte</p>
-                    //         <p style="font-size: 18px;">' . $ligne['num_carte'] . '</p>
-                    //     </div>
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Réseau</p>
+                                <p style="font-size: 16px;">' . $ligne['reseau'] . '</p>
+                            </div>
 
-                    //     <div class="remittance_result">
-                    //         <p style="font-size: 16px;">Réseau</p>
-                    //         <p style="font-size: 18px;">' . $ligne['reseau'] . '</p>
-                    //     </div>
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">N° d\'autorisation</p>
+                                <p style="font-size: 16px;">' . $ligne['num_autorisation'] . '</p>
+                            </div>
 
-                    //     <div class="remittance_result">
-                    //         <p style="font-size: 16px;">N° d\'autorisation</p>
-                    //         <p style="font-size: 18px;">' . $ligne['num_autorisation'] . '</p>
-                    //     </div>
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Devise</p>
+                                <p style="font-size: 16px;">EUR</p>
+                            </div>
 
-                    //     <div class="remittance_result">
-                    //         <p style="font-size: 16px;">Devise</p>
-                    //         <p style="font-size: 18px;">EUR</p>
-                    //     </div>
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Sens</p>
+                                <p style="font-size: 16px;">' . $ligne['sens'] . '</p>
+                            </div>
 
-                    //     <div class="remittance_result">
-                    //         <p style="font-size: 16px;">Sens</p>
-                    //         <p style="font-size: 18px;">' . $ligne['sens'] . '</p>
-                    //     </div>
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Montant</p>
+                                <p style="font-size: 16px;">' . $ligne['montant'] . '</p>
+                            </div>
 
-                    //     <div class="remittance_result">
-                    //         <p style="font-size: 16px;">Montant</p>
-                    //         <p style="font-size: 18px;">' . $ligne['montant'] . '</p>
-                    //     </div>
-                    // </div>';
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">N° de carte</p>
+                                <p style="font-size: 16px;">' . $ligne['num_carte'] . '</p>
+                            </div>
+                        </div>
+                        ' . ($ligne == end($details_remises) ? '</section>' : '');
                 }
             }
-            echo "<br><br>";
+            
         }
+        echo '<div style="display: block; margin-top: 15vh;"><p>BRBRBRBRBRBRBRBR</p></div>';
         $_SESSION['tab_remises'] = $array_remises;
         $_SESSION['tab_remises_detailled'] = $array_remises_detailles;
         // echo "<button onclick=\"window.open('exports/export_remittance.php?format=CSV&detail=0', '_blank');\">CSV</button>";
         // echo "<button onclick=\"window.open('exports/export_remittance.php?format=XLSX&detail=0', '_blank');\">XLSX</button>";
         // echo "<button onclick=\"window.open('exports/export_remittance.php?format=CSV&detail=1', '_blank');\">CSV détaillé</button>";
-        // echo "<button onclick=\"window.open('exports/export_remittance.php?format=XLSX&detail=1', '_blank');\">XLSX détaillé</button>";
-
-        
+        // echo "<button onclick=\"window.open('exports/export_remittance.php?format=XLSX&detail=1', '_blank');\">XLSX détaillé</button>";        
     }
     ?>
+
+    <script>
+        const remittance_results_wrap = document.querySelectorAll('.remittance_results_wrap');
+
+        remittance_results_wrap.forEach((ele) => {
+            let remittance_results = ele.querySelector('.remittance_results');
+            remittance_results.addEventListener('click', () => {
+                remittance_results.classList.toggle('remittance_results-active');
+                ele.querySelectorAll('.remittance_results__details').forEach((ele) => {
+                    ele.classList.toggle('hidden');
+                });
+            });
+        });
+
+    </script>
 
 </body>
 

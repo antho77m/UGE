@@ -1,6 +1,6 @@
 <?php
 // include("cnx.inc.php");
-include (dirname(__FILE__, 2) . "/includes/cnx.inc.php");
+include(dirname(__FILE__, 2) . "/includes/cnx.inc.php");
 session_start();
 if (!isset($_SESSION['niveau'])) {
     exit("Erreur 401");
@@ -8,8 +8,6 @@ if (!isset($_SESSION['niveau'])) {
 
 include(dirname(__FILE__, 2) . "/includes/components/nav.php");
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -23,6 +21,27 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
 </head>
 
 <body>
+    <div class="navbar">
+        <div class="icon_container" onclick="window.location.href='/graphics'">
+            <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
+        </div>
+
+        <div class="icon_container" onclick="window.location.href='/unpaid'">
+            <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
+        </div>
+
+        <div class="icon_container" onclick="window.location.href='/home'">
+            <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
+        </div>
+
+        <div class="icon_container" onclick="window.location.href='/treasury'">
+            <img src="<?= $basepath ?>/src/img/treasury.svg" alt="Treasury icon">
+        </div>
+
+        <div class="icon_container" onclick="window.location.href='/remittance'">
+            <img src="<?= $basepath ?>/src/img/remittanceIcon.svg" alt="Remittance icon">
+        </div>
+    </div>
 
     <section class="unpaid_section">
 
@@ -47,19 +66,19 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
                     <input type="radio" id="desc" name="sens" value="DESC" required>
                     <label for="">décroissant</label>
                 </div>
-            
+
                 <div class="form__select">
                     <input type="radio" id="asc" name="sens" value="ASC" required>
                     <label for="">croissant</label>
                 </div>
             </div>
 
-            <input type="submit" name="submit" value="Validez" class="btn" style="margin-top: 30px;"/>
+            <input type="submit" name="submit" value="Validez" class="btn" style="margin-top: 30px;" />
 
         </form>
 
     </section>
-<?php
+    <?php
     if ((isset($_POST['dd']) && isset($_POST['df'])) && isset($_POST['sens'])) {
         $SIREN;
         $Raison_Sociale;
@@ -79,24 +98,25 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
         } else {
             exit("Erreur 401");
         }
-        
-        $impayes = $cnx -> prepare("SELECT SIREN, date_vente, date_traitement, num_carte, reseau, num_dos, montant, libelle FROM Commercant NATURAL JOIN percevoir NATURAL JOIN Transaction NATURAL JOIN Impaye JOIN Motifs_Impaye ON Impaye.code_motif = Motifs_Impaye.code WHERE SIREN LIKE :siren AND date_traitement BETWEEN :dd AND :df ORDER BY $ORDER $SENS");
-        $impayes -> bindParam(':siren', $SIREN);
-        $impayes -> bindParam(':dd', $dd);
-        $impayes -> bindParam(':df', $df);
-        
-        $verif = $impayes -> execute();
+
+        $impayes = $cnx->prepare("SELECT SIREN, date_vente, date_traitement, num_carte, reseau, num_dos, montant, libelle FROM Commercant NATURAL JOIN percevoir NATURAL JOIN Transaction NATURAL JOIN Impaye JOIN Motifs_Impaye ON Impaye.code_motif = Motifs_Impaye.code WHERE SIREN LIKE :siren AND date_traitement BETWEEN :dd AND :df ORDER BY $ORDER $SENS");
+        $impayes->bindParam(':siren', $SIREN);
+        $impayes->bindParam(':dd', $dd);
+        $impayes->bindParam(':df', $df);
+
+        $verif = $impayes->execute();
         if (empty($verif)) {
             exit("Erreur lors de la sélection");
         }
-        $impayes = $impayes -> fetchAll();
-        foreach($impayes AS $ligne) {
-            echo $ligne['SIREN']." ".$ligne['date_vente']." ".$ligne['date_traitement']." ".$ligne['num_carte']." ".$ligne['reseau']." ".$ligne['num_dos']." EUR ".$ligne['montant']." ".$ligne['libelle']."<br>";
+        $impayes = $impayes->fetchAll();
+        foreach ($impayes as $ligne) {
+            echo $ligne['SIREN'] . " " . $ligne['date_vente'] . " " . $ligne['date_traitement'] . " " . $ligne['num_carte'] . " " . $ligne['reseau'] . " " . $ligne['num_dos'] . " EUR " . $ligne['montant'] . " " . $ligne['libelle'] . "<br>";
         }
         $_SESSION['tab_unpaids'] = $impayes;
         echo "<button onclick=\"window.open('exports/export_unpaid.php?format=CSV', '_blank');\">CSV</button>";
         echo "<button onclick=\"window.open('exports/export_unpaid.php?format=XLSX', '_blank');\">XLSX</button>";
     }
-?>
+    ?>
 </body>
+
 </html>

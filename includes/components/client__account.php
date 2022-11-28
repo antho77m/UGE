@@ -1,4 +1,4 @@
-    <section class="clients_manage">
+<section class="clients_manage">
     <div class="clients_manage__search">
         <p>Liste des comptes (<span class="important"><?= count_clients(); ?></span>)</p>
         <form action="" method="post">
@@ -37,15 +37,11 @@
     </div>
 </div>
 
-
-
-
-
 <div class="navbar">
     <div class="icon_container" onclick="window.location.href='/graphics'">
         <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
     </div>
-    
+
     <div class="icon_container" onclick="window.location.href='/unpaid'">
         <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
     </div>
