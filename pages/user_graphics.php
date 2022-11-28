@@ -5,9 +5,14 @@ session_start();
 if (!isset($_SESSION['SIREN']) || !isset($_SESSION['niveau']) || $_SESSION['niveau'] != 1) {
     exit("Erreur 401");
 }
+
+include (dirname(__FILE__, 2) . "/includes/components/nav.php");
+
 ?>
 <!DOCTYPE HTML>
 <html>
+
+
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -58,7 +63,9 @@ if (!isset($_SESSION['SIREN']) || !isset($_SESSION['niveau']) || $_SESSION['nive
             }
 		</style>
 	</head>
+
 	<body>
+        <section class="unpaid_section">
         <form action="graphics_user_page.php" method="post">
             <label for="date_debut">date de début:</label>
             <input type="date" id="dates" name="dd" value="2010-01-01">
