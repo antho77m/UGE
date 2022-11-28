@@ -442,7 +442,7 @@ input[type="date"] {
     outline: none;
 }
 
-.remittance_sect {
+.remittance_sect, .unpaid_section {
     /* border: 1px solid #000; */
     padding: 20px;
     display: flex;
@@ -498,6 +498,14 @@ input[type="date"] {
 .negative .montant {
     color: var(--red);
     font-weight: bold;
+}
+
+.form__radio{
+    display: flex;
+    flex-direction: row;
+    padding:20px;
+    justify-content: space-between;
+    gap:80px;
 }
 
 .logos {
