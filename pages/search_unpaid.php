@@ -1,31 +1,63 @@
 <?php
-include("cnx.inc.php");
+// include("cnx.inc.php");
+include (dirname(__FILE__, 2) . "/includes/cnx.inc.php");
 session_start();
 if (!isset($_SESSION['niveau'])) {
     exit("Erreur 401");
 }
 
+include(dirname(__FILE__, 2) . "/includes/components/nav.php");
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
+
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Impayés</title>
 </head>
+
 <body>
-    <form action="search_unpaid.php" method="post">
+<section class="unpaid_section">
+
+<p style="font-size: 24px;">Consultation des impayés</p>
+
+<form action="/unpaid" method="POST" class="client__form">
+    <div class="form__group">
         <label for="start">date de début:</label>
-        <input type="date" id="dd" name="dd" value="2010-01-01">
+        <div class="input__container">
+            <input type="date" id="dd" name="dd" value="2010-01-01">
+        </div>
+    </div>
+
+    <div class="form__group">
         <label for="start">date de fin:</label>
-        <input type="date" id="df" name="df" value="2022-12-30">
-        <input type="radio" id="desc" name="sens" value="DESC" required>
-        <label for="">décroissant</label>
-        <input type="radio" id="asc" name="sens" value="ASC" required>
-        <label for="">croissant</label>
-        <input type="submit" name="submit" value="Validez" class = "boutton_formulaire"/>
-    </form>
+        <div class="input__container">
+            <input type="date" id="df" name="df" value="2022-12-30">
+        </div>
+    </div>
+    <div class="form__radio">
+        <div class="form__select">
+            <input type="radio" id="desc" name="sens" value="DESC" required>
+            <label for="">décroissant</label>
+        </div>
+    
+        <div class="form__select">
+            <input type="radio" id="asc" name="sens" value="ASC" required>
+            <label for="">croissant</label>
+        </div>
+    </div>
+
+    <input type="submit" name="submit" value="Validez" class="btn" style="margin-top: 30px;"/>
+
+</form>
+
+</section>
 <?php
     if ((isset($_POST['dd']) && isset($_POST['df'])) && isset($_POST['sens'])) {
         $SIREN;
