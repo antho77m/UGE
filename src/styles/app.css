@@ -540,4 +540,8 @@ input[type="date"] {
         justify-content: space-between;
         width: 10%;
     }
+
+    .PO_nav{
+        visibility: collapse;
+    }
 }

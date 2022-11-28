@@ -13,14 +13,13 @@
             </div>
         </form>
         <div class="logos">
-            <picture>
-                <source srcset="<?= $basepath ?>/src/img/remittanceIcon.svg" type="image/svg">
-                <img src="<?= $basepath ?>/src/img/remittanceIcon.svg" alt="Logo UGE">
-            </picture>
-            <picture>
-                <source srcset="<?= $basepath ?>/src/img/leaderboard.svg" type="image/svg">
-                <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Logo UGE">
-            </picture>
+            <div class="icon_container" onclick="window.location.href='/graphics'">
+                <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
+            </div>
+
+            <div class="icon_container" onclick="window.location.href='/remittance'">
+                <img src="<?= $basepath ?>/src/img/remittanceIcon.svg" alt="Remittance icon">
+            </div>
         </div>
     </div>
 </section>
