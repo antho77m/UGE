@@ -437,7 +437,9 @@ nav .privileges__title {
     color: var(--red);
 }
 
-::-webkit-datetime-edit-text {padding: 0 0.2em; }
+::-webkit-datetime-edit-text {
+    padding: 0 0.2em;
+}
 
 input[type="date"] {
     font: 400 16px Outfit, sans-serif;
@@ -446,7 +448,8 @@ input[type="date"] {
     outline: none;
 }
 
-.remittance_sect, .unpaid_section {
+.remittance_sect,
+.unpaid_section {
     /* border: 1px solid #000; */
     padding: 20px;
     display: flex;
@@ -463,18 +466,18 @@ input[type="date"] {
     padding: 20px;
 }
 
-.export_wrap_2{
-    display:flex;
+.export_wrap_2 {
+    display: flex;
     flex-direction: row;
     align-items: center;
-    padding:20px;
+    padding: 20px;
     justify-content: space-evenly;
 }
 
 
 .export {
     /* border: 1px solid #000; */
-    
+
 
     border: 2px solid var(--blue);
     background: #fff;
@@ -515,6 +518,33 @@ input[type="date"] {
     padding: 10px;
 }
 
+.unpaid_results {
+    /* border: 1px solid var(--blue); */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.unpaid_results {
+    margin-top: 20px;
+    border-bottom: 1px solid;
+    padding-bottom: 25px;
+    border-radius: 0;
+}
+
+.unpaid_result {
+    border: 1px solid var(--blue);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+}
+
 .positive .montant {
     color: green;
     font-weight: bold;
@@ -525,12 +555,12 @@ input[type="date"] {
     font-weight: bold;
 }
 
-.form__radio{
+.form__radio {
     display: flex;
     flex-direction: row;
-    padding:20px;
+    padding: 20px;
     justify-content: space-between;
-    gap:80px;
+    gap: 80px;
 }
 
 .logos {
@@ -575,7 +605,7 @@ input[type="date"] {
         width: 10%;
     }
 
-    .navbar{
+    .navbar {
         visibility: collapse;
     }
 }
