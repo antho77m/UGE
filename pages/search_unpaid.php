@@ -55,6 +55,16 @@ if (!isset($_SESSION['niveau'])) {
             exit("Erreur lors de la sélection");
         }
         $impayes = $impayes -> fetchAll();
+<<<<<<< Updated upstream
+=======
+        echo '
+            <p style="margin-left: 18px;">Exporter les résultats en :</p>
+            <div class="export_wrap_2">
+            <button class="export" onclick="window.open(\'/export?format=CSV&detail=0\', \'_blank\');">CSV</button>
+            <button class="export" onclick="window.open(\'/export?format=XLSX&detail=0\', \'_blank\');">XLSX</button>
+            </div>
+            ';
+>>>>>>> Stashed changes
         foreach($impayes AS $ligne) {
             echo $ligne['SIREN']." ".$ligne['date_vente']." ".$ligne['date_traitement']." ".$ligne['num_carte']." ".$ligne['reseau']." ".$ligne['num_dos']." EUR ".$ligne['montant']." ".$ligne['libelle']."<br>";
         }
