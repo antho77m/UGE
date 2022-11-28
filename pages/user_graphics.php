@@ -65,26 +65,47 @@ include (dirname(__FILE__, 2) . "/includes/components/nav.php");
 	</head>
 
 	<body>
-        <section class="unpaid_section">
-        <form action="graphics_user_page.php" method="post">
-            <label for="date_debut">date de début:</label>
-            <input type="date" id="dates" name="dd" value="2010-01-01">
-            <label for="date_fin">date de fin:</label>
-            <input type="date" id="dates" name="df" value="2022-12-30">
-            <input type="radio" id="1mois" name="mg" value="1">
-            <label for="4m">Sur 1 mois glissant</label>
-            <input type="radio" id="4mois" name="mg" value="4">
-            <label for="4m">Sur 4 mois glissants</label>
-            <input type="radio" id="12mois" name="mg" value="12">
-            <label for="12m">Sur 12mois glissants</label>
+        <section class="graphics_section">
+            <p style="font-size: 24px;">Consultation des graphiques</p>
 
-            <label for="graphiques">Type de graphique:</label>
-            <select name="graphique" id="graphique" required>
-                <option value="lr">Linéaire</option>
-                <option value="hm">Histogramme</option>
-                <option value="cl">Circulaire</option>
-            </select>
-            <input type="submit" name="submit" value="Générer un graphique" class = "boutton_formulaire"/>
+            <form action="graphics_user_page.php" method="POST" class="client__form">
+                <div class="form__group">
+                    <label for="date_debut">date de début:</label>
+                    <div class="input__container">
+                        <input type="date" id="dates" name="dd" value="2010-01-01">
+                    </div> 
+                </div>
+
+                <div class="form__group">
+                    <label for="date_fin">date de fin:</label>
+                    <div class="input__container">
+                        <input type="date" id="dates" name="df" value="2022-12-30">
+                    </div>
+                </div>
+
+                <div class="radio__graphics">
+                    <label for="1m">Sur 1 mois glissant</label>
+                    <input type="radio" id="1mois" name="mg" value="1">
+                    <label for="4m">Sur 4 mois glissants</label>
+                    <input type="radio" id="4mois" name="mg" value="4">
+                    <label for="12m">Sur 12mois glissants</label>
+                    <input type="radio" id="12mois" name="mg" value="12">
+                    
+                </div>
+
+            <div class="select__group">
+                <label for="graphiques">Type de graphique:</label>
+                <div class="select__container">
+                    <select name="graphique" id="graphique" required>
+                    <option value="lr">Linéaire</option>
+                    <option value="hm">Histogramme</option>
+                    <option value="cl">Circulaire</option>
+                    </select>
+                </div>
+            </div>
+
+            
+            <input type="submit" name="submit" value="Générer un graphique" class = "btn" style="margin-top:30px;"/>
         </form>
         <?php // fonctions   
             function dateDiffMois($date1, $date2) { // renvoi la différence de mois entre la date 1 et 2
