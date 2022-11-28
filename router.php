@@ -130,6 +130,13 @@ switch ($request) {
         ];
         loadPage("user_graphics");
         break;
+    case "/treasury":
+        $og = (object) [
+            "title" => "Trésorerie",
+            "description" => "Trésorerie"
+        ];
+        loadPage("treasury"); // TODO: create treasury page
+        break;
     case "/export":
         $og = (object) [
             "title" => "Remises",

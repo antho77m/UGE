@@ -23,6 +23,28 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
 </head>
 
 <body>
+
+    <div class="navbar">
+        <div class="icon_container" onclick="window.location.href='/graphics'">
+            <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
+        </div>
+        
+        <div class="icon_container" onclick="window.location.href='/unpaid'">
+            <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
+        </div>
+
+        <div class="icon_container" onclick="window.location.href='/home'">
+            <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
+        </div>
+
+        <div class="icon_container" onclick="window.location.href='/treasury'">
+            <img src="<?= $basepath ?>/src/img/treasury.svg" alt="Treasury icon">
+        </div>
+
+        <div class="icon_container" onclick="window.location.href='/remittance'">
+            <img src="<?= $basepath ?>/src/img/remittanceIcon.svg" alt="Remittance icon">
+        </div>
+    </div>
     <!-- <form action="search_remittance.php" method="post"> -->
 
     <section class="remittance_sect">
@@ -141,56 +163,56 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
             $total_remises = $total_remises->fetch();
 
             if (!empty($total_remises)) {
-                // echo "<b>" . $total_remises['SIREN'] . " " . $total_remises['Raison_sociale'] . " " . $total_remises['num_remise'] . " " . $total_remises['date_traitement'] . " " . $total_remises['nb_transactions'] . " EUR ";
+                echo "<b>" . $total_remises['SIREN'] . " " . $total_remises['Raison_sociale'] . " " . $total_remises['num_remise'] . " " . $total_remises['date_traitement'] . " " . $total_remises['nb_transactions'] . " EUR ";
                 $montant_total = $total_remises['montant_total'] - $total_remises['montant_impayes'];
                 
-                echo '
-                <div class="remittance_results">
-                    <div class="remittance_result">
-                        <p style="font-size: 16px;">SIREN</p>
-                        <p style="font-size: 18px;">' . $total_remises['SIREN'] . '</p>
-                    </div>
+                // echo '
+                // <div class="remittance_results">
+                //     <div class="remittance_result">
+                //         <p style="font-size: 16px;">SIREN</p>
+                //         <p style="font-size: 18px;">' . $total_remises['SIREN'] . '</p>
+                //     </div>
 
-                    <div class="remittance_result">
-                        <p style="font-size: 16px;">Raison sociale</p>
-                        <p style="font-size: 18px;">' . $total_remises['Raison_sociale'] . '</p>
-                    </div>
+                //     <div class="remittance_result">
+                //         <p style="font-size: 16px;">Raison sociale</p>
+                //         <p style="font-size: 18px;">' . $total_remises['Raison_sociale'] . '</p>
+                //     </div>
 
-                    <div class="remittance_result">
-                        <p style="font-size: 16px;">Numéro de remise</p>
-                        <p style="font-size: 18px;">' . $total_remises['num_remise'] . '</p>
-                    </div>
+                //     <div class="remittance_result">
+                //         <p style="font-size: 16px;">Numéro de remise</p>
+                //         <p style="font-size: 18px;">' . $total_remises['num_remise'] . '</p>
+                //     </div>
 
-                    <div class="remittance_result">
-                        <p style="font-size: 16px;">Date de traitement</p>
-                        <p style="font-size: 18px;">' . $total_remises['date_traitement'] . '</p>
-                    </div>
+                //     <div class="remittance_result">
+                //         <p style="font-size: 16px;">Date de traitement</p>
+                //         <p style="font-size: 18px;">' . $total_remises['date_traitement'] . '</p>
+                //     </div>
 
-                    <div class="remittance_result">
-                        <p style="font-size: 16px;">Nombre de transactions</p>
-                        <p style="font-size: 18px;">' . $total_remises['nb_transactions'] . '</p>
-                    </div>
+                //     <div class="remittance_result">
+                //         <p style="font-size: 16px;">Nombre de transactions</p>
+                //         <p style="font-size: 18px;">' . $total_remises['nb_transactions'] . '</p>
+                //     </div>
 
-                    <div class="remittance_result">
-                        <p style="font-size: 16px;">Montant</p>
-                        <p style="font-size: 18px;">' . $total_remises['montant_total'] . '</p>
-                    </div>
+                //     <div class="remittance_result">
+                //         <p style="font-size: 16px;">Montant</p>
+                //         <p style="font-size: 18px;">' . $total_remises['montant_total'] . '</p>
+                //     </div>
 
-                    <div class="remittance_result">
-                        <p style="font-size: 16px;">Montant impayés</p>
-                        <p style="font-size: 18px;">' . ($total_remises['montant_impayes'] == 0 ? "0" : $total_remises['montant_impayes']) . '</p>
-                    </div>
+                //     <div class="remittance_result">
+                //         <p style="font-size: 16px;">Montant impayés</p>
+                //         <p style="font-size: 18px;">' . ($total_remises['montant_impayes'] == 0 ? "0" : $total_remises['montant_impayes']) . '</p>
+                //     </div>
                     
-                    <div class="remittance_result' . ($montant_total >= 0 ? ' positive' : ' negative') . '">
-                        <p style="font-size: 16px;">Montant total</p>
-                        <p class="montant" style="font-size: 18px;">' . ($montant_total >= 0 ? ('+' . $montant_total) : $montant_total) . '</p>
-                    </div>
-                </div>';
+                //     <div class="remittance_result' . ($montant_total >= 0 ? ' positive' : ' negative') . '">
+                //         <p style="font-size: 16px;">Montant total</p>
+                //         <p class="montant" style="font-size: 18px;">' . ($montant_total >= 0 ? ('+' . $montant_total) : $montant_total) . '</p>
+                //     </div>
+                // </div>';
 
-                // if ($montant_total >= 0) {
-                //     echo "+";
-                // }
-                // echo "$montant_total</b><br>";
+                if ($montant_total >= 0) {
+                    echo "+";
+                }
+                echo "$montant_total</b><br>";
                 array_push($array_remises, [$total_remises['SIREN'], $total_remises['Raison_sociale'], $total_remises['num_remise'], $total_remises['date_traitement'], $total_remises['nb_transactions'], "EUR", $montant_total]);
 
                 $details_remises = $cnx->prepare("SELECT SIREN, date_vente, date_traitement, num_carte, reseau, num_autorisation, montant, sens FROM Commercant NATURAL JOIN percevoir NATURAL JOIN Transaction WHERE SIREN = :siren AND date_traitement = :date");
@@ -203,45 +225,45 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
                 $details_remises = $details_remises->fetchAll();
                 array_push($array_remises_detailles, $details_remises);
                 foreach ($details_remises as $ligne) {
-                    // echo $ligne['SIREN'] . " " . $ligne['date_vente'] . " " . $ligne['num_carte'] . " " . $ligne['reseau'] . " " . $ligne['num_autorisation'] . " EUR " . $ligne['sens'] . $ligne['montant'] . "<br>";
+                    echo $ligne['SIREN'] . " " . $ligne['date_vente'] . " " . $ligne['num_carte'] . " " . $ligne['reseau'] . " " . $ligne['num_autorisation'] . " EUR " . $ligne['sens'] . $ligne['montant'] . "<br>";
 
-                    echo '
-                    <div class="remittance_results">
-                        <div class="remittance_result">
-                            <p style="font-size: 16px;">Date de vente</p>
-                            <p style="font-size: 18px;">' . $ligne['date_vente'] . '</p>
-                        </div>
+                    // echo '
+                    // <div class="remittance_results">
+                    //     <div class="remittance_result">
+                    //         <p style="font-size: 16px;">Date de vente</p>
+                    //         <p style="font-size: 18px;">' . $ligne['date_vente'] . '</p>
+                    //     </div>
 
-                        <div class="remittance_result">
-                            <p style="font-size: 16px;">N° de carte</p>
-                            <p style="font-size: 18px;">' . $ligne['num_carte'] . '</p>
-                        </div>
+                    //     <div class="remittance_result">
+                    //         <p style="font-size: 16px;">N° de carte</p>
+                    //         <p style="font-size: 18px;">' . $ligne['num_carte'] . '</p>
+                    //     </div>
 
-                        <div class="remittance_result">
-                            <p style="font-size: 16px;">Réseau</p>
-                            <p style="font-size: 18px;">' . $ligne['reseau'] . '</p>
-                        </div>
+                    //     <div class="remittance_result">
+                    //         <p style="font-size: 16px;">Réseau</p>
+                    //         <p style="font-size: 18px;">' . $ligne['reseau'] . '</p>
+                    //     </div>
 
-                        <div class="remittance_result">
-                            <p style="font-size: 16px;">N° d\'autorisation</p>
-                            <p style="font-size: 18px;">' . $ligne['num_autorisation'] . '</p>
-                        </div>
+                    //     <div class="remittance_result">
+                    //         <p style="font-size: 16px;">N° d\'autorisation</p>
+                    //         <p style="font-size: 18px;">' . $ligne['num_autorisation'] . '</p>
+                    //     </div>
 
-                        <div class="remittance_result">
-                            <p style="font-size: 16px;">Devise</p>
-                            <p style="font-size: 18px;">EUR</p>
-                        </div>
+                    //     <div class="remittance_result">
+                    //         <p style="font-size: 16px;">Devise</p>
+                    //         <p style="font-size: 18px;">EUR</p>
+                    //     </div>
 
-                        <div class="remittance_result">
-                            <p style="font-size: 16px;">Sens</p>
-                            <p style="font-size: 18px;">' . $ligne['sens'] . '</p>
-                        </div>
+                    //     <div class="remittance_result">
+                    //         <p style="font-size: 16px;">Sens</p>
+                    //         <p style="font-size: 18px;">' . $ligne['sens'] . '</p>
+                    //     </div>
 
-                        <div class="remittance_result">
-                            <p style="font-size: 16px;">Montant</p>
-                            <p style="font-size: 18px;">' . $ligne['montant'] . '</p>
-                        </div>
-                    </div>';
+                    //     <div class="remittance_result">
+                    //         <p style="font-size: 16px;">Montant</p>
+                    //         <p style="font-size: 18px;">' . $ligne['montant'] . '</p>
+                    //     </div>
+                    // </div>';
                 }
             }
             echo "<br><br>";
