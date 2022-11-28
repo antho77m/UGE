@@ -35,7 +35,7 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
         $req->execute();
 
         $result = $req->fetch();
-        if (!($result)) {
+        if (($result)) {
             $_SESSION['SIREN'] = $result[0];
         }
 
