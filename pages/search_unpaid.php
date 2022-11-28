@@ -1,6 +1,6 @@
 <?php
 // include("cnx.inc.php");
-include (dirname(__FILE__, 2) . "/includes/cnx.inc.php");
+include(dirname(__FILE__, 2) . "/includes/cnx.inc.php");
 session_start();
 if (!isset($_SESSION['niveau'])) {
     exit("Erreur 401");
@@ -8,8 +8,6 @@ if (!isset($_SESSION['niveau'])) {
 
 include(dirname(__FILE__, 2) . "/includes/components/nav.php");
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -23,6 +21,27 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
 </head>
 
 <body>
+    <div class="navbar">
+        <div class="icon_container" onclick="window.location.href='/graphics'">
+            <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
+        </div>
+
+        <div class="icon_container" onclick="window.location.href='/unpaid'">
+            <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
+        </div>
+
+        <div class="icon_container" onclick="window.location.href='/home'">
+            <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
+        </div>
+
+        <div class="icon_container" onclick="window.location.href='/treasury'">
+            <img src="<?= $basepath ?>/src/img/treasury.svg" alt="Treasury icon">
+        </div>
+
+        <div class="icon_container" onclick="window.location.href='/remittance'">
+            <img src="<?= $basepath ?>/src/img/remittanceIcon.svg" alt="Remittance icon">
+        </div>
+    </div>
 <section class="unpaid_section">
 
 <p style="font-size: 24px;">Consultation des impayés</p>
@@ -58,7 +77,7 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
 </form>
 
 </section>
-<?php
+    <?php
     if ((isset($_POST['dd']) && isset($_POST['df'])) && isset($_POST['sens'])) {
         $SIREN;
         $Raison_Sociale;
@@ -87,7 +106,7 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
         if (empty($verif)) {
             exit("Erreur lors de la sélection");
         }
-        $impayes = $impayes -> fetchAll();
+        $impayes = $impayes->fetchAll();
         echo '
             <p style="margin-left: 18px;">Exporter les résultats en :</p>
             <div class="export_wrap_2">
@@ -95,51 +114,52 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
             <button class="export" onclick="window.open(\'/export?format=XLSX&detail=0\', \'_blank\');">XLSX</button>
             </div>
             ';
-        foreach($impayes AS $ligne) {
+        foreach ($impayes as $ligne) {
             echo '<div class="unpaid_results">
                 <div class="unpaid_result">
                 <p style="font-size: 16px;">SIREN</p>
-                <p style="font-size: 18px;">' .$ligne['SIREN'] .'</p>
+                <p style="font-size: 18px;">' .$ligne['SIREN']  .'</p>
                 </div>
 
-                <div class="unpaid_result">
+                <div class= "unpaid_result">
                 <p style="font-size: 16px;">Date de Vente</p>
-                <p style="font-size: 18px;">' .$ligne['date_vente'] .'</p>
+                <p style="font-size: 18px;">'  . $ligne['date_vente']  .'</p>
                 </div>
 
-                <div class="unpaid_result">
+                <div class= "unpaid_result">
                 <p style="font-size: 16px;">Date de Traitement</p>
-                <p style="font-size: 18px;">' .$ligne['date_traitement'] .'</p>
+                <p style="font-size: 18px;">'  . $ligne['date_traitement']  .'</p>
                 </div>
 
-                <div class="unpaid_result">
+                <div class= "unpaid_result">
                 <p style="font-size: 16px;">Numéro de Carte</p>
-                <p style="font-size: 18px;">' .$ligne['num_carte'] .'</p>
+                <p style="font-size: 18px;">'  . $ligne['num_carte']  .'</p>
                 </div>
 
-                <div class="unpaid_result">
+                <div class= "unpaid_result">
                 <p style="font-size: 16px;">Réseau</p>
-                <p style="font-size: 18px;">' .$ligne['reseau'] .'</p>
+                <p style="font-size: 18px;">'  . $ligne['reseau']  .'</p>
                 </div>
 
-                <div class="unpaid_result">
+                <div class= "unpaid_result">
                 <p style="font-size: 16px;">Numéro de Dossier</p>
-                <p style="font-size: 18px;">' .$ligne['num_dos'] .'</p>
+                <p style="font-size: 18px;">'  . $ligne['num_dos']  .'</p>
                 </div>
 
-                <div class="unpaid_result">
+                <div class= "unpaid_result">
                 <p style="font-size: 16px;">Montant</p>
-                <p style="font-size: 18px;">' .$ligne['montant'] .'</p>
+                <p style="font-size: 18px;">'  . $ligne['montant']  .'</p>
                 </div>
 
-                <div class="unpaid_result">
+                <div class= "unpaid_result">
                 <p style="font-size: 16px;">Libelle</p>
-                <p style="font-size: 18px;">' .$ligne['libelle'] .'</p>
+                <p style="font-size: 18px;">'  . $ligne['libelle']  . '</p>
                 </div>
                 </div>';
         }
         $_SESSION['tab'] = $impayes;
     }
-?>
+    ?>
 </body>
+
 </html>
