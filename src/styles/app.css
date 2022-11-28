@@ -1,7 +1,8 @@
 :root {
     --blue: #20234A;
-    --red: #D6404E;
+    --blue50: #20234A50;
     --blue75: #20234A75;
+    --red: #D6404E;
     --red50: #D6404E50;
 }
 
@@ -403,13 +404,13 @@ nav .privileges__title {
     font-weight: bold;
 }
 
-.PO_nav {
+.navbar {
     border-top: 1px solid var(--blue);
-    /* border: 1px solid #000; */
+    background: #fff;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     height: 64px;
@@ -425,7 +426,7 @@ nav .privileges__title {
 }
 
 .icon_container:hover {
-    background: var(--blue75);
+    background: var(--blue50);
 }
 
 .red {
@@ -556,7 +557,7 @@ input[type="date"] {
         width: 10%;
     }
 
-    .PO_nav{
+    .navbar{
         visibility: collapse;
     }
 }
