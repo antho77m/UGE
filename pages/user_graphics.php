@@ -68,7 +68,7 @@ include (dirname(__FILE__, 2) . "/includes/components/nav.php");
         <section class="graphics_section">
             <p style="font-size: 24px;">Consultation des graphiques</p>
 
-            <form action="graphics_user_page.php" method="POST" class="client__form">
+            <form action="" method="POST" class="client__form">
                 <div class="form__group">
                     <label for="date_debut">date de début:</label>
                     <div class="input__container">
