@@ -262,13 +262,9 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
             }
             
         }
-        echo '<div style="display: block; margin-top: 15vh;"><p>BRBRBRBRBRBRBRBR</p></div>';
+        echo '<div style="display: block; margin-top: 15vh; visibility: hidden;">ecart</div>';
         $_SESSION['tab_remises'] = $array_remises;
-        $_SESSION['tab_remises_detailled'] = $array_remises_detailles;
-        // echo "<button onclick=\"window.open('exports/export_remittance.php?format=CSV&detail=0', '_blank');\">CSV</button>";
-        // echo "<button onclick=\"window.open('exports/export_remittance.php?format=XLSX&detail=0', '_blank');\">XLSX</button>";
-        // echo "<button onclick=\"window.open('exports/export_remittance.php?format=CSV&detail=1', '_blank');\">CSV détaillé</button>";
-        // echo "<button onclick=\"window.open('exports/export_remittance.php?format=XLSX&detail=1', '_blank');\">XLSX détaillé</button>";        
+        $_SESSION['tab_remises_detailled'] = $array_remises_detailles;       
     }
     ?>
 

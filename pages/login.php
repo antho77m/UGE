@@ -6,7 +6,7 @@ if (isset($_GET['error']) && $_GET['error'] == 1) {
     // $_SESSION['try'] = 0;
     // setcookie('blocked', '', 1);
 
-    echo '<p class="incorrect_pass">mot de passe ou identifiant incorrect, plus que '. (3 - $try) .' essais</p>';
+    echo '<p class="incorrect_pass">mot de passe ou identifiant incorrect, plus que ' . (3 - $try) . ' essais</p>';
     echo "
     <script>
 
@@ -21,42 +21,43 @@ if (isset($_GET['error']) && $_GET['error'] == 1) {
 
 
 
+
 <?php include "includes/components/logo.php";
 
 // setcookie('blocked', '', 1);
 
-if(!isset($_COOKIE['blocked'])){
+if (!isset($_COOKIE['blocked'])) {
 
 ?>
 
-<form class="connection__form" action="/verify_login" method="post">
+    <form class="connection__form" action="/verify_login" method="post">
 
-    <div class="form__group">
-        <label for="id">Identifiant</label>
-        <div class="input__container">
-            <span class="material-symbols-outlined icon">Login</span>
-            <input type="text" name="login" id="id" placeholder="monidentifiant" required>
+        <div class="form__group">
+            <label for="id">Identifiant</label>
+            <div class="input__container">
+                <span class="material-symbols-outlined icon">Login</span>
+                <input type="text" name="login" id="id" placeholder="monidentifiant" required>
+            </div>
         </div>
-    </div>
 
-    <div class="form__group pass__group">
-        <label for="password">Mot de passe</label>
-        <div class="input__container">
-            <span class="material-symbols-outlined icon">key</span>
-            <input type="password" name="password" id="password" placeholder="Mot de passe" autocomplete="true" required>
-            <span class="material-symbols-outlined icon" id="togglePassword">Visibility</span>
+        <div class="form__group pass__group">
+            <label for="password">Mot de passe</label>
+            <div class="input__container">
+                <span class="material-symbols-outlined icon">key</span>
+                <input type="password" name="password" id="password" placeholder="Mot de passe" autocomplete="true" required>
+                <span class="material-symbols-outlined icon" id="togglePassword">Visibility</span>
+            </div>
+            <a href="/forgot-password" class="forgot__password">Mot de passe oublié ?</a>
         </div>
-        <a href="/forgot-password" class="forgot__password">Mot de passe oublié ?</a>
-    </div>
 
-    <div class="form__group">
-        <button type="submit" class="btn connection" disabled>CONNEXION</button>
-    </div>
+        <div class="form__group">
+            <button type="submit" class="btn connection" disabled>CONNEXION</button>
+        </div>
 
 
-</form>
-<?php 
-}else{ 
+    </form>
+<?php
+} else {
     echo '<p class="blocked">Vous avez été bloqué pour 1 heure</p>';
 }
 ?>

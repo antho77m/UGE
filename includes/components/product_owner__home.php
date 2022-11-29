@@ -17,18 +17,17 @@
                 <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
             </div>
 
-            <div class="icon_container" onclick="window.location.href='/remittance'">
-                <img src="<?= $basepath ?>/src/img/remittanceIcon.svg" alt="Remittance icon">
+            <div class="icon_container" onclick="window.location.href='/unpaid'">
+                <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
             </div>
 
             <div class="icon_container" onclick="window.location.href='/treasury'">
                 <img src="<?= $basepath ?>/src/img/treasury.svg" alt="Treasury icon">
             </div>
 
-            <div class="icon_container" onclick="window.location.href='/unpaid'">
-                <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
+            <div class="icon_container" onclick="window.location.href='/remittance'">
+                <img src="<?= $basepath ?>/src/img/remittanceIcon.svg" alt="Remittance icon">
             </div>
-            
         </div>
     </div>
 </section>
