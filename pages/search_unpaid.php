@@ -76,7 +76,7 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
 
 </form>
 
-</section>
+
     <?php
     if ((isset($_POST['dd']) && isset($_POST['df'])) && isset($_POST['sens'])) {
         $SIREN;
@@ -113,50 +113,55 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
             <button class="export" onclick="window.open(\'/export?format=CSV&detail=0\', \'_blank\');">CSV</button>
             <button class="export" onclick="window.open(\'/export?format=XLSX&detail=0\', \'_blank\');">XLSX</button>
             </div>
+            </section>
             ';
         foreach ($impayes as $ligne) {
-            echo '<div class="unpaid_results">
+            echo '
+            <section class="unpaid_results_wrap">
+                <div class="unpaid_results">
                 <div class="unpaid_result">
-                <p style="font-size: 16px;">SIREN</p>
-                <p style="font-size: 18px;">' .$ligne['SIREN']  .'</p>
+                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
+                <p style="font-size: 18px; font-weight: 500;">' .$ligne['SIREN']  .'</p>
                 </div>
 
                 <div class= "unpaid_result">
-                <p style="font-size: 16px;">Date de Vente</p>
-                <p style="font-size: 18px;">'  . $ligne['date_vente']  .'</p>
+                <p style="font-size: 14px; color: var(--blue75);">Date de Vente</p>
+                <p style="font-size: 18px; font-weight: 500;">'  . $ligne['date_vente']  .'</p>
                 </div>
 
                 <div class= "unpaid_result">
-                <p style="font-size: 16px;">Date de Traitement</p>
-                <p style="font-size: 18px;">'  . $ligne['date_traitement']  .'</p>
+                <p style="font-size: 14px; color: var(--blue75);">Date de Traitement</p>
+                <p style="font-size: 18px; font-weight: 500;">'  . $ligne['date_traitement']  .'</p>
                 </div>
 
                 <div class= "unpaid_result">
-                <p style="font-size: 16px;">Numéro de Carte</p>
-                <p style="font-size: 18px;">'  . $ligne['num_carte']  .'</p>
+                <p style="font-size: 14px; color: var(--blue75);">Numéro de Carte</p>
+                <p style="font-size: 18px; font-weight: 500;">'  . $ligne['num_carte']  .'</p>
                 </div>
 
                 <div class= "unpaid_result">
-                <p style="font-size: 16px;">Réseau</p>
-                <p style="font-size: 18px;">'  . $ligne['reseau']  .'</p>
+                <p style="font-size: 14px; color: var(--blue75);">Réseau</p>
+                <p style="font-size: 18px; font-weight: 500;">'  . $ligne['reseau']  .'</p>
                 </div>
 
                 <div class= "unpaid_result">
-                <p style="font-size: 16px;">Numéro de Dossier</p>
-                <p style="font-size: 18px;">'  . $ligne['num_dos']  .'</p>
+                <p style="font-size: 14px; color: var(--blue75);">Numéro de Dossier</p>
+                <p style="font-size: 18px; font-weight: 500;">'  . $ligne['num_dos']  .'</p>
                 </div>
 
                 <div class= "unpaid_result">
-                <p style="font-size: 16px;">Montant</p>
-                <p style="font-size: 18px;">'  . $ligne['montant']  .'</p>
+                <p style="font-size: 14px; color: var(--blue75);">Montant</p>
+                <p style="font-size: 18px; font-weight: 500;">'  . $ligne['montant']  .'</p>
                 </div>
 
                 <div class= "unpaid_result">
-                <p style="font-size: 16px;">Libelle</p>
-                <p style="font-size: 18px;">'  . $ligne['libelle']  . '</p>
+                <p style="font-size: 14px; color: var(--blue75);">Libelle</p>
+                <p style="font-size: 18px; font-weight: 500;">'  . $ligne['libelle']  . '</p>
                 </div>
-                </div>';
+                </div>
+                </section>';
         }
+        echo'<div style="display: block; margin-top: 15vh; visibility: hidden;">ecart</div>';
         $_SESSION['tab'] = $impayes;
     }
     ?>
