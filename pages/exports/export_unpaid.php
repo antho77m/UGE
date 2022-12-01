@@ -43,5 +43,14 @@
             flush();
             readfile('impayés.xlsx');
         }
+        else if ($format == 'PDF') {
+            echo "<table border=\"1\"><tr><th>SIREN</th><th>Date vente</th><th>Date traitement</th><th>Numero Carte</th><th>Reseau</th><th>Numero Dossier</th><th>Devise</th><th>Montant</th><th>Libelle</th></tr>";
+            foreach($tab AS $ligne) {
+                echo "<tr><td>".$ligne['SIREN']."</td><td>".$ligne['date_vente']."</td><td>".$ligne['date_traitement']."</td><td>".$ligne['num_carte']."</td><td>".$ligne['reseau']."</td><td>".$ligne['num_dos']."</td><td>EUR</td><td>".$ligne['montant']."</td><td>".$ligne['libelle']."</td></tr>";
+            }
+            echo "</table>";
+            echo "<br>EXTRAIT DU ".date('d/m/Y');
+            echo "<script>window.print()</script>";
+        }
     }
 ?>

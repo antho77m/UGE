@@ -147,8 +147,9 @@ include ROOT . "/includes/cnx.inc.php";
                 echo '
                 <p style="margin-left: 18px;">Exporter les résultats en :</p>
                 <div class="export_wrap_2">
-                <button class="export" onclick="window.open(\'/pages/exports/export_unpaid.php?format=CSV&detail=0\', \'_blank\');">CSV</button>
-                <button class="export" onclick="window.open(\'/pages/exports/export_unpaid.php?format=XLSX&detail=0\', \'_blank\');">XLSX</button>
+                <button class="export" onclick="window.open(\'/pages/exports/export_unpaid.php?format=CSV\', \'_blank\');">CSV</button>
+                <button class="export" onclick="window.open(\'/pages/exports/export_unpaid.php?format=XLSX\', \'_blank\');">XLSX</button>
+                <button class="export" onclick="window.open(\'/pages/exports/export_unpaid.php?format=PDF\', \'_blank\');">PDF</button>
                 </div>
                 </section>
                 ';
@@ -200,7 +201,7 @@ include ROOT . "/includes/cnx.inc.php";
                 </section>';
             }
             echo '<div style="display: block; margin-top: 15vh; visibility: hidden;">ecart</div>';
-            $_SESSION['tab'] = $impayes;
+            $_SESSION['tab_unpaids'] = $impayes;
         }
         ?>
         <script src="/src/scripts/app.js?v=<?= sha1(rand()) ?>" defer></script>

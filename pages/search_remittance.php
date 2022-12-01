@@ -97,6 +97,13 @@ include ROOT . "/includes/cnx.inc.php";
             <?php endif; ?>
 
             <div class="form__group">
+                <label for="name">N° de REMISE</label>
+                <div class="input__container">
+                    <input type="number" name="remise" id="remise" placeholder="numéro de remise" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="form__group">
                 <label for="name">Date de début</label>
                 <div class="input__container">
                     <input type="date" name="dd" id="dd" value="2010-01-01">
@@ -116,7 +123,7 @@ include ROOT . "/includes/cnx.inc.php";
     </section>
 
     <?php
-    if ((isset($_POST['dd']) && isset($_POST['df']))) {
+    if ((isset($_POST['dd']) && isset($_POST['df']) && isset($_POST['remise']))) {
         $SIREN;
         $Raison_Sociale;
         $dd = $_POST['dd'];
@@ -143,16 +150,23 @@ include ROOT . "/includes/cnx.inc.php";
         } else {
             exit("Erreur 401");
         }
+        if (!empty($_POST['remise'])) {
+            $num_remise = $_POST['remise'];
+        } else {
+            $num_remise = '%';
+        }
 
         if (isset($_POST['rsociale'])) {
-            $remises = $cnx->prepare("SELECT DISTINCT SIREN, date_traitement FROM Commercant NATURAL JOIN percevoir NATURAL JOIN Transaction WHERE SIREN LIKE :siren AND Raison_sociale LIKE :raison_sociale AND date_traitement BETWEEN :dd AND :df");
+            $remises = $cnx->prepare("SELECT DISTINCT SIREN, date_traitement FROM Commercant NATURAL JOIN percevoir NATURAL JOIN Transaction WHERE SIREN LIKE :siren AND num_remise LIKE :num_remise AND Raison_sociale LIKE :raison_sociale AND date_traitement BETWEEN :dd AND :df");
             $remises->bindParam(':siren', $SIREN);
             $remises->bindParam(':raison_sociale', $Raison_Sociale);
+            $remises->bindParam(':num_remise', $num_remise);
             $remises->bindParam(':dd', $dd);
             $remises->bindParam(':df', $df);
         } else {
-            $remises = $cnx->prepare("SELECT DISTINCT SIREN, date_traitement FROM Commercant NATURAL JOIN percevoir NATURAL JOIN Transaction WHERE SIREN LIKE :siren AND date_traitement BETWEEN :dd AND :df");
+            $remises = $cnx->prepare("SELECT DISTINCT SIREN, date_traitement FROM Commercant NATURAL JOIN percevoir NATURAL JOIN Transaction WHERE SIREN LIKE :siren AND num_remise LIKE :num_remise AND date_traitement BETWEEN :dd AND :df");
             $remises->bindParam(':siren', $SIREN);
+            $remises->bindParam(':num_remise', $num_remise);
             $remises->bindParam(':dd', $dd);
             $remises->bindParam(':df', $df);
         }
@@ -167,8 +181,10 @@ include ROOT . "/includes/cnx.inc.php";
             <div class="export_wrap">
             <button class="export" onclick="window.open(\'/pages/exports/export_remittance.php?format=CSV&detail=0\', \'_blank\');">CSV</button>
             <button class="export" onclick="window.open(\'/pages/exports/export_remittance.php?format=XLSX&detail=0\', \'_blank\');">XLSX</button>
+            <button class="export" onclick="window.open(\'/pages/exports/export_remittance.php?format=PDF&detail=0\', \'_blank\');">PDF</button>
             <button class="export" onclick="window.open(\'/pages/exports/export_remittance.php?format=CSV&detail=1\', \'_blank\');">CSV détaillé</button>
             <button class="export" onclick="window.open(\'/pages/exports/export_remittance.php?format=XLSX&detail=1\', \'_blank\');">XLSX détaillé</button>
+            <button class="export" onclick="window.open(\'/pages/exports/export_remittance.php?format=PDF&detail=1\', \'_blank\');">PDF détaillé</button>
             </div>
             ';
         }
@@ -181,10 +197,11 @@ include ROOT . "/includes/cnx.inc.php";
             FROM Commercant 
             NATURAL JOIN percevoir 
             NATURAL JOIN Transaction AS R
-            WHERE SIREN = :siren AND date_traitement = :date
+            WHERE SIREN = :siren AND num_remise LIKE :num_remise AND date_traitement = :date
             GROUP BY num_remise");
             $total_remises->bindParam(':siren', $ligne['SIREN']);
             $total_remises->bindParam(':date', $ligne['date_traitement']);
+            $total_remises->bindParam(':num_remise', $num_remise);
             $verif = $total_remises->execute();
             if (empty($verif)) {
                 exit("Erreur lors de la sélection");
@@ -235,9 +252,10 @@ include ROOT . "/includes/cnx.inc.php";
                 // echo "$montant_total</b><br>";
                 array_push($array_remises, [$total_remises['SIREN'], $total_remises['Raison_sociale'], $total_remises['num_remise'], $total_remises['date_traitement'], $total_remises['nb_transactions'], "EUR", $montant_total]);
 
-                $details_remises = $cnx->prepare("SELECT SIREN, date_vente, date_traitement, num_carte, reseau, num_autorisation, montant, sens FROM Commercant NATURAL JOIN percevoir NATURAL JOIN Transaction WHERE SIREN = :siren AND date_traitement = :date");
+                $details_remises = $cnx->prepare("SELECT SIREN, date_vente, date_traitement, num_carte, reseau, num_autorisation, montant, sens FROM Commercant NATURAL JOIN percevoir NATURAL JOIN Transaction WHERE SIREN = :siren AND num_remise LIKE :num_remise AND date_traitement = :date");
                 $details_remises->bindParam(':siren', $ligne['SIREN']);
                 $details_remises->bindParam(':date', $ligne['date_traitement']);
+                $details_remises->bindParam(':num_remise', $num_remise);
                 $verif = $details_remises->execute();
                 if (empty($verif)) {
                     exit("Erreur lors de la sélection");
@@ -290,7 +308,7 @@ include ROOT . "/includes/cnx.inc.php";
         }
         echo '<div style="display: block; margin-top: 15vh; visibility: hidden;">ecart</div>';
         $_SESSION['tab_remises'] = $array_remises;
-        $_SESSION['tab_remises_detailled'] = $array_remises_detailles;
+        $_SESSION['tab_remises_detailles'] = $array_remises_detailles;
     }
     ?>
 
