@@ -21,7 +21,6 @@ if (isset($_SESSION['niveau'])) {
     <title><?= $level ?></title>
     <meta property="og:description" content="Acceuil du site">
     <link rel="stylesheet" href="/src/styles/app.css?<?= sha1(rand()) ?>">
-    <link rel="stylesheet" href="/src/styles/pages/home.css?<?= sha1(rand()) ?>">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
