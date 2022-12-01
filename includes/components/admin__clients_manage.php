@@ -25,14 +25,14 @@
     const btnDelete = document.querySelector('.btn__delete');
 
     btnAdd.addEventListener('click', () => {
-        window.location.href = "<?= $basepath ?>/client?add";
+        window.location.href = "<?= $basepath ?>/pages/client.php?add";
     });
 
     btnEdit.addEventListener('click', () => {
-        window.location.href = "<?= $basepath ?>/client?edit";
+        window.location.href = "<?= $basepath ?>/pages/client.php?edit";
     });
 
     btnDelete.addEventListener('click', () => {
-        window.location.href = "<?= $basepath ?>/client?delete";
+        window.location.href = "<?= $basepath ?>/pages/client.php?delete";
     });
 </script>

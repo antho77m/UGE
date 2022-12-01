@@ -1,4 +1,3 @@
-
 <section class="clients_manage">
     <div class="clients_manage__search">
         <p>Liste des comptes (<span class="important"><?= count_clients(); ?></span>)</p>
@@ -12,20 +11,20 @@
 
             </div>
         </form>
-        <div class="logos">
-            <div class="icon_container" onclick="window.location.href='/graphics'">
+        <div class="logos pc-nav">
+            <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
                 <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
             </div>
 
-            <div class="icon_container" onclick="window.location.href='/unpaid'">
+            <div class="icon_container" onclick="window.location.href='/pages/search_unpaid.php'">
                 <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
             </div>
 
-            <div class="icon_container" onclick="window.location.href='/treasury'">
+            <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
                 <img src="<?= $basepath ?>/src/img/treasury.svg" alt="Treasury icon">
             </div>
 
-            <div class="icon_container" onclick="window.location.href='/remittance'">
+            <div class="icon_container" onclick="window.location.href='/pages/search_remittance.php'">
                 <img src="<?= $basepath ?>/src/img/remittanceIcon.svg" alt="Remittance icon">
             </div>
         </div>
@@ -66,24 +65,24 @@
     <?php endforeach; ?>
 </section>
 
-<div class="navbar">
-    <div class="icon_container" onclick="window.location.href='/graphics'">
+<div class="navbar mobile-nav">
+    <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
         <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
     </div>
-    
-    <div class="icon_container" onclick="window.location.href='/unpaid'">
+
+    <div class="icon_container" onclick="window.location.href='/pages/search_unpaid.php'">
         <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
     </div>
 
-    <div class="icon_container" onclick="window.location.href='/home'">
+    <div class="icon_container" onclick="window.location.href='/pages/home.php'">
         <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
     </div>
 
-    <div class="icon_container" onclick="window.location.href='/treasury'">
+    <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
         <img src="<?= $basepath ?>/src/img/treasury.svg" alt="Treasury icon">
     </div>
 
-    <div class="icon_container" onclick="window.location.href='/remittance'">
+    <div class="icon_container" onclick="window.location.href='/pages/search_remittance.php'">
         <img src="<?= $basepath ?>/src/img/remittanceIcon.svg" alt="Remittance icon">
     </div>
 </div>

@@ -77,8 +77,9 @@ label {
 }
 
 .privileges {
-    background: var(--red50);
+    background: #f0a9b0;
     height: 15px;
+    z-index: 10;
 }
 
 .privileges p {
@@ -119,6 +120,9 @@ input[type="number"]::placeholder {
     color: var(--blue75);
 }
 
+body {
+    overflow-x: hidden;
+}
 
 body,
 html {
@@ -418,6 +422,7 @@ nav .privileges__title {
     bottom: 0;
     width: 100%;
     height: 64px;
+    z-index: 10;
 }
 
 .icon_container {
@@ -470,7 +475,6 @@ input[type="date"] {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 20px;
     justify-content: space-evenly;
 }
 
@@ -567,9 +571,8 @@ input[type="date"] {
 }
 
 
-.logos {
+.pc-nav {
     display: none;
-    visibility: collapse;
 }
 
 @media (min-width: 1500px) {
@@ -604,17 +607,24 @@ input[type="date"] {
     .logos {
         display: flex;
         visibility: visible;
-        align-items: flex-end;
+        align-items: center;
         justify-content: space-between;
-        width: 10%;
+    }
+
+    .logos .icon_container:active {
+        background: var(--blue75);
     }
 
     .navbar {
         visibility: collapse;
     }
 
-    .unpaid_section{
+    .mobile-nav {
+        display: none;
+    }
+
+    /* .unpaid_section{
         width: 45% ;
 
-    }
+    } */
 }

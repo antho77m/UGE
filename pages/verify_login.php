@@ -1,5 +1,7 @@
 <?php
 
+include(dirname(__FILE__, 2) . "/router.php");
+
 // include("/Laragon/www/Tran/includes/cnx.inc.php");
 include(dirname(__FILE__, 2) . "/includes/cnx.inc.php");
 
@@ -39,7 +41,7 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
             $_SESSION['SIREN'] = $result[0];
         }
 
-        header('Location: /home');    // si connecté, on redirige vers la page d'accueil
+        header('Location: /pages/home.php');    // si connecté, on redirige vers la page d'accueil
         exit();
     } else {
 
@@ -49,8 +51,8 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
         }
         
 
-        header('Location: /login?error=1');   // si erreur, on redirige vers la page de connexion
+        header('Location: /pages/login.php?error=1');   // si erreur, on redirige vers la page de connexion
         exit();
     }
 }
-header('Location: /login'); // si pas de données envoyées, on redirige vers la page de connexion
+header('Location: /pages/login.php'); // si pas de données envoyées, on redirige vers la page de connexion

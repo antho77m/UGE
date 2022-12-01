@@ -1,14 +1,14 @@
 <?php
-// include("../includes/cnx.inc.php");
-
-include(dirname(__FILE__, 2) . "/includes/cnx.inc.php");
 
 session_start();
+include(dirname(__FILE__, 2) . "/router.php");
+
 if (!isset($_SESSION['niveau'])) {
     exit("Erreur 401");
 }
 
-include(dirname(__FILE__, 2) . "/includes/components/nav.php");
+include ROOT . "/includes/cnx.inc.php";
+
 ?>
 
 
@@ -20,38 +20,65 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Remises</title>
+    <meta property="og:description" content="Remises">
+    <link rel="stylesheet" href="/src/styles/app.css?<?= sha1(rand()) ?>">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="shortcut icon" type="image/svg+xml" href="/src/img/Logo UGE.svg" id="js-favicon" />
 </head>
 
 <body>
+    <?php include ROOT . "/includes/components/nav.php"; ?>
 
-    <div class="navbar">
-        <div class="icon_container" onclick="window.location.href='/graphics'">
+    <div class="navbar mobile-nav">
+        <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
             <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
         </div>
-        
-        <div class="icon_container" onclick="window.location.href='/unpaid'">
+
+        <div class="icon_container" onclick="window.location.href='/pages/search_unpaid.php'">
             <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
         </div>
 
-        <div class="icon_container" onclick="window.location.href='/home'">
+        <div class="icon_container" onclick="window.location.href='/pages/home.php'">
             <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
         </div>
 
-        <div class="icon_container" onclick="window.location.href='/treasury'">
+        <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
             <img src="<?= $basepath ?>/src/img/treasury.svg" alt="Treasury icon">
         </div>
 
-        <div class="icon_container" onclick="window.location.href='/remittance'">
+        <div class="icon_container" onclick="window.location.href='/pages/search_remittance.php'">
             <img src="<?= $basepath ?>/src/img/remittanceIcon.svg" alt="Remittance icon">
         </div>
     </div>
-    <!-- <form action="search_remittance.php" method="post"> -->
-
     <section class="remittance_sect">
 
-        <p style="font-size: 24px;">Consulation des remises</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <p style="font-size: 24px;">Consultation des remises</p>
+            <div class="logos pc-nav">
+                <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
+                    <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
+                </div>
 
-        <form action="/remittance" method="POST" class="client__form">
+                <div class="icon_container" onclick="window.location.href='/pages/search_unpaid.php'">
+                    <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
+                </div>
+
+                <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
+                    <img src="<?= $basepath ?>/src/img/treasury.svg" alt="Treasury icon">
+                </div>
+
+                <div class="icon_container" onclick="window.location.href='/pages/search_remittance.php'">
+                    <img src="<?= $basepath ?>/src/img/remittanceIcon.svg" alt="Remittance icon">
+                </div>
+            </div>
+        </div>
+
+
+        <form action="/pages/search_remittance.php" method="post" class="client__form">
 
             <?php if ($_SESSION['niveau'] == 3) : ?>
                 <div class="form__group">
@@ -116,7 +143,7 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
         } else {
             exit("Erreur 401");
         }
-        
+
         if (isset($_POST['rsociale'])) {
             $remises = $cnx->prepare("SELECT DISTINCT SIREN, date_traitement FROM Commercant NATURAL JOIN percevoir NATURAL JOIN Transaction WHERE SIREN LIKE :siren AND Raison_sociale LIKE :raison_sociale AND date_traitement BETWEEN :dd AND :df");
             $remises->bindParam(':siren', $SIREN);
@@ -138,10 +165,10 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
             echo '
             <p style="margin-left: 18px;">Exporter les résultats en :</p>
             <div class="export_wrap">
-            <button class="export" onclick="window.open(\'/export?format=CSV&detail=0\', \'_blank\');">CSV</button>
-            <button class="export" onclick="window.open(\'/export?format=XLSX&detail=0\', \'_blank\');">XLSX</button>
-            <button class="export" onclick="window.open(\'/export?format=CSV&detail=1\', \'_blank\');">CSV détaillé</button>
-            <button class="export" onclick="window.open(\'/export?format=XLSX&detail=1\', \'_blank\');">XLSX détaillé</button>
+            <button class="export" onclick="window.open(\'/pages/exports/export_remittance.php?format=CSV&detail=0\', \'_blank\');">CSV</button>
+            <button class="export" onclick="window.open(\'/pages/exports/export_remittance.php?format=XLSX&detail=0\', \'_blank\');">XLSX</button>
+            <button class="export" onclick="window.open(\'/pages/exports/export_remittance.php?format=CSV&detail=1\', \'_blank\');">CSV détaillé</button>
+            <button class="export" onclick="window.open(\'/pages/exports/export_remittance.php?format=XLSX&detail=1\', \'_blank\');">XLSX détaillé</button>
             </div>
             ';
         }
@@ -167,7 +194,7 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
             if (!empty($total_remises)) {
                 // echo "<b>" . $total_remises['SIREN'] . " " . $total_remises['Raison_sociale'] . " " . $total_remises['num_remise'] . " " . $total_remises['date_traitement'] . " " . $total_remises['nb_transactions'] . " EUR ";
                 $montant_total = $total_remises['montant_total'] - $total_remises['montant_impayes'];
-                
+
                 echo '
                 <section class="remittance_results_wrap">
                     <div class="remittance_results">
@@ -260,11 +287,10 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
                         ' . ($ligne == end($details_remises) ? '</section>' : '');
                 }
             }
-            
         }
         echo '<div style="display: block; margin-top: 15vh; visibility: hidden;">ecart</div>';
         $_SESSION['tab_remises'] = $array_remises;
-        $_SESSION['tab_remises_detailled'] = $array_remises_detailles;       
+        $_SESSION['tab_remises_detailled'] = $array_remises_detailles;
     }
     ?>
 
@@ -280,9 +306,8 @@ include(dirname(__FILE__, 2) . "/includes/components/nav.php");
                 });
             });
         });
-
     </script>
-
+    <script src="/src/scripts/app.js?v=<?= sha1(rand()) ?>" defer></script>
 </body>
 
 </html>
