@@ -1,6 +1,13 @@
 <?php
 
 session_start();
+if (isset($_SESSION['niveau'])) {
+    if ($_SESSION['niveau'] != 1) {
+        header("Location: login.php");
+    }
+} else {
+    exit("Erreur 401");
+}
 include(dirname(__FILE__, 2) . "/router.php");
 
 // if (!isset($_SESSION['SIREN']) || !isset($_SESSION['niveau']) || $_SESSION['niveau'] != 1) {

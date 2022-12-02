@@ -110,7 +110,7 @@ include ROOT . "/includes/cnx.inc.php";
         </form>
 
         <?php
-        if ((isset($_POST['dd']) && isset($_POST['df'])) && isset($_POST['sens'])) {
+        if ((isset($_POST['dd']) && isset($_POST['df'])) && isset($_POST['sens']) && isset($_SESSION['niveau'])) {
             $SIREN;
             $Raison_Sociale;
             $dd = $_POST['dd'];
@@ -190,7 +190,7 @@ include ROOT . "/includes/cnx.inc.php";
 
                 <div class= "unpaid_result">
                 <p style="font-size: 14px; color: var(--blue75);">Montant</p>
-                <p style="font-size: 18px; font-weight: 500;">'  . $ligne['montant']  . '</p>
+                <p style="font-size: 18px; font-weight: 500;">-'  . $ligne['montant']  . '</p>
                 </div>
 
                 <div class= "unpaid_result">
