@@ -83,24 +83,6 @@ include ROOT . "/includes/cnx.inc.php";
     </div>
     <?php
 
-    class commercant
-    { // Création de la classe commercant
-        public $SIREN;
-        public $Raison_sociale;
-        public $nb_transaction;
-        public $montant;
-        public $date;
-
-        function __construct($SIREN, $Raison_sociale, $nb_transaction, $montant, $date)
-        { // Constructeur de la classe commercant
-            $this->SIREN = $SIREN;
-            $this->Raison_sociale = $Raison_sociale;
-            $this->nb_transaction = $nb_transaction;
-            $this->montant = $montant;
-            $this->date = $date;
-        }
-    }
-
     function CountTransac($SIREN, $date)
     { // Fonction qui compte le nombre de transaction d'un commercant à une date donnée
 
@@ -119,7 +101,6 @@ include ROOT . "/includes/cnx.inc.php";
     function CountMontant($nb_transac, $SIREN, $date)
     { // Fonction qui compte le montant total des transactions d'un commercant à une date donnée
 
-        // include("cnx.inc.php");
         global $cnx;
 
         $montant = 0;
@@ -141,10 +122,9 @@ include ROOT . "/includes/cnx.inc.php";
         return $montant;
     }
 
-    function AfficheTresorerie_Client_Date($SIREN)
+    function AfficheTresorerie_Client_Date($SIREN) // fonction profil client
     { // Fonction qui affiche le solde des transactions du jour de la trésorerie du client à une date donnée
 
-        // include("cnx.inc.php");
         global $cnx;
 
         echo '
@@ -166,15 +146,18 @@ include ROOT . "/includes/cnx.inc.php";
             $ligne = $command->fetch(PDO::FETCH_OBJ);
             $nb_transac = CountTransac($ligne->SIREN, $date3);
             $montant = CountMontant($nb_transac, $ligne->SIREN, $date3);
-            $commercant = new commercant($ligne->SIREN, $ligne->Raison_sociale, $nb_transac, $montant, null);
-            return $commercant; // Retourne un objet commercant
+            if ($montant > 0) {
+                echo 'SIREN : ' .$ligne->SIREN. 'Raison sociale : '.$ligne->Raison_sociale . 'Nombre de transactions : ' . $nb_transac . 'Montant total : + ' . $montant . 'Date : ' . $date3;
+            }
+            else {
+                echo 'SIREN : ' .$ligne->SIREN. 'Raison sociale : '.$ligne->Raison_sociale . 'Nombre de transactions : ' . $nb_transac . 'Montant total : ' . $montant . 'Date : ' . $date3;
+            }
         }
     }
 
-    function AfficheTresorerie_Client_Date_PO()
-    { // Fonction qui affiche le solde des transactions du jour de la trésorerie des client à une date donnée
+    function AfficheTresorerie_Client_Date_PO() // Profil PO
+    { // Fonction qui affiche le solde des transactions du jour de la trésorerie des clients à une date donnée
 
-        // include("cnx.inc.php");
         global $cnx;
 
         echo '
@@ -197,24 +180,24 @@ include ROOT . "/includes/cnx.inc.php";
         }
         if (isset($date)) {
             if ($date != "") {
-                $commercant_array = array();
-                $i = 0;
                 $command = $cnx->query("SELECT * FROM Commercant");
                 while ($ligne = $command->fetch(PDO::FETCH_OBJ)) {
                     $nb_transac = CountTransac($ligne->SIREN, $date);
                     $montant = CountMontant($nb_transac, $ligne->SIREN, $date);
-                    $commercant_array[$i] = new commercant($ligne->SIREN, $ligne->Raison_sociale, $nb_transac, $montant, null);
-                    $i++;
+                    if ($montant > 0) {
+                        echo 'SIREN : ' .$ligne->SIREN. 'Raison sociale : '.$ligne->Raison_sociale . 'Nombre de transactions : ' . $nb_transac . 'Montant total : +' . $montant . 'Date : ' . $date;
+                    }
+                    else {
+                        echo 'SIREN : ' .$ligne->SIREN. 'Raison sociale : '.$ligne->Raison_sociale . 'Nombre de transactions : ' . $nb_transac . 'Montant total : ' . $montant . 'Date : ' . $date;
+                    }
                 }
-                return $commercant_array; // Retourne un tableau d'objet commercant
             }
         }
     }
 
-    function AfficheTresorerie_Par_Client_Date_PO()
+    function AfficheTresorerie_Par_Client_Date_PO() // profil PO
     { // Fonction qui affiche le solde des transactions du jour de la trésorerie d'un client à une date donnée
 
-        // include("cnx.inc.php");
         global $cnx;
 
         echo '
@@ -255,8 +238,12 @@ include ROOT . "/includes/cnx.inc.php";
                 $ligne = $command->fetch(PDO::FETCH_OBJ);
                 $nb_transac = CountTransac($ligne->SIREN, $date1);
                 $montant = CountMontant($nb_transac, $ligne->SIREN, $date1);
-                $commercant = new commercant($ligne->SIREN, $ligne->Raison_sociale, $nb_transac, $montant, null);
-                return $commercant; // Retourne un objet commercant
+                if ($montant > 0) {
+                    echo 'SIREN : ' .$ligne->SIREN. 'Raison sociale : '.$ligne->Raison_sociale . 'Nombre de transactions : ' . $nb_transac . 'Montant total : +' . $montant . 'Date : ' . $date1;
+                }
+                else {
+                    echo 'SIREN : ' .$ligne->SIREN. 'Raison sociale : '.$ligne->Raison_sociale . 'Nombre de transactions : ' . $nb_transac . 'Montant total : ' . $montant . 'Date : ' . $date1;
+                }
             }
         }
     }
@@ -275,7 +262,6 @@ include ROOT . "/includes/cnx.inc.php";
     function CountMontantOfAllTransac($nb_transac, $SIREN)
     { // Fonction qui compte le montant de toutes les transactions d'un client
 
-        // include("cnx.inc.php");
         global $cnx;
 
         if ($nb_transac == 0) {
@@ -311,13 +297,17 @@ include ROOT . "/includes/cnx.inc.php";
         while ($ligne = $command->fetch(PDO::FETCH_OBJ)) {
             $nb_transac = CountAllTransac($ligne->SIREN);
             $montant = CountMontantOfAllTransac($nb_transac, $ligne->SIREN);
-            $commercant_array[$i] = new commercant($ligne->SIREN, $ligne->Raison_sociale, $nb_transac, $montant, null);
-            $i++;
+            if ($montant > 0) {
+                echo 'SIREN : ' .$ligne->SIREN. 'Raison sociale : '.$ligne->Raison_sociale . 'Nombre de transactions : ' . $nb_transac . 'Montant total : +' . $montant;
+            }
+            else {
+                echo 'SIREN : ' .$ligne->SIREN. 'Raison sociale : '.$ligne->Raison_sociale . 'Nombre de transactions : ' . $nb_transac . 'Montant total : <span>'.$montant.'</span>';
+            }
         }
         return $commercant_array; // Retourne un tableau d'objet commercant. Penser a afficher le solde en rouge si negatif
     }
 
-    function AfficheTresorerie_Client_Solde_And_SIREN_PO()
+    function AfficheTresorerie_Client_Solde_And_SIREN_PO() //Profil PO
     { // Fonction qui affiche le solde des transactions totale de la trésorerie d'un client
 
         // include("cnx.inc.php");
@@ -358,16 +348,19 @@ include ROOT . "/includes/cnx.inc.php";
             if ($montant >= $min_solde && $montant <= $max_solde) {
                 $command = $cnx->query("SELECT * FROM Commercant WHERE SIREN = '$SIREN'");
                 $ligne = $command->fetch(PDO::FETCH_OBJ);
-                $commercant = new commercant($ligne->SIREN, $ligne->Raison_sociale, $nb_transac, $montant, null);
-                return $commercant; // Retourne un objet commercant
+                if ($montant > 0) {
+                    echo 'SIREN : ' .$ligne->SIREN. 'Raison sociale : '.$ligne->Raison_sociale . 'Nombre de transactions : ' . $nb_transac . 'Montant total : +' . $montant;
+                }
+                else {
+                    echo '<p>SIREN : '  .$ligne->SIREN. 'Raison sociale : ' .$ligne->Raison_sociale . 'Nombre de transactions : '. $nb_transac . 'Montant total : <span style = "color: var(--red)">' .  $montant . '</span> <<p>';
+                }
             } else {
                 return null;
             }
-        } else {
-            echo "Veuillez remplir les champs s'il vous plait";
         }
     }
-
+    //  affiche le jour d'aujourd'hui
+    echo date("d/m/Y");
     echo '<div style="display: block; margin-top: 15vh; visibility: hidden;">ecart</div>';
 
     ?>
