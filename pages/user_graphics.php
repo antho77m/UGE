@@ -130,8 +130,9 @@ include ROOT . "/includes/cnx.inc.php";
             </div>
         </div>
 
-        <form action="" method="POST" class="client__form">
+        <form action="" method="POST" class="graphics__form">
             <div class="form__group">
+            <p style="margin-bottom:20px;"> Choisissez un intervalle </p>
                 <label for="date_debut">date de début:</label>
                 <div class="input__container">
                     <input type="date" id="dates" name="dd" value="2010-01-01">
@@ -145,15 +146,18 @@ include ROOT . "/includes/cnx.inc.php";
                 </div>
             </div>
 
-            <div class="radio__graphics">
-                <label for="1m">Sur 1 mois glissant</label>
-                <input type="radio" id="1mois" name="mg" value="1">
-                <label for="4m">Sur 4 mois glissants</label>
-                <input type="radio" id="4mois" name="mg" value="4">
-                <label for="12m">Sur 12mois glissants</label>
-                <input type="radio" id="12mois" name="mg" value="12">
+            <div class="radio__container">
+                <p class="options_text"> Ou une option </p>
+                <div class="radio__graphics">
+                    <label for="1m">Sur 1 mois glissant</label>
+                    <input type="radio" id="1mois" name="mg" value="1">
+                    <label for="4m">Sur 4 mois glissants</label>
+                    <input type="radio" id="4mois" name="mg" value="4">
+                    <label for="12m">Sur 12mois glissants</label>
+                    <input type="radio" id="12mois" name="mg" value="12">
 
-            </div>
+                </div>
+        </div>
 
             <div class="select__group">
                 <label for="graphiques">Type de graphique:</label>

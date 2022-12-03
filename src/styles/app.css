@@ -575,6 +575,19 @@ input[type="date"] {
     display: none;
 }
 
+.options_text{
+    margin:20px 0 20px 0;
+}
+
+.radio__container{
+    width: 100%;
+}
+
+.radio__graphics{
+    margin-left: 40px;
+}
+
+
 @media (min-width: 1500px) {
 
     .privileges {
@@ -634,6 +647,13 @@ input[type="date"] {
         
     }
 
+    .graphics__form{
+        position: absolute;
+        left: 0px;
+        margin-top:155px;
+        width: 60%;
+    }
+
     .form__group, .unpaid_results{
         width: 80%;
     }
@@ -648,5 +668,35 @@ input[type="date"] {
     .unpaid_result{
         margin-left: 20%;
     }
+
+    .graphics__form .form__group .input__container {
+        width: 50%;
+        left: 0px;
+    }
+
+    .radio__container{
+        position: absolute;
+        bottom:100px;
+        width:auto;
+        margin-left: 400px;
+        margin-bottom: 40px;
+    }
+
+    #container{
+        height: 100%;
+    }
+
+    .highcharts-figure{
+        width: 40% !important;
+        height: 40% !important;
+        position: absolute;
+        right: 20px;
+        margin-top: 90px !important;
+    }
+
+    .options_text{
+        margin-bottom:48px;
+    }
+
 
 }
