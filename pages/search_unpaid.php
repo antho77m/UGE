@@ -78,7 +78,7 @@ include ROOT . "/includes/cnx.inc.php";
             </div>
         </div>
 
-
+        
         <form action="/pages/search_unpaid.php" method="POST" class="client__form">
             <div class="form__group">
                 <label for="start">date de début:</label>
@@ -152,11 +152,11 @@ include ROOT . "/includes/cnx.inc.php";
                 <button class="export" onclick="window.open(\'/pages/exports/export_unpaid.php?format=PDF\', \'_blank\');">PDF</button>
                 </div>
                 </section>
+                <section class="unpaid_results_wrap">
                 ';
             }
             foreach ($impayes as $ligne) {
                 echo '
-            <section class="unpaid_results_wrap">
                 <div class="unpaid_results">
                 <div class="unpaid_result">
                 <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
@@ -197,10 +197,9 @@ include ROOT . "/includes/cnx.inc.php";
                 <p style="font-size: 14px; color: var(--blue75);">Libelle</p>
                 <p style="font-size: 18px; font-weight: 500;">'  . $ligne['libelle']  . '</p>
                 </div>
-                </div>
-                </section>';
+                </div>';
             }
-            echo '<div style="display: block; margin-top: 15vh; visibility: hidden;">ecart</div>';
+            echo '</section> <div style="display: block; margin-top: 15vh; visibility: hidden;">ecart</div>';
             $_SESSION['tab_unpaids'] = $impayes;
         }
         ?>

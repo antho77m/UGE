@@ -623,8 +623,30 @@ input[type="date"] {
         display: none;
     }
 
-    /* .unpaid_section{
-        width: 45% ;
+    .unpaid_results{
+        grid-template-columns: repeat(3,1fr);   
+    }
 
-    } */
+    .client__form{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+    }
+
+    .form__group, .unpaid_results{
+        width: 80%;
+    }
+
+    .unpaid_results_wrap{
+        
+        display: flex;
+        flex-direction: column ;
+        align-items: center;
+    }
+
+    .unpaid_result{
+        margin-left: 20%;
+    }
+
 }
