@@ -180,10 +180,10 @@ include ROOT . "/includes/cnx.inc.php";
             <p style="margin-left: 18px;">Exporter les résultats en :</p>
             <div class="export_wrap">
             <button class="export" onclick="window.open(\'/pages/exports/export_remittance.php?format=CSV&detail=0\', \'_blank\');">CSV</button>
-            <button class="export" onclick="window.open(\'/pages/exports/export_remittance.php?format=XLSX&detail=0\', \'_blank\');">XLSX</button>
+            <button class="export" onclick="window.open(\'/pages/exports/export_remittance.php?format=XLS&detail=0\', \'_blank\');">XLS</button>
             <button class="export" onclick="window.open(\'/pages/exports/export_remittance.php?format=PDF&detail=0\', \'_blank\');">PDF</button>
             <button class="export" onclick="window.open(\'/pages/exports/export_remittance.php?format=CSV&detail=1\', \'_blank\');">CSV détaillé</button>
-            <button class="export" onclick="window.open(\'/pages/exports/export_remittance.php?format=XLSX&detail=1\', \'_blank\');">XLSX détaillé</button>
+            <button class="export" onclick="window.open(\'/pages/exports/export_remittance.php?format=XLS&detail=1\', \'_blank\');">XLS détaillé</button>
             <button class="export" onclick="window.open(\'/pages/exports/export_remittance.php?format=PDF&detail=1\', \'_blank\');">PDF détaillé</button>
             </div>
             ';

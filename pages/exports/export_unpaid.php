@@ -6,8 +6,8 @@
 
         if ($format == 'CSV') 
         {
-            header('Content-Type: application/csv');
-            header('Content-Disposition: attachment; filename="impayés.csv";');
+            header("Content-Type: application/csv");
+            header("Content-Disposition: attachment; filename=IMPAYES ".date('d/m/Y').".csv;");
             $file = fopen('php://output', 'w');
             fputcsv($file, ["SIREN","Date vente","Date traitement","Numero Carte","Reseau","Numero Dossier","Devise","Montant","Libelle"], ';');
             foreach($tab AS $ligne) {
@@ -16,32 +16,17 @@
             fputcsv($file, ["EXTRAIT DU ".date('d/m/Y')], ';');
             fclose($file);
         } 
-        else if ($format == 'XLSX') 
+        else if ($format == 'XLS') 
         {
-            require_once("../extensions/xlsxwriter.class.php");
-            $header = array(
-                'SIREN'=>'string',
-                'Date vente'=>'string',
-                'Date traitement'=>'string',
-                'Numero Carte'=>'string',
-                'Reseau'=>'string',
-                'Numero Dossier'=>'string',
-                'Devise'=>'string',
-                'Montant'=>'string',
-                'Libelle'=>'string',
-            );
-            $writer = new XLSXWriter();
-            $writer->writeSheetHeader('Sheet1', $header);
-            foreach($tab AS $ligne)
-                $writer->writeSheetRow('Sheet1', [$ligne['SIREN'],$ligne['date_vente'],$ligne['date_traitement'],$ligne['num_carte'],$ligne['reseau'],$ligne['num_dos'],"EUR",'-'.$ligne['montant'],$ligne['libelle']]);
-            $writer->writeSheetRow('Sheet1', ["EXTRAIT DU ".date('d/m/Y')]);
-            $writer->writeToFile('impayés.xlsx');
+            $excel = "SIREN\tDate vente\tDate traitement\tNumero Carte\tReseau\tNumero Dossier\tDevise\tMontant\tLibelle\n";
+            foreach($tab AS $ligne) {
+                $excel .= $ligne['SIREN']."\t".$ligne['date_vente']."\t".$ligne['date_traitement']."\t".$ligne['num_carte']."\t".$ligne['reseau']."\t".$ligne['num_dos']."\tEUR\t-".$ligne['montant']."\t".$ligne['libelle']."\n";
+            }
+            $excel .= "EXTRAIT DU ".date('d/m/Y');
+            header("Content-type: application/application/vnd.ms-excel");
+            header("Content-disposition: attachment; filename=IMPAYES ".date('d/m/Y').".xls");
+            print $excel;
 
-            header('Content-disposition: attachment; filename=impayés.xlsx');
-            header('Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            ob_clean();
-            flush();
-            readfile('impayés.xlsx');
         }
         else if ($format == 'PDF') {
             echo "<table border=\"1\"><tr><th>SIREN</th><th>Date vente</th><th>Date traitement</th><th>Numero Carte</th><th>Reseau</th><th>Numero Dossier</th><th>Devise</th><th>Montant</th><th>Libelle</th></tr>";

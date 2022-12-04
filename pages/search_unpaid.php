@@ -148,7 +148,7 @@ include ROOT . "/includes/cnx.inc.php";
                 <p style="margin-left: 18px;">Exporter les résultats en :</p>
                 <div class="export_wrap_2">
                 <button class="export" onclick="window.open(\'/pages/exports/export_unpaid.php?format=CSV\', \'_blank\');">CSV</button>
-                <button class="export" onclick="window.open(\'/pages/exports/export_unpaid.php?format=XLSX\', \'_blank\');">XLSX</button>
+                <button class="export" onclick="window.open(\'/pages/exports/export_unpaid.php?format=XLS\', \'_blank\');">XLS</button>
                 <button class="export" onclick="window.open(\'/pages/exports/export_unpaid.php?format=PDF\', \'_blank\');">PDF</button>
                 </div>
                 </section>

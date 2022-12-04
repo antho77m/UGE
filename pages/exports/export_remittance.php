@@ -4,14 +4,20 @@
         $tab1 = $_SESSION['tab_remises'];
         $tab2 = $_SESSION['tab_remises_detailles'];
         $format = $_GET['format'];
-        $detail = $_GET['detail'];
+        $detailled = $_GET['detail'];
+
+        if ($detailled == 1) {
+            $filename = "REMISES DETAILLES";
+        } else {
+            $filename = "REMISES";
+        }
 
         if ($format == 'CSV') 
         {
-            header('Content-Type: application/csv');
-            header('Content-Disposition: attachment; filename="impayés.csv";');
+            header("Content-Type: application/csv");
+            header("Content-Disposition: attachment; filename=$filename ".date('d/m/Y').".csv;");
             $file = fopen('php://output', 'w');
-            if ($detail == 1) 
+            if ($detailled == 1) 
             {
                 foreach($tab1 AS $ligne) {
                     fputcsv($file, ["LISTE DES TRANSACTIONS DE LA REMISE DE L'ENTREPRISE ".$ligne[1].", No DE SIREN ".$ligne[0]." LE ".$ligne[3]], ';');
@@ -36,52 +42,38 @@
             fputcsv($file, ["EXTRAIT DU ".date('d/m/Y')], ';');
             fclose($file);
         } 
-        else if ($format == 'XLSX') 
+        else if ($format == 'XLS') 
         {
-            // require_once("xlsxwriter.class.php");
-            require_once (dirname(__FILE__, 2) . "../extensions/xlsxwriter.class.php");
-            $writer = new XLSXWriter();
-            if ($detail == 1) 
+            if ($detailled == 1) 
             {
+                $excel = "";
                 foreach($tab1 AS $ligne) {
-                    $writer->writeSheetRow('Sheet1', ["LISTE DES TRANSACTIONS DE LA REMISE DE L'ENTREPRISE ".$ligne[1].", No DE SIREN ".$ligne[0]." LE ".$ligne[3]]);
-                    $writer->writeSheetRow('Sheet1', ["SIREN", "Date vente", "Numero Carte", "Reseau", "Numero Autorisation", "Devise", "Montant", "Sens"]);
+                    $excel .= "LISTE DES TRANSACTIONS DE LA REMISE DE L'ENTREPRISE ".$ligne[1].", No DE SIREN ".$ligne[0]." LE ".$ligne[3]."\n";
+                    $excel .= "SIREN\tDate vente\tNumero Carte\tReseau\tNumero Autorisation\tDevise\tMontant\tSens\n";
                     foreach($tab2 AS $remises) {
                         foreach($remises AS $remise) {
                             if ($remise['SIREN'] == $ligne[0] && $ligne[3] == $remise['date_traitement']) {
-                                $writer->writeSheetRow('Sheet1', [$remise['SIREN'], $remise['date_vente'], $remise['num_carte'], $remise['reseau'], $remise['num_autorisation'], "EUR", $remise['montant'], $remise['sens']]);
+                                $excel .= $remise['SIREN']."\t".$remise['date_vente']."\t".$remise['num_carte']."\t".$remise['reseau']."\t".$remise['num_autorisation']."\tEUR\t".$remise['montant']."\t".$remise['sens']."\n";
                             }
                         }
                     }
-                    $writer->writeSheetRow('Sheet1', [""]);
                 }
             } 
             else 
             {
-                $header = array(
-                    'SIREN'=>'string',
-                    'Raison Sociale'=>'string',
-                    'Numero Remise'=>'string',
-                    'Date traitement'=>'string',
-                    'Nombre de transactions'=>'string',
-                    'Devise'=>'string',
-                    'Montant Total'=>'string',
-                );
-                $writer->writeSheetHeader('Sheet1', $header);
-                foreach($tab1 AS $ligne)
-                    $writer->writeSheetRow('Sheet1', $ligne);
+                $excel = "SIREN\tRaison Sociale\tNumero Remise\tDate traitement\tNombre de transactions\tDevise\tMontant total\n";
+                foreach($tab1 AS $ligne) {
+                    $excel .= $ligne[0]."\t".$ligne[1]."\t".$ligne[2]."\t".$ligne[3]."\t".$ligne[4]."\t".$ligne[5]."\t".$ligne[6]."\n";
+                }
             }
-            $writer->writeSheetRow('Sheet1', ["EXTRAIT DU ".date('d/m/Y')]);
-            $writer->writeToFile('impayés.xlsx');
-            header('Content-disposition: attachment; filename=impayés.xlsx');
-            header('Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            ob_clean();
-            flush();
-            readfile('impayés.xlsx');
+            $excel .= "EXTRAIT DU ".date('d/m/Y');
+            header("Content-type: application/application/vnd.ms-excel");
+            header("Content-disposition: attachment; filename=$filename ".date('d/m/Y').".xls");
+            print $excel;
         }
         else if ($format == 'PDF') 
         {
-            if ($detail == 1) 
+            if ($detailled == 1) 
             {
                 foreach($tab1 AS $ligne) {
                     echo "LISTE DES TRANSACTIONS DE LA REMISE DE L'ENTREPRISE ".$ligne[1].", No DE SIREN ".$ligne[0]." LE ".$ligne[3]."<br>";

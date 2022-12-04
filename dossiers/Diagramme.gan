@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="UGEFinance" company="" webLink="http://" view-date="2022-12-02" view-index="0" gantt-divider-location="351" resource-divider-location="300" version="3.2.3247" locale="fr_FR">
+<?xml version="1.0" encoding="UTF-8"?><project name="UGEFinance" company="" webLink="http://" view-date="2022-10-25" view-index="0" gantt-divider-location="351" resource-divider-location="300" version="3.2.3247" locale="fr_FR">
     <description/>
     <view zooming-state="default:2" id="gantt-chart">
         <field id="tpd3" name="Nom" width="200" order="0"/>
@@ -34,6 +34,16 @@
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
+        <task id="0" name="Conception MCD et MLD" color="#8cb6ce" meeting="false" start="2022-10-03" duration="7" complete="0" thirdDate="2022-12-02" thirdDate-constraint="0" expand="true">
+            <depend id="1" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="1" name="Création de la Base de données et des jeux de données" color="#8cb6ce" meeting="false" start="2022-10-10" duration="7" complete="0" thirdDate="2022-10-03" thirdDate-constraint="0" expand="true"/>
+        <task id="2" name="Conceptualisation des pages PHP" color="#8cb6ce" meeting="false" start="2022-10-17" duration="7" complete="0" thirdDate="2022-10-03" thirdDate-constraint="0" expand="true"/>
+        <task id="3" name="Premier essai page PHP Trésorerie" color="#8cb6ce" meeting="false" start="2022-10-24" duration="14" complete="0" thirdDate="2022-10-03" thirdDate-constraint="0" expand="true"/>
+        <task id="4" name="Premier essai page PHP Remise" color="#8cb6ce" meeting="false" start="2022-10-24" duration="14" complete="0" thirdDate="2022-10-03" thirdDate-constraint="0" expand="true"/>
+        <task id="5" name="Premier essai page PHP Impayés" color="#8cb6ce" meeting="false" start="2022-10-24" duration="14" complete="0" thirdDate="2022-10-03" thirdDate-constraint="0" expand="true"/>
+        <task id="6" name="Premier essai pages PHP Admins" color="#8cb6ce" meeting="false" start="2022-10-24" duration="14" complete="0" thirdDate="2022-10-03" thirdDate-constraint="0" expand="true"/>
+        <task id="7" name="Finition des pages PHP" color="#8cb6ce" meeting="false" start="2022-11-07" duration="21" complete="0" thirdDate="2022-10-25" thirdDate-constraint="0" expand="true"/>
     </tasks>
     <resources/>
     <allocations/>
