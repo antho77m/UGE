@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if (isset($_GET['format']) && isset($_SESSION['tab'])) {
+    if (isset($_GET['format']) && isset($_SESSION['tab_unpaids'])) {
         $tab = $_SESSION['tab_unpaids'];
         $format = $_GET['format'];
 

@@ -199,8 +199,8 @@ include ROOT . "/includes/cnx.inc.php";
                 </div>
                 </div>';
             }
-            echo '</section> <div style="display: block; margin-top: 15vh; visibility: hidden;">ecart</div>';
             $_SESSION['tab_unpaids'] = $impayes;
+            echo '</section> <div style="display: block; margin-top: 15vh; visibility: hidden;">ecart</div>';
         }
         ?>
         <script src="/src/scripts/app.js?v=<?= sha1(rand()) ?>" defer></script>
