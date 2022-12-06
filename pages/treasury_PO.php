@@ -1,5 +1,8 @@
 
-<?php require_once("commercant.php");?> 
+<?php 
+    require_once("../includes/class/commercant.php");
+    include("../includes/cnx.inc.php");
+?> 
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -16,8 +19,8 @@
     <?php
 
     function show_treasury_all_client_date($date) { // Show the solde of all client has a date
+        global $cnx;
 
-        include("cnx.inc.php");
         //require_once("commercant.php");
         $i = 0;
         $commercant_array[] = array();
@@ -39,8 +42,7 @@
     }
 
     function show_treasury_client_date($SIREN, $date) { // Show the solde of a client has a date
-
-        include("cnx.inc.php");
+        global $cnx;
 
         $command = $cnx->query("SELECT * FROM Commercant WHERE SIREN = '$SIREN'");
         $ligne = $command->fetch(PDO::FETCH_OBJ);
@@ -63,7 +65,7 @@
 
 
     function show_treasury_client($SIREN) { // Show the solde of a client
-        include ("connexion.inc.php");
+        global $cnx;
 
         $command = $cnx->query("SELECT * FROM Commercant WHERE SIREN = '$SIREN'");
         $ligne = $command->fetch(PDO::FETCH_OBJ);
@@ -85,8 +87,7 @@
 
     function show_treasury_all_client($trie)
     { // Fonction qui affiche le solde des transactions totale de la trésorerie de tout client
-
-        include("cnx.inc.php");
+        global $cnx;
 
         $commercant_array = array();
         $command = $cnx->query("SELECT * FROM Commercant $trie"); // trie the result
@@ -107,9 +108,8 @@
     }
 
     function show_treasury_all_client_order_solde() { // Show the solde of all client order by solde
-
-        include("cnx.inc.php");
-
+        global $cnx;
+        
         $commercant_array = array();
         $montant_array = array();
         $command = $cnx->query("SELECT * FROM Commercant");
@@ -120,7 +120,7 @@
             $montant_array[$i] = $montant;
             $commercant_array[$i] = new commercant($ligne->SIREN, $ligne->Raison_sociale, $nb_transac, $montant, null);
             $i++;
-        }
+        } 
         arsort($montant_array);
         $commercant_array_return = array();
         $i = 0;
@@ -156,7 +156,6 @@
             <p>
             Afficher les soldes des clients :
             <select id="trie" name="trie">
-                <option value="">Trie par :</option>
                 <option value="Aucun">Aucun</option>
                 <option value="SIREN">SIREN</option>
                 <option value="Montant">Montant</option>
@@ -164,7 +163,6 @@
             </p>
             <input type="submit" name="submit" value="Envoyer">
         </form>';
-
 
     if(isset($_POST['submit'])) {
         if (!empty($_POST['date'])) {
@@ -207,7 +205,6 @@
             }
             echo '<br>';
         }
-        
     }
 	
     320367139

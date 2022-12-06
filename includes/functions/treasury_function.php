@@ -1,9 +1,7 @@
 <?php
 
 function CountTransac($SIREN, $date) { // Count the number of transactions has a date 
-
-    // include("cnx.inc.php");
-    include("cnx.inc.php");
+    global $cnx;
 
     $command2 = $cnx->query("SELECT COUNT(percevoir.num_autorisation) AS nb_transaction FROM Transaction, percevoir WHERE percevoir.SIREN = '$SIREN' AND Transaction.num_autorisation = percevoir.num_autorisation AND Transaction.date_vente = '$date'");
     while ($ligne2 = $command2->fetch(PDO::FETCH_OBJ)) // un par un
@@ -14,10 +12,8 @@ function CountTransac($SIREN, $date) { // Count the number of transactions has a
     return $nb_transac;
 }
 
-function CountMontant($nb_transac, $SIREN, $date) // Count the solde has a date
-{
-
-    include("cnx.inc.php");
+function CountMontant($nb_transac, $SIREN, $date) { // Count the solde has a date
+    global $cnx;
 
     $montant = 0;
     if ($nb_transac != 0) {
@@ -41,9 +37,7 @@ function CountMontant($nb_transac, $SIREN, $date) // Count the solde has a date
 
 
 function CountAllTransac($SIREN) { // Count the numbers of all transaction  
-
-    // include("cnx.inc.php");
-    include("cnx.inc.php");
+    global $cnx;
 
     $command = $cnx->query("SELECT COUNT(percevoir.num_autorisation) AS nb_transaction FROM Transaction, percevoir WHERE percevoir.SIREN = '$SIREN' AND Transaction.num_autorisation = percevoir.num_autorisation");
     $ligne = $command->fetch(PDO::FETCH_OBJ);
@@ -51,8 +45,7 @@ function CountAllTransac($SIREN) { // Count the numbers of all transaction
 }
 
 function CountMontantOfAllTransac($nb_transac, $SIREN) { // Count the solde of all transaction
-
-    include("cnx.inc.php");
+    global $cnx;
 
     if ($nb_transac == 0) {
         return 0;

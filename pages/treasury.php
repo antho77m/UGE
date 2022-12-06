@@ -60,9 +60,9 @@ include ROOT . "/includes/cnx.inc.php";
     <?php 
         if ($_SESSION['niveau'] == 1) {
             $SIREN = $_SESSION['SIREN'];
-            include ("/pages/treasury_customer.php");
+            include ("treasury_customer.php");
         } else {
-            include ("/pages/treasury_PO.php");
+            include ("treasury_PO.php");
         }
 
     ?>
