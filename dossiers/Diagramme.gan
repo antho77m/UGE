@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?><project name="UGEFinance" company="" webLink="http://" view-date="2022-09-12" view-index="0" gantt-divider-location="290" resource-divider-location="300" version="3.2.3247" locale="fr_FR">
     <description/>
     <view zooming-state="default:7" id="gantt-chart">
-        <field id="tpd3" name="Nom" width="165" order="0"/>
-        <field id="tpd4" name="Date de début" width="62" order="1"/>
-        <field id="tpd5" name="Date de fin" width="62" order="2"/>
+        <field id="tpd3" name="Nom" width="156" order="0"/>
+        <field id="tpd4" name="Date de début" width="59" order="1"/>
+        <field id="tpd5" name="Date de fin" width="59" order="2"/>
         <option id="filter.completedTasks" value="false"/>
         <option id="color.recent">
             <![CDATA[#999999 #cccccc #cc00cc #f4f4f4 #ccffff #99ffff #33ffff #00ccff #9900ff #00ffcc]]>
         </option>
     </view>
     <view id="resource-table">
-        <field id="0" name="Nom" width="199" order="0"/>
-        <field id="1" name="Rôle par défaut" width="82" order="1"/>
+        <field id="0" name="Nom" width="206" order="0"/>
+        <field id="1" name="Rôle par défaut" width="90" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -46,9 +46,12 @@
             <depend id="8" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="1" name="Création BDD" color="#99ffff" meeting="false" start="2022-10-10" duration="7" complete="0" thirdDate="2022-10-03" thirdDate-constraint="0" expand="true">
-            <depend id="2" type="2" difference="0" hardness="Strong"/>
+            <depend id="21" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="8" name="Importation jeux de données" color="#99ffff" meeting="false" start="2022-10-10" duration="7" complete="0" thirdDate="2022-10-10" thirdDate-constraint="0" expand="true"/>
+        <task id="21" name="Fin première phase" color="#8cb6ce" meeting="true" start="2022-10-17" duration="0" complete="0" thirdDate="2022-10-17" thirdDate-constraint="0" expand="true">
+            <depend id="2" type="2" difference="0" hardness="Strong"/>
+        </task>
         <task id="2" name="Analyse Développement PHP" color="#33ffff" meeting="false" start="2022-10-17" duration="7" complete="0" thirdDate="2022-10-03" thirdDate-constraint="0" expand="true">
             <depend id="3" type="2" difference="0" hardness="Strong"/>
             <depend id="4" type="2" difference="0" hardness="Strong"/>
@@ -72,28 +75,36 @@
             <depend id="16" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="13" name="Version Finale: page Trésorerie" color="#9900ff" meeting="false" start="2022-11-07" duration="21" complete="0" thirdDate="2022-10-27" thirdDate-constraint="0" expand="true">
-            <depend id="17" type="2" difference="0" hardness="Strong"/>
+            <depend id="22" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="14" name="Version Finale: page Remises" color="#00cccc" meeting="false" start="2022-11-07" duration="21" complete="0" thirdDate="2022-11-07" thirdDate-constraint="0" expand="true">
-            <depend id="17" type="2" difference="0" hardness="Strong"/>
+            <depend id="22" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="15" name="Version Finale: page Impayés" color="#00cccc" meeting="false" start="2022-11-07" duration="21" complete="0" thirdDate="2022-11-07" thirdDate-constraint="0" expand="true">
-            <depend id="17" type="2" difference="0" hardness="Strong"/>
+            <depend id="22" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="20" name="Version Finale: page Graphiques" color="#00cccc" meeting="false" start="2022-11-07" duration="21" complete="0" thirdDate="2022-11-07" thirdDate-constraint="0" expand="true"/>
+        <task id="20" name="Version Finale: page Graphiques" color="#00cccc" meeting="false" start="2022-11-07" duration="21" complete="0" thirdDate="2022-11-07" thirdDate-constraint="0" expand="true">
+            <depend id="22" type="2" difference="0" hardness="Strong"/>
+        </task>
         <task id="16" name="Version Finale: page Admins" color="#3333ff" meeting="false" start="2022-11-07" duration="21" complete="0" thirdDate="2022-11-07" thirdDate-constraint="0" expand="true">
-            <depend id="17" type="2" difference="0" hardness="Strong"/>
+            <depend id="22" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="9" name="Maquettage site web (Figma)" color="#0099cc" meeting="false" start="2022-10-03" duration="28" complete="0" thirdDate="2022-10-08" thirdDate-constraint="0" expand="true">
             <depend id="12" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="12" name="Mise en place HTML/CSS" color="#006699" meeting="false" start="2022-10-31" duration="28" complete="0" thirdDate="2022-10-24" thirdDate-constraint="0" expand="true">
+            <depend id="22" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="22" name="Fin deuxième phase" color="#8cb6ce" meeting="true" start="2022-11-28" duration="0" complete="0" thirdDate="2022-11-28" thirdDate-constraint="0" expand="true">
             <depend id="17" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="17" name="Assemblage HTML/CSS et PHP" color="#cccccc" meeting="false" start="2022-11-28" duration="7" complete="0" thirdDate="2022-11-11" thirdDate-constraint="0" expand="true">
             <depend id="18" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="18" name="Phase de tests" color="#999999" meeting="false" start="2022-12-05" duration="7" complete="0" thirdDate="2022-12-05" thirdDate-constraint="0" expand="true"/>
+        <task id="18" name="Phase de tests" color="#999999" meeting="false" start="2022-12-05" duration="7" complete="0" thirdDate="2022-12-05" thirdDate-constraint="0" expand="true">
+            <depend id="23" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="23" name="Fin du projet" color="#8cb6ce" meeting="true" start="2022-12-12" duration="0" complete="0" thirdDate="2022-12-12" thirdDate-constraint="0" expand="true"/>
     </tasks>
     <resources>
         <resource id="8" name="Anthonin" function="SoftwareDevelopment:2" contacts="" phone=""/>
