@@ -149,11 +149,9 @@ include ROOT . "/includes/cnx.inc.php";
             <div class="radio__container">
                 <p class="options_text"> Ou une option </p>
                 <div class="radio__graphics">
-                    <label for="1m">Sur 1 mois glissant</label>
-                    <input type="radio" id="1mois" name="mg" value="1">
                     <label for="4m">Sur 4 mois glissants</label>
                     <input type="radio" id="4mois" name="mg" value="4">
-                    <label for="12m">Sur 12mois glissants</label>
+                    <label for="12m">Sur 12 mois glissants</label>
                     <input type="radio" id="12mois" name="mg" value="12">
 
                 </div>
@@ -188,10 +186,7 @@ include ROOT . "/includes/cnx.inc.php";
 
         if (isset($_POST['graphique']) && (isset($_POST['mg']) || (isset($_POST['dd']) && isset($_POST['df'])))) {
             if (isset($_POST['mg'])) { // une des trois options pour mois glissants a été choisis
-                if ($_POST['mg'] == 1) {
-                    $dd = date('Y-m-d', strtotime('-1 month')); // date début
-                    $df = date('Y-m-d'); // date fin
-                } else if ($_POST['mg'] == 4) {
+                if ($_POST['mg'] == 4) {
                     $dd = date('Y-m-d', strtotime('-4 month'));
                     $df = date('Y-m-d');
                 } else {
@@ -205,7 +200,7 @@ include ROOT . "/includes/cnx.inc.php";
             $GRAPHIQUE = $_POST['graphique']; // lr pour linéaire, hm pour histogramme
             if ($GRAPHIQUE == "cl") {
                 // récupère la somme des motifs des impayés entre deux dates  
-                $motifs = $cnx->prepare("SELECT libelle, count(libelle) AS nb_motifs FROM Commercant NATURAL JOIN percevoir NATURAL JOIN Transaction NATURAL JOIN Impaye JOIN Motifs_Impaye ON Impaye.code_motif = Motifs_Impaye.code WHERE SIREN = :siren AND date_vente BETWEEN :dd AND :df GROUP BY libelle");
+                $motifs = $cnx->prepare("SELECT libelle, count(libelle) AS nb_motifs FROM Commercant NATURAL JOIN Transaction NATURAL JOIN Impaye JOIN Motifs_Impaye ON Impaye.code_motif = Motifs_Impaye.code WHERE SIREN = :siren AND date_vente BETWEEN :dd AND :df GROUP BY libelle");
                 $motifs->bindParam(':dd', $dd);
                 $motifs->bindParam(':df', $df);
                 $motifs->bindParam(':siren', $SIREN);
@@ -221,7 +216,7 @@ include ROOT . "/includes/cnx.inc.php";
                 include("graphics/circular.php");
             } else {
                 // récupère la somme des montants et la date de vente des chiffre d'affaires entre deux dates
-                $chiffre_affaires = $cnx->prepare("SELECT SUM(montant) AS montant, date_vente FROM Commercant NATURAL JOIN percevoir NATURAL JOIN Transaction WHERE SIREN = :siren AND date_vente BETWEEN :dd AND :df GROUP BY date_vente ORDER BY date_vente");
+                $chiffre_affaires = $cnx->prepare("SELECT SUM(montant) AS montant, date_vente FROM Commercant NATURAL JOIN Transaction WHERE SIREN = :siren AND date_vente BETWEEN :dd AND :df GROUP BY date_vente ORDER BY date_vente");
                 $chiffre_affaires->bindParam(':dd', $dd);
                 $chiffre_affaires->bindParam(':df', $df);
                 $chiffre_affaires->bindParam(':siren', $SIREN);
@@ -238,7 +233,7 @@ include ROOT . "/includes/cnx.inc.php";
                 }
 
                 // récupère la somme des montants et la date de vente des impayés entre deux dates
-                $impayes = $cnx->prepare("SELECT SUM(montant) AS montant, date_vente FROM Commercant NATURAL JOIN percevoir NATURAL JOIN Transaction NATURAL JOIN Impaye WHERE SIREN = :siren AND date_vente BETWEEN :dd AND :df GROUP BY date_vente ORDER BY date_vente");
+                $impayes = $cnx->prepare("SELECT SUM(montant) AS montant, date_vente FROM Commercant NATURAL JOIN Transaction NATURAL JOIN Impaye WHERE SIREN = :siren AND date_vente BETWEEN :dd AND :df GROUP BY date_vente ORDER BY date_vente");
                 $impayes->bindParam(':dd', $dd);
                 $impayes->bindParam(':df', $df);
                 $impayes->bindParam(':siren', $SIREN);
