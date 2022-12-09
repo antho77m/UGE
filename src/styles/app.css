@@ -592,7 +592,7 @@ input[type="date"] {
 }
 
 
-@media (min-width: 1500px) {
+@media (min-width: 1300px) {
 
     .privileges {
         height: 22px;
