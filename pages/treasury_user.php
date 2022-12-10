@@ -1,6 +1,5 @@
  
 <?php
-    require_once("../includes/class/commercant.php");
     include("../includes/cnx.inc.php");
 ?>
 <!DOCTYPE html>
@@ -24,7 +23,6 @@
 
         global $cnx;
 
-        //require_once("commercant.php");
         $sql = $cnx->prepare("SELECT SIREN, Raison_sociale, count(num_autorisation) AS nbT, 
         COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='+' AND date_traitement <= '$date'), 0) - COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='-' AND date_traitement <= '$date'), 0) AS montant_total
         FROM Commercant AS R NATURAL JOIN Transaction
@@ -48,7 +46,6 @@
     {
         global $cnx;
 
-        //require_once("commercant.php");
         $sql = $cnx->prepare("SELECT SIREN, Raison_sociale, count(num_autorisation) AS nbT, 
         COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='+'), 0) - COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='-'), 0) AS montant_total
         FROM Commercant AS R NATURAL JOIN Transaction
@@ -82,10 +79,12 @@
 <?php
 
     if(isset($_POST['submit'])){
-
         if(isset($_POST['date'])) {
             $date = $_POST['date'];
             array_push($array_export,show_treasury_client_date($SIREN, $date));
+            echo "<button class=\"export\" onclick=\"window.open(\'/pages/exports/export_treasury.php?format=CSV&date=$date\', \'_blank\');\">CSV</button>
+            <button class=\"export\" onclick=\"window.open(\'/pages/exports/export_treasury.php&format=XLS?date=$date\', \'_blank\');\">XLS</button>
+            <button class=\"export\" onclick=\"window.open(\'/pages/exports/export_treasury.php&format=PDF?date=$date\', \'_blank\');\">PDF</button>";
         }
     }
 

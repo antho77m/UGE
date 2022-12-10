@@ -65,7 +65,7 @@ include ROOT . "/includes/cnx.inc.php";
         } else {
             include ("treasury_PO.php");
         }
-
+        $_SESSION['tab_treasury'] = $array_export;
     ?>
     
     <div class="navbar mobile-nav">

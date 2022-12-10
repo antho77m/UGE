@@ -1,16 +1,23 @@
 
 <?php
-    require_once("../includes/class/commercant.php");
     include("../includes/cnx.inc.php");
 ?> 
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trésorerie</title>
+    <meta property="og:description" content="Remises">
+    <link rel="stylesheet" href="/src/styles/app.css?<?= sha1(rand()) ?>">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="shortcut icon" type="image/svg+xml" href="/src/img/Logo UGE.svg" id="js-favicon" />
 </head>
 
 <body>
@@ -37,6 +44,7 @@
                 echo '<p>SIREN : ' .$ligne->SIREN. ' Raison sociale : '.$ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : red;">' . $ligne->montant_total . '</span> Date : ' . $date . '</p><br>';
             }
         }
+        return $result;
     }
 
     function show_treasury_client_date($SIREN, $date) { // Show the solde of a client has a date
@@ -79,7 +87,6 @@
             }
         }
         return $result;
-        
     }
 
 
@@ -121,7 +128,6 @@
             <div class="form_group">
                 <label for="">Afficher les soldes des clients :</label>
                 <select id="trie_type" name="trie_type">
-                    <option value="">Trier par</option>
                     <option value="Aucun">Aucun</option>
                     <option value="SIREN">SIREN</option>
                     <option value="Montant">Montant</option>
@@ -144,9 +150,10 @@
         </form>
 <?php
     if(isset($_POST['submit'])) {
+        $date = date('Y-m-d');
         if (!empty($_POST['date'])) {
-
-            if (!empty($_POST['date']) && !empty($_POST['SIREN'])) {
+            $date = $_POST['date'];
+            if (!empty($_POST['SIREN'])) {
                 echo '<h3>Solde d\'un client à une date donné</h3> <br>';
                 $date = $_POST['date'];
                 $SIREN = $_POST['SIREN'];
@@ -159,49 +166,45 @@
                 array_push($array_export,show_treasury_all_client_date($date));
                 echo '<br>';
             }
-        }
-        if (!empty($_POST['SIREN'] && empty($_POST['date']))) {
+        } else if (!empty($_POST['SIREN'])) {
             echo '<h3>Solde d\'un client</h3> <br>';
             $SIREN = $_POST['SIREN'];
             array_push($array_export,show_treasury_client($SIREN));
             echo '<br>';
-        }
-        if (!empty($_POST['trie_type']) != '') {
-
+        } else if (!empty($_POST['trie_type']) != '') {
             if ($_POST['trie_type'] == 'SIREN') {
-                if (isset($_POST['sens']) && $_POST['sens'] == 'croissant') {
-                    echo '<h3>Trier par SIREN croissant</h3><br>';
-                    array_push($array_export, show_treasury_all_client("ORDER BY SIREN ASC"));
-                    echo '<br>';
-                } elseif (isset($_POST['sens']) && $_POST['sens'] == 'decroissant') {
-                    echo '<h3>Trier par SIREN décroissant</h3><br>';
-                    array_push($array_export, show_treasury_all_client("ORDER BY SIREN DESC"));
-                    echo '<br>';
+                if (isset($_POST['sens'])) {
+                    if ($_POST['sens'] == 'croissant') {
+                        echo '<h3>Trier par SIREN croissant</h3><br>';
+                        array_push($array_export, show_treasury_all_client("ORDER BY SIREN ASC"));
+                        echo '<br>';
+                    } elseif ($_POST['sens'] == 'decroissant') {
+                        echo '<h3>Trier par SIREN décroissant</h3><br>';
+                        array_push($array_export, show_treasury_all_client("ORDER BY SIREN DESC"));
+                        echo '<br>';
+                    }    
                 } else {
                     echo '<h3>Solde clients </h3><br>';
                     array_push($array_export, show_treasury_all_client(''));
                     echo '<br>';
                 }
-            }
-
-
-            if ($_POST['trie_type'] == 'Montant') {
-
-                if (isset($_POST['sens']) && $_POST['sens'] == 'croissant') {
-                    echo '<h3>Trier par Montant croissant</h3><br>';
-                    array_push($array_export, show_treasury_all_client("ORDER BY montant_total ASC"));
-                    echo '<br>';
-                } elseif (isset($_POST['sens']) && $_POST['sens'] == 'decroissant') {
-                    echo '<h3>Trier par Montant décroissant</h3><br>';
-                    array_push($array_export, show_treasury_all_client("ORDER BY montant_total DESC"));
-                    echo '<br>';
+            } else if ($_POST['trie_type'] == 'Montant') {
+                if (isset($_POST['sens'])) {
+                    if ($_POST['sens'] == 'croissant') {
+                        echo '<h3>Trier par Montant croissant</h3><br>';
+                        array_push($array_export, show_treasury_all_client("ORDER BY montant_total ASC"));
+                        echo '<br>';
+                    } elseif ($_POST['sens'] == 'decroissant') {
+                        echo '<h3>Trier par Montant décroissant</h3><br>';
+                        array_push($array_export, show_treasury_all_client("ORDER BY montant_total DESC"));
+                        echo '<br>';
+                    }
                 } else {
                     echo '<h3>Trier par Montant </h3><br>';
                     array_push($array_export, show_treasury_all_client(''));
                     echo '<br>';
                 }
             }
-
             elseif($_POST['trie_type'] == 'Aucun') {
                 echo '<h3>Solde des clients</h3> <br>';
                 array_push($array_export,show_treasury_all_client(''));
@@ -209,6 +212,14 @@
             }
             echo '<br>';
         }
+        echo '
+        <p style="margin-left: 18px;">Exporter les résultats en :</p>
+        <div class="export_wrap">
+        <button class="export" onclick="window.open(\'/pages/exports/export_treasury.php?format=CSV&date='.$date.'\', \'_blank\');">CSV</button>
+        <button class="export" onclick="window.open(\'/pages/exports/export_treasury.php?format=XLS&date='.$date.'\', \'_blank\');">XLS</button>
+        <button class="export" onclick="window.open(\'/pages/exports/export_treasury.php?format=PDF&date='.$date.'\', \'_blank\');">PDF</button>
+        </div>
+        ';
     }
 ?>
 
