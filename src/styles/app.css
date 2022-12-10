@@ -586,6 +586,13 @@ input[type="date"] {
 .radio__graphics{
     margin-left: 40px;
 }
+.radio__graphics label{
+    width: 120%;
+}
+
+.options_text{
+    margin-bottom: 30px;
+}
 
 #container{
     height: 30%;
@@ -673,17 +680,34 @@ input[type="date"] {
         margin-left: 20%;
     }
 
-    .graphics__form .form__group .input__container {
+
+    form.graphics__form .form__group .input__container {
         width: 50%;
         left: 0px;
     }
 
+    form.graphics__form{
+        width: 50%;
+    }
+
+    
+
     .radio__container{
         position: absolute;
-        bottom:100px;
+        bottom:38%;
         width:auto;
-        margin-left: 400px;
+        margin-left: 50%;
         margin-bottom: 40px;
+    }
+
+    input[type="radio"][id="12mois"],input[type="radio"][id="4mois"] {
+        width: 0.6vw;
+        height: 0.6vw;
+        margin-top: 4.5%;
+    }
+
+    #select_graphics,#button_graphics{
+        margin-right: 8%;
     }
 
     #container{
@@ -702,5 +726,13 @@ input[type="date"] {
         margin-bottom:48px;
     }
 
+    .radio__container label, .form__group label, .radio__container p, .form__group p{
+        font-size: 1vw;
+        vertical-align: middle;
+    }
+
+    .options_text{
+        margin-bottom: 78px;
+    }
 
 }

@@ -153,7 +153,7 @@ include ROOT . "/includes/cnx.inc.php";
                 </div>
             </div>
 
-            <div class="select__group">
+            <div class="select__group" id="select_graphics" style="margin-top:30px;">
                 <label for="graphiques">Type de graphique:</label>
                 <div class="select__container">
                     <select name="graphique" id="graphique" required>
@@ -164,7 +164,8 @@ include ROOT . "/includes/cnx.inc.php";
                 </div>
             </div>
 
-            <input type="submit" name="submit" value="Générer un graphique" class="btn" style="margin-top:30px;" />
+
+            <input type="submit" name="submit" value="Générer un graphique" class="btn" style="margin-top:30px;" id="button_graphics" />
         </form>
         <?php // fonctions   
         function dateDiffMois($date1, $date2)
