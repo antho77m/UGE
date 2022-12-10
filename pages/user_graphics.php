@@ -185,7 +185,7 @@ include ROOT . "/includes/cnx.inc.php";
         $SIREN = $_SESSION['SIREN'];
 
         if (isset($_POST['graphique']) && (isset($_POST['mg']) || (isset($_POST['dd']) && isset($_POST['df'])))) {
-            if (isset($_POST['mg'])) { // une des trois options pour mois glissants a été choisis
+            if (isset($_POST['mg'])) { // une des deux options pour mois glissants a été choisis
                 if ($_POST['mg'] == 4) {
                     $dd = date('Y-m-d', strtotime('-4 month'));
                     $df = date('Y-m-d');
@@ -193,7 +193,7 @@ include ROOT . "/includes/cnx.inc.php";
                     $dd = date('Y-m-d', strtotime('-12 month'));
                     $df = date('Y-m-d');
                 }
-            } else if (isset($_POST['dd']) && isset($_POST['df'])) { // si aucune option de mois glissants choisis, on prend les deux champs de dates
+            } else if (isset($_POST['dd']) && isset($_POST['df'])) { // si aucune option de mois glissants choisi/existe, on prend les deux champs de dates
                 $dd = $_POST['dd'];
                 $df = $_POST['df'];
             }
@@ -209,8 +209,9 @@ include ROOT . "/includes/cnx.inc.php";
                     exit("Erreur lors de la sélection");
                 }
                 $motifs = $motifs->fetchAll();
+                // liste contenant le nombre d'itérations de chaque motif d'impayé
                 $array_motifs = array("fraude a la carte" => 0, "compte a decouvert" => 0, "compte cloture" => 0, "compte bloque" => 0, "provision insuffisante" => 0, "operation contestee par le debiteur" => 0, "titulaire decede" => 0, "raison non communiquee, contactez la banque du client" => 0);
-                foreach ($motifs as $ligne) { // ajoute le nombre de motifs dans array_motifs
+                foreach ($motifs as $ligne) { // ajoute le nombre d'itérations de chaque motif d'impayé dans array_motifs
                     $array_motifs[$ligne['libelle']] = $ligne['nb_motifs'];
                 }
                 include("graphics/circular_unpaids_user.php");
@@ -245,48 +246,49 @@ include ROOT . "/includes/cnx.inc.php";
                 $array_impayes = array();
                 for ($i = 0; $i < count($array_dates); $i++) { // ajoute les montants d'impayés dans array_impayes par rapport aux dates d'actions et met 0 si aucun impayés n'a eu lieu à une date
                     $inserted = 0;
-                    foreach ($impayes as $ligne) {
-                        if ($ligne['date_vente'] == $array_dates[$i]) {
+                    foreach ($impayes as $ligne) { // parcours les impayés ligne par ligne
+                        if ($ligne['date_vente'] == $array_dates[$i]) { // s'il y a un impayé à une date, on insère l'impayé
                             array_push($array_impayes, (float)$ligne['montant']);
                             $inserted = 1;
                         }
                     }
-                    if ($inserted == 0) {
+                    if ($inserted == 0) { // s'il n'y a pas d'impayé à une date, on insère 0
                         array_push($array_impayes, (float)0);
                     }
                 }
 
+                // liste contenant les mois d'une année avec pour identifiant les mois en numérique
                 $liste_mois = array("01" => "Jan", "02" => "Fév", "03" => "Mars", "04" => "Avr", "05" => "Mai", "06" => "Juin", "07" => "Jui", "08" => "Août", "09" => "Sep", "10" => "Oct", "11" => "Nov", "12" => "Déc");
                 $en_mois = 0;
-                if (count($array_dates) > 2 && dateDiffMois($array_dates[0], $array_dates[count($array_dates) - 1]) > 1) {
+                if (count($array_dates) > 2 && dateDiffMois($array_dates[0], $array_dates[count($array_dates) - 1]) > 1) { // vérifie si il y a plus de deux dates et si la différence entre la première et dernière date est supérieur à un mois
                     $en_mois = 1;
                 }
 
-                if ($en_mois == 1) { // si la première et la dernière date de array_dates sont supérieurs à 1 mois, on transforme les array par dates/jours en array par mois et additionne les montants d'un mois
+                if ($en_mois == 1) { // si la première et la dernière date de array_dates sont supérieurs à 1 mois, on transforme les array par dates/jours en array par mois et additionne les montants par mois
                     $array_tmp1 = array();
                     $array_tmp2 = array();
                     $array_tmp3 = array();
-                    for ($i = 0; $i < count($array_dates); $i++) {
-                        if ($i == 0) {
-                            $mois_actuel = date('Y-m', strtotime($array_dates[$i]));
-                            $montant_chiffre_affaires = $array_chiffre_affaires[$i];
-                            $montant_impayes = $array_impayes[$i];
-                        } else if (date('Y-m', strtotime($array_dates[$i])) != $mois_actuel) {
-                            array_push($array_tmp1, $montant_chiffre_affaires);
-                            array_push($array_tmp2, $montant_impayes);
-                            array_push($array_tmp3, $liste_mois[date('m', strtotime($mois_actuel))] . " " . date('Y', strtotime($mois_actuel)));
+                    for ($i = 0; $i < count($array_dates); $i++) { // parcours la liste array_dates
+                        if ($i == 0) { // si on est au premier élément de array_dates
+                            $mois_actuel = date('Y-m', strtotime($array_dates[$i])); // récupère le premier mois de array_dates
+                            $montant_chiffre_affaires = $array_chiffre_affaires[$i]; // met dans la variable montant_chiffre_affaires la première valeur de array_chiffre_affaires
+                            $montant_impayes = $array_impayes[$i]; // met dans la variable montant_impayes la première valeur de array_impayes
+                        } else if (date('Y-m', strtotime($array_dates[$i])) != $mois_actuel) { // si la date à l'indice i de array_dates est différent du mois actuel dans mois_actuel
+                            array_push($array_tmp1, $montant_chiffre_affaires); // ajoute dans array_tmp1 la valeur de montant_chiffre_affaires
+                            array_push($array_tmp2, $montant_impayes); // ajoute dans array_tmp2 la valeur de montant_impayes
+                            array_push($array_tmp3, $liste_mois[date('m', strtotime($mois_actuel))] . " " . date('Y', strtotime($mois_actuel))); // ajoute dans array_tmp3 le mois non numérique en sélectionnant dans liste_mois le mois via la variable mois_actuel
 
-                            $mois_actuel = date('Y-m', strtotime($array_dates[$i]));
-                            $montant_chiffre_affaires = $array_chiffre_affaires[$i];
-                            $montant_impayes = $array_impayes[$i];
-                        } else {
-                            $montant_chiffre_affaires += $array_chiffre_affaires[$i];
+                            $mois_actuel = date('Y-m', strtotime($array_dates[$i])); // met dans mois_actuel le nouveau mois sélectionné
+                            $montant_chiffre_affaires = $array_chiffre_affaires[$i]; // met dans la variable montant_chiffre_affaires la valeur à l'indice i de array_chiffre_affaires
+                            $montant_impayes = $array_impayes[$i]; // met dans la variable montant_impayes la première valeur de array_impayes
+                        } else { // si i != 0 et que le mois sélectionné n'est pas différent de mois_actuel
+                            $montant_chiffre_affaires += $array_chiffre_affaires[$i]; 
                             $montant_impayes += $array_impayes[$i];
                         }
                     }
-                    $array_chiffre_affaires = $array_tmp1;
-                    $array_impayes = $array_tmp2;
-                    $array_dates = $array_tmp3;
+                    $array_chiffre_affaires = $array_tmp1; // remplace array_chiffre_affaires par array_tmp1 contenant la liste des chiffre d'affaires par mois
+                    $array_impayes = $array_tmp2; // remplace array_impayes par array_tmp1 contenant la liste des impayés par mois
+                    $array_dates = $array_tmp3; // remplace array_dates par array_tmp3 contenant la liste des mois où il y a eu des transactions
                 }
 
                 if ($GRAPHIQUE == "lr") { // si la variable $graphique est égale à lr (linéaire), on include un graphique linéaire, sinon on include un graphique histogramme
