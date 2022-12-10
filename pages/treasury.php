@@ -33,20 +33,19 @@ include ROOT . "/includes/cnx.inc.php";
 
     <?php include ROOT . "/includes/components/nav.php"; ?>
 
-    <section class="graphics_section">
+    <section class="graphics_section pcnav_treasury">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <p style="font-size: 24px;">Trésorerie</p>
             <div class="logos pc-nav">
-                <div class="icon_container" onclick="window.location.href='/pages/user_treasury_graphics.php'">
+                <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
+                    <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
+                </div>
+
+                <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
                     <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
                 </div>
 
                 <div class="icon_container" onclick="window.location.href='/pages/search_unpaid.php'">
                     <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
-                </div>
-
-                <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
-                    <img src="<?= $basepath ?>/src/img/treasury.svg" alt="Treasury icon">
                 </div>
 
                 <div class="icon_container" onclick="window.location.href='/pages/search_remittance.php'">
@@ -56,20 +55,24 @@ include ROOT . "/includes/cnx.inc.php";
         </div>
     </section>
 
-    <?php 
-        $array_export = array();
-        if ($_SESSION['niveau'] == 1) {
-            $SIREN = $_SESSION['SIREN'];
-            include ("treasury_user.php");
-        } else if ($_SESSION['niveau'] == 3) {
-            include ("treasury_PO.php");
-        } else {
-            echo "redirection to page connexion!!!";
-        }
-        $_SESSION['tab_treasury'] = $array_export;
+    <?php
+    $array_export = array();
+    if ($_SESSION['niveau'] == 1) {
+        $SIREN = $_SESSION['SIREN'];
+        include("treasury_user.php");
+    } else if ($_SESSION['niveau'] == 3) {
+        include("treasury_PO.php");
+    } else {
+        echo "redirection to page connexion!!!";
+    }
+    $_SESSION['tab_treasury'] = $array_export;
     ?>
-    
+
     <div class="navbar mobile-nav">
+        <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
+            <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
+        </div>
+
         <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
             <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
         </div>
@@ -78,13 +81,6 @@ include ROOT . "/includes/cnx.inc.php";
             <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
         </div>
 
-        <div class="icon_container" onclick="window.location.href='/pages/home.php'">
-            <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
-        </div>
-
-        <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
-            <img src="<?= $basepath ?>/src/img/treasury.svg" alt="Treasury icon">
-        </div>
 
         <div class="icon_container" onclick="window.location.href='/pages/search_remittance.php'">
             <img src="<?= $basepath ?>/src/img/remittanceIcon.svg" alt="Remittance icon">

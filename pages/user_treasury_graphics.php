@@ -1,13 +1,4 @@
-<!DOCTYPE HTML>
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Graphique</title>
-
-    <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
 
 <style type="text/css">
     .highcharts-figure,
@@ -53,32 +44,33 @@
         background: #f1f7ff;
     }
 </style>
-</head>
 
-<body>
-
-<?php 
-    $array_date = array();
-    $array_montant = array();
+<?php
+$includegraph = false;
+$array_date = array();
+$array_montant = array();
+array_push($array_date, $date);
+for ($i = 0; $i < 14; $i++) {
+    $date = date('Y-m-d', strtotime('-1 day', strtotime($date)));
     array_push($array_date, $date);
-    for($i = 0; $i < 14 ; $i++){
-        $date = date('Y-m-d', strtotime('-1 day', strtotime($date)));
-        array_push($array_date, $date);
-    }
-    $array_date = array_reverse($array_date);
-    foreach($array_date as $date_array){
-        $sql = $cnx->prepare("SELECT 
+}
+$array_date = array_reverse($array_date);
+foreach ($array_date as $date_array) {
+    $sql = $cnx->prepare("SELECT 
         COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='+' AND date_traitement <= '$date_array'), 0) - COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='-' AND date_traitement <= '$date_array'), 0) AS montant_total
         FROM Commercant AS R NATURAL JOIN Transaction
         WHERE date_traitement <= '$date_array' AND SIREN LIKE '%$SIREN'
         GROUP BY SIREN");
-        $sql->execute();
-        $result = $sql->fetch(PDO::FETCH_OBJ);
+    $sql->execute();
+    $result = $sql->fetch(PDO::FETCH_OBJ);
+    if (!empty($result)) {
         $row = $result->montant_total;
         array_push($array_montant, (int) $row);
+        $includegraph = true;
     }
-    include("graphics/treasury_linear.php");
-?>
+}
 
-</body>
-</html>
+if ($includegraph) {
+    include("graphics/treasury_linear.php");
+}
+?>

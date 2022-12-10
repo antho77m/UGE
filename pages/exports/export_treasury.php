@@ -8,7 +8,7 @@
         if ($format == 'CSV') 
         {
             header("Content-Type: application/csv");
-            header("Content-Disposition: attachment; filename=IMPAYES ".date('d/m/Y').".csv;");
+            header("Content-Disposition: attachment; filename=TRESORERIE ".date('d/m/Y').".csv;");
             $file = fopen('php://output', 'w');
             fputcsv($file, ["SIREN","Raison sociale","Nombre de transactions","Montant total"], ';');
             foreach($tab AS $solde) {
@@ -31,7 +31,7 @@
             $excel .= "Solde de compte à la date: $date\n";
             $excel .= "EXTRAIT DU ".date('d/m/Y');
             header("Content-type: application/application/vnd.ms-excel");
-            header("Content-disposition: attachment; filename=IMPAYES ".date('d/m/Y').".xls");
+            header("Content-disposition: attachment; filename=TRESORERIE ".date('d/m/Y').".xls");
             print $excel;
 
         }

@@ -111,20 +111,7 @@ body {
         height: 45px;
     }
 
-    /* .btn {
-        position: relative;
-        top: 100%;
-        width: 75%;
-    } */
-
     .incorrect_pass {
         text-align: center;
     }
-
-    .connection {
-        /* position: relative; */
-
-    }
-
-
 }

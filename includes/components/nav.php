@@ -25,7 +25,9 @@ $permissions = [
 <?php endif; ?>
 
 <nav>
-    <?php include ROOT . "/includes/components/logo.php" ?>
+    <a href="/pages/home.php">
+        <?php include ROOT . "/includes/components/logo.php" ?>
+    </a>
     <p class="privileges__title"><?= $permissions[$_SESSION['niveau']]['titre'] ?></p>
 
     <div class="user">

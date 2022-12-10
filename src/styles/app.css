@@ -46,6 +46,10 @@ label {
     font-weight: 500;
 }
 
+.bold {
+    font-weight: 700;
+}
+
 .important {
     font-weight: 700;
     color: var(--red);
@@ -454,12 +458,17 @@ input[type="date"] {
 }
 
 .remittance_sect,
-.unpaid_section, .graphics_section {
+.unpaid_section,
+.graphics_section {
     /* border: 1px solid #000; */
     padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 30px;
+}
+
+.pcnav_treasury {
+    display: none;
 }
 
 .export_wrap {
@@ -490,7 +499,8 @@ input[type="date"] {
     font-weight: bold;
 }
 
-.remittance_results_wrap ,.unpaid_results_wrap{
+.remittance_results_wrap,
+.unpaid_results_wrap {
     /* border: 1px solid #000; */
     margin-bottom: 10px;
 }
@@ -552,10 +562,10 @@ input[type="date"] {
     gap: 80px;
 }
 
-.radio__graphics{
-    display:grid;
+.radio__graphics {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap:15px;
+    gap: 15px;
 }
 
 .select__group {
@@ -563,11 +573,11 @@ input[type="date"] {
     flex-direction: row;
     margin-top: 15px;
     margin-right: 15px;
-    
+
 }
 
-.select__group label{
-    margin-right:40px ;
+.select__group label {
+    margin-right: 40px;
 }
 
 
@@ -575,25 +585,42 @@ input[type="date"] {
     display: none;
 }
 
-.options_text{
-    margin:20px 0 20px 0;
+.options_text {
+    margin: 20px 0 20px 0;
 }
 
-.radio__container{
+.radio__container {
     width: 100%;
 }
 
-.radio__graphics{
+.radio__graphics {
     margin-left: 40px;
 }
 
-#container{
+#container {
     height: 30%;
+}
+
+.treasury_sect {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.treasury_sep {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 
 @media (min-width: 1300px) {
 
+    .pcnav_treasury {
+        display: flex;
+    }
+    
     .privileges {
         height: 22px;
         position: fixed;
@@ -640,36 +667,37 @@ input[type="date"] {
         display: none;
     }
 
-    .unpaid_results{
-        grid-template-columns: repeat(3,1fr);   
+    .unpaid_results {
+        grid-template-columns: repeat(3, 1fr);
     }
 
-    .client__form{
+    .client__form {
         display: flex;
         justify-content: center;
         align-items: center;
-        
+
     }
 
-    .graphics__form{
+    .graphics__form {
         position: absolute;
         left: 0px;
-        margin-top:155px;
+        margin-top: 155px;
         width: 60%;
     }
 
-    .form__group, .unpaid_results{
+    .form__group,
+    .unpaid_results {
         width: 80%;
     }
 
-    .unpaid_results_wrap{
-        
+    .unpaid_results_wrap {
+
         display: flex;
-        flex-direction: column ;
+        flex-direction: column;
         align-items: center;
     }
 
-    .unpaid_result{
+    .unpaid_result {
         margin-left: 20%;
     }
 
@@ -678,28 +706,26 @@ input[type="date"] {
         left: 0px;
     }
 
-    .radio__container{
+    .radio__container {
         position: absolute;
-        bottom:100px;
-        width:auto;
+        bottom: 100px;
+        width: auto;
         margin-left: 400px;
         margin-bottom: 40px;
     }
 
-    #container{
+    #container {
         height: 100%;
     }
 
-    .highcharts-figure{
+    .highcharts-figure {
         width: 50% !important;
         height: 50% !important;
-        position: absolute;
-        right: 20px;
         margin-top: 90px !important;
     }
 
-    .options_text{
-        margin-bottom:48px;
+    .options_text {
+        margin-bottom: 48px;
     }
 
 

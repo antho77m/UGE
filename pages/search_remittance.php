@@ -34,20 +34,16 @@ include ROOT . "/includes/cnx.inc.php";
     <?php include ROOT . "/includes/components/nav.php"; ?>
 
     <div class="navbar mobile-nav">
+        <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
+            <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
+        </div>
+
         <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
             <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
         </div>
 
         <div class="icon_container" onclick="window.location.href='/pages/search_unpaid.php'">
             <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
-        </div>
-
-        <div class="icon_container" onclick="window.location.href='/pages/home.php'">
-            <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
-        </div>
-
-        <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
-            <img src="<?= $basepath ?>/src/img/treasury.svg" alt="Treasury icon">
         </div>
 
         <div class="icon_container" onclick="window.location.href='/pages/search_remittance.php'">
@@ -59,16 +55,17 @@ include ROOT . "/includes/cnx.inc.php";
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <p style="font-size: 24px;">Consultation des remises</p>
             <div class="logos pc-nav">
+
+                <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
+                    <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
+                </div>
+
                 <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
                     <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
                 </div>
 
                 <div class="icon_container" onclick="window.location.href='/pages/search_unpaid.php'">
                     <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
-                </div>
-
-                <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
-                    <img src="<?= $basepath ?>/src/img/treasury.svg" alt="Treasury icon">
                 </div>
 
                 <div class="icon_container" onclick="window.location.href='/pages/search_remittance.php'">

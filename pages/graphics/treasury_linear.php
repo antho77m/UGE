@@ -12,11 +12,11 @@
             text: 'Evolution du solde de votre compte des 15 derniers jours'
         },
         xAxis: {
-            categories: <?php echo json_encode($array_date); ?>        
+            categories: <?php echo json_encode($array_date); ?>
         },
         yAxis: {
             title: {
-            text: 'Montant (€)'
+                text: 'Montant (€)'
             }
         },
         plotOptions: {
@@ -27,7 +27,7 @@
                 enableMouseTracking: true
             }
         },
-        series: [ {
+        series: [{
             name: 'Solde',
             data: <?php echo json_encode($array_montant); ?>
         }]

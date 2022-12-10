@@ -1,5 +1,5 @@
 <?php
-
+// TODO: redirect vers cette page quand clic sur graphs navbar
 session_start();
 if (isset($_SESSION['niveau'])) {
     if ($_SESSION['niveau'] != 1) {

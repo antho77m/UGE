@@ -83,20 +83,16 @@ include ROOT . "/includes/cnx.inc.php";
     <?php include ROOT . "/includes/components/nav.php"; ?>
 
     <div class="navbar mobile-nav">
+        <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
+            <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
+        </div>
+
         <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
             <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
         </div>
 
         <div class="icon_container" onclick="window.location.href='/pages/search_unpaid.php'">
             <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
-        </div>
-
-        <div class="icon_container" onclick="window.location.href='/pages/home.php'">
-            <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
-        </div>
-
-        <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
-            <img src="<?= $basepath ?>/src/img/treasury.svg" alt="Treasury icon">
         </div>
 
         <div class="icon_container" onclick="window.location.href='/pages/search_remittance.php'">
@@ -108,16 +104,16 @@ include ROOT . "/includes/cnx.inc.php";
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <p style="font-size: 24px;">Consultation des graphiques</p>
             <div class="logos pc-nav">
+                <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
+                    <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
+                </div>
+
                 <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
-                    <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
+                    <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Graphics icon">
                 </div>
 
                 <div class="icon_container" onclick="window.location.href='/pages/search_unpaid.php'">
                     <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
-                </div>
-
-                <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
-                    <img src="<?= $basepath ?>/src/img/treasury.svg" alt="Treasury icon">
                 </div>
 
                 <div class="icon_container" onclick="window.location.href='/pages/search_remittance.php'">
@@ -128,7 +124,7 @@ include ROOT . "/includes/cnx.inc.php";
 
         <form action="" method="POST" class="graphics__form">
             <div class="form__group">
-            <p style="margin-bottom:20px;"> Choisissez un intervalle </p>
+                <p style="margin-bottom:20px;"> Choisissez un intervalle </p>
                 <label for="date_debut">date de début:</label>
                 <div class="input__container">
                     <input type="date" id="dates" name="dd" value="2010-01-01">
@@ -277,7 +273,7 @@ include ROOT . "/includes/cnx.inc.php";
                             $montant_chiffre_affaires = $array_chiffre_affaires[$i]; // met dans la variable montant_chiffre_affaires la valeur à l'indice i de array_chiffre_affaires
                             $montant_impayes = $array_impayes[$i]; // met dans la variable montant_impayes la première valeur de array_impayes
                         } else { // si i != 0 et que le mois sélectionné n'est pas différent de mois_actuel
-                            $montant_chiffre_affaires += $array_chiffre_affaires[$i]; 
+                            $montant_chiffre_affaires += $array_chiffre_affaires[$i];
                             $montant_impayes += $array_impayes[$i];
                         }
                     }
