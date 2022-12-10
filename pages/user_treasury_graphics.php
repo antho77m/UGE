@@ -58,8 +58,6 @@
 <body>
 
 <?php 
-
-    $SIREN = '320367139';
     $array_date = array();
     $array_montant = array();
     $date_fin = date('Y-m-d');
