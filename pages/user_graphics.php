@@ -10,10 +10,6 @@ if (isset($_SESSION['niveau'])) {
 }
 include(dirname(__FILE__, 2) . "/router.php");
 
-// if (!isset($_SESSION['SIREN']) || !isset($_SESSION['niveau']) || $_SESSION['niveau'] != 1) {
-//     exit("Erreur 401");
-// }
-
 include ROOT . "/includes/cnx.inc.php";
 
 ?>
@@ -155,7 +151,7 @@ include ROOT . "/includes/cnx.inc.php";
                     <input type="radio" id="12mois" name="mg" value="12">
 
                 </div>
-        </div>
+            </div>
 
             <div class="select__group">
                 <label for="graphiques">Type de graphique:</label>
@@ -167,7 +163,6 @@ include ROOT . "/includes/cnx.inc.php";
                     </select>
                 </div>
             </div>
-
 
             <input type="submit" name="submit" value="Générer un graphique" class="btn" style="margin-top:30px;" />
         </form>
@@ -214,7 +209,7 @@ include ROOT . "/includes/cnx.inc.php";
                 foreach ($motifs as $ligne) { // ajoute le nombre d'itérations de chaque motif d'impayé dans array_motifs
                     $array_motifs[$ligne['libelle']] = $ligne['nb_motifs'];
                 }
-                include("graphics/circular_unpaids_user.php");
+                include("graphics/circular_graphics.php");
             } else {
                 // récupère la somme des montants et la date de vente des chiffre d'affaires entre deux dates
                 $chiffre_affaires = $cnx->prepare("SELECT SUM(montant) AS montant, date_vente FROM Commercant NATURAL JOIN Transaction WHERE SIREN = :siren AND date_vente BETWEEN :dd AND :df GROUP BY date_vente ORDER BY date_vente");
