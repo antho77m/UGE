@@ -7,7 +7,8 @@ function add_account($name, $siren, $password, $id)
     if (strlen($siren) != 9 || is_int($siren)) {
         echo "Le numéro de SIREN doit contenir 9 chiffres";
     } else {
-        require_once(dirname(__FILE__, 2) . '/cnx.inc.php');
+        
+        include ROOT . "/includes/cnx.inc.php";
 
         $req = $cnx->prepare("SELECT * FROM commercant WHERE siren = :siren");
         $req->bindParam(":siren", $siren);
@@ -61,35 +62,22 @@ function delete_account($name, $siren, $id)
     if (strlen($siren) != 9 || is_int($siren)) {
         echo "Le numéro de SIREN doit contenir 9 chiffres";
     } else {
-
-        require_once(dirname(__FILE__, 2) . '/cnx.inc.php');
+        include ROOT . "/includes/cnx.inc.php";
         $req = $cnx->prepare("SELECT * FROM commercant WHERE id = :id AND siren = :siren AND raison_sociale = :name");
         $req->bindParam(":id", $id);
         $req->bindParam(":siren", $siren);
         $req->bindParam(":name", $name);
-        $result = $req->execute();
+        $req->execute();
 
-        if (!$result) {
+        if ($req->rowCount() == 0) {
             echo "Le compte n'existe pas";
         } else {
             $cnx->exec("START TRANSACTION");
 
-            //recuperation des numéros d'autorisation (avant la suppression du lien)
-            $req_autorisation = $cnx->prepare("SELECT num_autorisation FROM percevoir NATURAL JOIN commercant WHERE id = :id AND commercant.siren = :siren AND raison_sociale = :name");
-            $req_autorisation->bindParam(":id", $id);
-            $req_autorisation->bindParam(":siren", $siren);
-            $req_autorisation->bindParam(":name", $name);
-            $req_autorisation->execute();
-
-
-
-
-
             //suppression impayés
-            $req = $cnx->prepare("DELETE impaye FROM commercant 
-            INNER JOIN percevoir ON percevoir.SIREN=commercant.SIREN 
-            INNER JOIN impaye ON impaye.num_autorisation=percevoir.num_autorisation
-            INNER JOIN transaction ON transaction.num_autorisation=percevoir.num_autorisation 
+            $req = $cnx->prepare("DELETE impaye FROM commercant             
+            INNER JOIN transaction ON transaction.SIREN=commercant.SIREN 
+            INNER JOIN impaye ON impaye.num_autorisation=transaction.num_autorisation 
             WHERE commercant.id = :id 
             AND commercant.siren = :siren 
             AND commercant.raison_sociale = :name;");
@@ -101,32 +89,14 @@ function delete_account($name, $siren, $id)
                 echo "Erreur lors de la suppression des impayés";
             }
 
-
-
-            //suppression des percevoir
-            $req = $cnx->prepare("DELETE percevoir FROM commercant 
-            INNER JOIN percevoir ON percevoir.SIREN=commercant.SIREN 
-            INNER JOIN transaction ON transaction.num_autorisation=percevoir.num_autorisation 
-            WHERE commercant.id = :id 
-            AND commercant.siren = :siren 
-            AND commercant.raison_sociale = :name;");
-            $req->bindParam(":id", $id);
-            $req->bindParam(":siren", $siren);
-            $req->bindParam(":name", $name);
+            //suppression des transactions
+            $req = $cnx->prepare("DELETE FROM transaction WHERE SIREN = :SIREN");
+            $req->bindParam(":SIREN", $siren);
             if (!$req->execute()) {
                 $cnx->exec("ROLLBACK");
-                echo "Erreur lors de la suppression des perçus";
+                echo "Erreur lors de la suppression des transactions";
             }
-
-            //suppression des transactions
-            while ($autorisation = $req_autorisation->fetch()) {
-                $req = $cnx->prepare("DELETE FROM transaction WHERE num_autorisation = :num_autorisation");
-                $req->bindParam(":num_autorisation", $autorisation[0]);
-                if (!$req->execute()) {
-                    $cnx->exec("ROLLBACK");
-                    echo "Erreur lors de la suppression des transactions";
-                }
-            }
+            
 
             //suppression du commerçant
             $req = $cnx->prepare("DELETE FROM commercant WHERE id = :id AND siren = :siren AND raison_sociale = :name");
