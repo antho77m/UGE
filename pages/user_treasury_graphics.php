@@ -60,10 +60,8 @@
 <?php 
     $array_date = array();
     $array_montant = array();
-    $date_fin = date('Y-m-d');
-    array_push($array_date, $date_fin);
-    $date = $date_fin;
-    for($i = 0; $i < 13 ; $i++){
+    array_push($array_date, $date);
+    for($i = 0; $i < 14 ; $i++){
         $date = date('Y-m-d', strtotime('-1 day', strtotime($date)));
         array_push($array_date, $date);
     }
@@ -79,10 +77,7 @@
         $row = $result->montant_total;
         array_push($array_montant, (int) $row);
     }
-
     include("graphics/treasury_linear.php");
-    
-    
 ?>
 
 </body>

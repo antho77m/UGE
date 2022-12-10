@@ -1,7 +1,3 @@
-
-<?php
-    include("../includes/cnx.inc.php");
-?> 
 <!DOCTYPE html>
 <html lang="fr">
 

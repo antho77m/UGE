@@ -1,6 +1,5 @@
 <?php
 
-
 session_start();
 include(dirname(__FILE__, 2) . "/router.php");
 
@@ -62,8 +61,10 @@ include ROOT . "/includes/cnx.inc.php";
         if ($_SESSION['niveau'] == 1) {
             $SIREN = $_SESSION['SIREN'];
             include ("treasury_user.php");
-        } else {
+        } else if ($_SESSION['niveau'] == 3) {
             include ("treasury_PO.php");
+        } else {
+            echo "redirection to page connexion!!!";
         }
         $_SESSION['tab_treasury'] = $array_export;
     ?>

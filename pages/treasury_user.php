@@ -1,7 +1,3 @@
- 
-<?php
-    include("../includes/cnx.inc.php");
-?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -15,9 +11,7 @@
 
 <body>
 
-    <?php
-
-
+<?php
     function show_treasury_client_date($SIREN, $date) // fonction profil client
     { // Fonction qui affiche le solde des transactions du jour de la trésorerie du client à une date donnée
 
@@ -63,10 +57,9 @@
         }
     }
 
-    showTreasury($SIREN);
-    include("user_treasury_graphics.php");
+    // showTreasury($SIREN);
+    // include("user_treasury_graphics.php");
 ?>
-
         <form action="" method="post">
             <div>
                 <div>
@@ -77,18 +70,20 @@
             <input type="submit" name="submit" value="Valider" />
         </form>
 <?php
-
     if(isset($_POST['submit'])){
-        if(isset($_POST['date'])) {
+        if (!empty($_POST['date'])) {
             $date = $_POST['date'];
             array_push($array_export,show_treasury_client_date($SIREN, $date));
-            echo "<button class=\"export\" onclick=\"window.open(\'/pages/exports/export_treasury.php?format=CSV&date=$date\', \'_blank\');\">CSV</button>
-            <button class=\"export\" onclick=\"window.open(\'/pages/exports/export_treasury.php&format=XLS?date=$date\', \'_blank\');\">XLS</button>
-            <button class=\"export\" onclick=\"window.open(\'/pages/exports/export_treasury.php&format=PDF?date=$date\', \'_blank\');\">PDF</button>";
+        } else {
+            $date = date('Y-m-d');
+            showTreasury($SIREN);            
         }
+    } else {
+        $date = date('Y-m-d');
+        showTreasury($SIREN);
     }
-
-    ?>
+    include("user_treasury_graphics.php");
+?>
     <script src="/src/scripts/app.js?v=<?= sha1(rand()) ?>" defer></script>
 </body>
 
