@@ -57,10 +57,7 @@
 
 <body>
 
-    <?php 
-
-    
-    include("/includes/functions/treasury_function.php");
+<?php 
 
     $SIREN = '320367139';
     $array_date = array();
@@ -73,19 +70,22 @@
         array_push($array_date, $date);
     }
     $array_date = array_reverse($array_date);
-    $solde = 0;
     foreach($array_date as $date_array){
-        $nb_transac = CountTransac($SIREN, $date_array);
-        $montant = CountMontant($nb_transac, $SIREN, $date_array);
-        $solde = $solde + $montant;
-        echo $montant . '<br>';
-        array_push($array_montant, $solde);
+        $sql = $cnx->prepare("SELECT 
+        COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='+' AND date_traitement <= '$date_array'), 0) - COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='-' AND date_traitement <= '$date_array'), 0) AS montant_total
+        FROM Commercant AS R NATURAL JOIN Transaction
+        WHERE date_traitement <= '$date_array' AND SIREN LIKE '%$SIREN'
+        GROUP BY SIREN");
+        $sql->execute();
+        $result = $sql->fetch(PDO::FETCH_OBJ);
+        $row = $result->montant_total;
+        array_push($array_montant, (int) $row);
     }
 
-    include("graphics_linear.php");
+    include("graphics/treasury_linear.php");
     
     
-    ?>
+?>
 
 </body>
 </html>

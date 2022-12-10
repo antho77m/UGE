@@ -58,9 +58,10 @@ include ROOT . "/includes/cnx.inc.php";
     </section>
 
     <?php 
+        $array_export = array();
         if ($_SESSION['niveau'] == 1) {
             $SIREN = $_SESSION['SIREN'];
-            include ("treasury_customer.php");
+            include ("treasury_user.php");
         } else {
             include ("treasury_PO.php");
         }

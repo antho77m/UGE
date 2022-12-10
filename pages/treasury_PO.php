@@ -1,5 +1,5 @@
 
-<?php 
+<?php
     require_once("../includes/class/commercant.php");
     include("../includes/cnx.inc.php");
 ?> 
@@ -22,66 +22,64 @@
         global $cnx;
 
         //require_once("commercant.php");
-        $i = 0;
-        $commercant_array[] = array();
-        $command = $cnx->query("SELECT * FROM Commercant");
-        while ($ligne = $command->fetch(PDO::FETCH_OBJ)) {
-            $nb_transac = CountTransac($ligne->SIREN, $date);
-            $montant = CountMontant($nb_transac, $ligne->SIREN, $date);
-            if ($montant >= 0) {
-                echo '<p>SIREN : ' .$ligne->SIREN. 'Raison sociale : '.$ligne->Raison_sociale . 'Nombre de transactions : ' . $nb_transac . 'Montant total : +' . $montant . 'Date : ' . $date . '</p><br>';
+        $sql = $cnx->prepare("SELECT SIREN, Raison_sociale, count(num_autorisation) AS nbT, 
+        COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='+' AND date_traitement <= '$date'), 0) - COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='-' AND date_traitement <= '$date'), 0) AS montant_total
+        FROM Commercant AS R NATURAL JOIN Transaction
+        WHERE date_traitement <= '$date' AND SIREN LIKE '%'
+        GROUP BY SIREN ORDER BY ''");
+        $sql->execute();
+        $result = $sql->fetchAll(PDO::FETCH_OBJ);
+        foreach ($result as $ligne) {
+            if($ligne->montant_total >= 0) {
+                echo '<p>SIREN : ' .$ligne->SIREN. ' Raison sociale : '.$ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : green;">' . $ligne->montant_total . '</span> Date : ' . $date . '</p><br>';
             }
             else {
-                echo '<p>SIREN : ' .$ligne->SIREN. 'Raison sociale : '.$ligne->Raison_sociale . 'Nombre de transactions : ' . $nb_transac . 'Montant total : <span style="color : red;">' . $montant . '</span> Date : ' . $date . '</p><br>';
+                echo '<p>SIREN : ' .$ligne->SIREN. ' Raison sociale : '.$ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : red;">' . $ligne->montant_total . '</span> Date : ' . $date . '</p><br>';
             }
-            $commercant_array[$i] =  new commercant($ligne->SIREN, $ligne->Raison_sociale, $nb_transac, $montant, null);;
-            $i++;
         }
-        return $commercant_array; // return an array of commercant
-            
     }
 
     function show_treasury_client_date($SIREN, $date) { // Show the solde of a client has a date
         global $cnx;
 
-        $command = $cnx->query("SELECT * FROM Commercant WHERE SIREN = '$SIREN'");
-        $ligne = $command->fetch(PDO::FETCH_OBJ);
-
-        if(empty($ligne)){
-            echo "Le SIREN n'existe pas";
-            return null;
+        $sql = $cnx->prepare("SELECT SIREN, Raison_sociale, count(num_autorisation) AS nbT, 
+        COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='+' AND date_traitement <= '$date'), 0) - COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='-' AND date_traitement <= '$date'), 0) AS montant_total
+        FROM Commercant AS R NATURAL JOIN Transaction
+        WHERE date_traitement <= '$date' AND SIREN LIKE '%$SIREN'
+        GROUP BY SIREN");
+        $sql->execute();
+        $result = $sql->fetchAll(PDO::FETCH_OBJ);
+        foreach ($result as $ligne) {
+            if($ligne->montant_total >= 0) {
+                echo '<p>SIREN : ' .$ligne->SIREN. ' Raison sociale : '.$ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : green;">' . $ligne->montant_total . '</span> Date : ' . $date . '</p><br>';
+            }
+            else {
+                echo '<p>SIREN : ' .$ligne->SIREN. ' Raison sociale : '.$ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : red;">' . $ligne->montant_total . '</span> Date : ' . $date . '</p><br>';
+            }
         }
-        $nb_transac = CountTransac($ligne->SIREN, $date);
-        $montant = CountMontant($nb_transac, $ligne->SIREN, $date);
-        if ($montant >= 0) {
-            echo '<p>SIREN : ' .$ligne->SIREN. 'Raison sociale : '.$ligne->Raison_sociale . 'Nombre de transactions : ' . $nb_transac . 'Montant total : +' . $montant . 'Date : ' . $date . '</p><br>';
-        }
-        else {
-            echo '<p>SIREN : ' .$ligne->SIREN. 'Raison sociale : '.$ligne->Raison_sociale . 'Nombre de transactions : ' . $nb_transac . 'Montant total : ' . $montant . 'Date : ' . $date . '</p><br>';
-        }
-
-        return new commercant($ligne->SIREN, $ligne->Raison_sociale, $nb_transac, $montant, null); // return a commercant object
+        return $result;
     }
 
 
     function show_treasury_client($SIREN) { // Show the solde of a client
         global $cnx;
-
-        $command = $cnx->query("SELECT * FROM Commercant WHERE SIREN = '$SIREN'");
-        $ligne = $command->fetch(PDO::FETCH_OBJ);
-        if (empty($ligne)) {
-            echo "Le SIREN n'existe pas";
-            return null;
+        $sql = $cnx->prepare("SELECT SIREN, Raison_sociale, count(num_autorisation) AS nbT, 
+        COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='+'), 0) - COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='-'), 0) AS montant_total
+        FROM Commercant AS R NATURAL JOIN Transaction
+        WHERE SIREN LIKE '%$SIREN'
+        GROUP BY SIREN ORDER BY ''");
+        $sql->execute();
+        $result = $sql->fetchAll(PDO::FETCH_OBJ);
+        foreach ($result as $ligne) {
+            if($ligne->montant_total >= 0) {
+                echo '<p>SIREN : ' .$ligne->SIREN. ' Raison sociale : '.$ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : green;">' . $ligne->montant_total . '</span> Date : '.date('m-d-Y', time()).'</p><br>';
+            }
+            else {
+                echo '<p>SIREN : ' .$ligne->SIREN. ' Raison sociale : '.$ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : red;">' . $ligne->montant_total . '</span> Date : ' . date('m-d-Y', time()) . '</p><br>';
+            }
         }
-        $nb_transac = CountAllTransac($ligne->SIREN);
-        $montant = CountMontantOfAllTransac($nb_transac, $ligne->SIREN);
-        if ($montant >= 0) {
-            echo '<p>SIREN : ' .$ligne->SIREN. ' Raison sociale : '.$ligne->Raison_sociale . ' Nombre de transactions : ' . $nb_transac . ' Montant total : +' . $montant . '</p><br>';
-        }
-        else {
-            echo '<p>SIREN : ' .$ligne->SIREN. ' Raison sociale : '.$ligne->Raison_sociale . ' Nombre de transactions : ' . $nb_transac . ' Montant total : ' . $montant . '</p><br>';
-        }
-        return new commercant($ligne->SIREN, $ligne->Raison_sociale, $nb_transac, $montant, null); // return a commercant object
+        return $result;
+        
     }
 
 
@@ -89,81 +87,62 @@
     { // Fonction qui affiche le solde des transactions totale de la trésorerie de tout client
         global $cnx;
 
-        $commercant_array = array();
-        $command = $cnx->query("SELECT * FROM Commercant $trie"); // trie the result
-        $i = 0;
-        while ($ligne = $command->fetch(PDO::FETCH_OBJ)) {
-            $nb_transac = CountAllTransac($ligne->SIREN);
-            $montant = CountMontantOfAllTransac($nb_transac, $ligne->SIREN);
-            $commercant_array[$i] = new commercant ($ligne->SIREN, $ligne->Raison_sociale, $nb_transac, $montant, null);
-            if ($montant >= 0) {
-                echo '<p>SIREN : ' .$ligne->SIREN. 'Raison sociale : '.$ligne->Raison_sociale . ' Nombre de transactions : ' . $nb_transac . ' Montant total : + ' . $montant. '</p>  <br>';
+        $sql = $cnx->prepare("SELECT SIREN, Raison_sociale, count(num_autorisation) AS nbT, 
+        COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='+'), 0) - COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='-'), 0) AS montant_total
+        FROM Commercant AS R NATURAL JOIN Transaction
+        WHERE SIREN LIKE '%'
+        GROUP BY SIREN $trie");
+        $sql->execute();
+        $result = $sql->fetchAll(PDO::FETCH_OBJ);
+        foreach ($result as $ligne) {
+            if($ligne->montant_total >= 0) {
+                echo '<p>SIREN : ' .$ligne->SIREN. ' Raison sociale : '.$ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : green;">' . $ligne->montant_total . '</span> Date : '.date('m-d-Y', time()).'</p><br>';
             }
             else {
-                echo '<p>SIREN : ' .$ligne->SIREN. 'Raison sociale : '.$ligne->Raison_sociale . ' Nombre de transactions : ' . $nb_transac . ' Montant total : <span style="color : red;">'.$montant.'</span> </p> <br>';
+                echo '<p>SIREN : ' .$ligne->SIREN. 'Raison sociale : '.$ligne->Raison_sociale . 'Nombre de transactions : ' . $ligne->nbT . 'Montant total : <span style="color : red;">' . $ligne->montant_total . '</span> Date : ' . date('m-d-Y', time()) . '</p><br>';
             }
-            $i++;
         }
-        return $commercant_array; // Retourne un tableau d'objet commercant. Penser a afficher le solde en rouge si negatif
-    }
+        return $result;
 
-    function show_treasury_all_client_order_solde() { // Show the solde of all client order by solde
-        global $cnx;
-        
-        $commercant_array = array();
-        $montant_array = array();
-        $command = $cnx->query("SELECT * FROM Commercant");
-        $i = 0;
-        while ($ligne = $command->fetch(PDO::FETCH_OBJ)) {
-            $nb_transac = CountAllTransac($ligne->SIREN);
-            $montant = CountMontantOfAllTransac($nb_transac, $ligne->SIREN);
-            $montant_array[$i] = $montant;
-            $commercant_array[$i] = new commercant($ligne->SIREN, $ligne->Raison_sociale, $nb_transac, $montant, null);
-            $i++;
-        } 
-        arsort($montant_array);
-        $commercant_array_return = array();
-        $i = 0;
-        foreach ($montant_array as $value) {
-            $i++;
-            $index = 0;
-            foreach($commercant_array as $commercant) {
-                
-                if ($commercant->getMontant() == $value) {
-                    $commercant_array_return[$i] = $commercant;
-                    if ($commercant->getMontant() >= 0) {
-                        echo '<p>SIREN : ' .$commercant->getSIREN(). 'Raison sociale : '.$commercant->getRaison_social() . ' Nombre de transactions : ' . $commercant->getNb_transaction() . ' Montant total : + ' . $commercant->getMontant(). '</p>  <br>';
-                    }
-                    else {
-                        echo '<p>SIREN : ' .$commercant->getSIREN(). 'Raison sociale : '.$commercant->getRaison_social() . ' Nombre de transactions : ' . $commercant->getNb_transaction() . ' Montant total : <span style="color : red;">'.$commercant->getMontant().'</span> </p> <br>';
-                    }
-                    unset($commercant_array[$index]); 
-                }
-                $index++;
-            }
-            
-        }
-
-        return $commercant_array_return; // return a array of commercant object
     }
+?>
     
-    echo '
-        <form action="" method="post">
-            <p>Date : <input type="date" name="date" id="date"></p>
-            <p>
-            SIREN : <input type="text" name="SIREN" id="SIREN" maxlength="9">
-            </p>
-            <p>
-            Afficher les soldes des clients :
-            <select id="trie" name="trie">
-                <option value="Aucun">Aucun</option>
-                <option value="SIREN">SIREN</option>
-                <option value="Montant">Montant</option>
-            </select>
-            </p>
-            <input type="submit" name="submit" value="Envoyer">
-        </form>';
+        <form action="" method="post" class="client_form">
+            <div class="form_group">
+                <label for="">Date : </label>
+                <input type="date" name="date" id="date">
+            </div>
 
+            <div class="form_group">
+                <label for="">SIREN :</label>
+                <input type="text" name="SIREN" id="SIREN" maxlength="9">
+            </div>
+
+            <div class="form_group">
+                <label for="">Afficher les soldes des clients :</label>
+                <select id="trie_type" name="trie_type">
+                    <option value="">Trier par</option>
+                    <option value="Aucun">Aucun</option>
+                    <option value="SIREN">SIREN</option>
+                    <option value="Montant">Montant</option>
+                </select>
+            </div>
+
+            <div class="form_radio">
+                <div class="form_select">
+                    <input type="radio" id="croissant" name="sens" value="croissant">
+                    <label for="">Croissant</label>
+                </div>
+
+                <div class="form_select">
+                    <input type="radio" id="decroissant" name="sens" value="decroissant">
+                    <label for="">Décroissant</label>
+                </div>
+
+            </div>
+            <input type="submit" name="submit" value="Envoyer">
+        </form>
+<?php
     if(isset($_POST['submit'])) {
         if (!empty($_POST['date'])) {
 
@@ -171,44 +150,69 @@
                 echo '<h3>Solde d\'un client à une date donné</h3> <br>';
                 $date = $_POST['date'];
                 $SIREN = $_POST['SIREN'];
-                show_treasury_client_date($SIREN, $date);
+                array_push($array_export,show_treasury_client_date($SIREN, $date));
                 echo '<br>';
             }
             else {
                 $date = $_POST['date'];
                 echo '<h3>Solde des clients à une date donné</h3> <br>';
-                show_treasury_all_client_date($date);
+                array_push($array_export,show_treasury_all_client_date($date));
                 echo '<br>';
             }
         }
         if (!empty($_POST['SIREN'] && empty($_POST['date']))) {
             echo '<h3>Solde d\'un client</h3> <br>';
             $SIREN = $_POST['SIREN'];
-            show_treasury_client($SIREN);
+            array_push($array_export,show_treasury_client($SIREN));
             echo '<br>';
         }
-        if (!empty($_POST['trie']) != '') {
-            if ($_POST['trie'] == 'SIREN') {
-                echo '<h3>Trier par SIREN </h3><br>';
-                show_treasury_all_client("ORDER BY SIREN");
-                echo '<br>';
+        if (!empty($_POST['trie_type']) != '') {
+
+            if ($_POST['trie_type'] == 'SIREN') {
+                if (isset($_POST['sens']) && $_POST['sens'] == 'croissant') {
+                    echo '<h3>Trier par SIREN croissant</h3><br>';
+                    array_push($array_export, show_treasury_all_client("ORDER BY SIREN ASC"));
+                    echo '<br>';
+                } elseif (isset($_POST['sens']) && $_POST['sens'] == 'decroissant') {
+                    echo '<h3>Trier par SIREN décroissant</h3><br>';
+                    array_push($array_export, show_treasury_all_client("ORDER BY SIREN DESC"));
+                    echo '<br>';
+                } else {
+                    echo '<h3>Solde clients </h3><br>';
+                    array_push($array_export, show_treasury_all_client(''));
+                    echo '<br>';
+                }
             }
-            if ($_POST['trie'] == 'Montant') {
-                echo '<h3>Trier par Montant </h3><br>';
-                show_treasury_all_client_order_solde();
-                echo '<br>';
+
+
+            if ($_POST['trie_type'] == 'Montant') {
+
+                if (isset($_POST['sens']) && $_POST['sens'] == 'croissant') {
+                    echo '<h3>Trier par Montant croissant</h3><br>';
+                    array_push($array_export, show_treasury_all_client("ORDER BY montant_total ASC"));
+                    echo '<br>';
+                } elseif (isset($_POST['sens']) && $_POST['sens'] == 'decroissant') {
+                    echo '<h3>Trier par Montant décroissant</h3><br>';
+                    array_push($array_export, show_treasury_all_client("ORDER BY montant_total DESC"));
+                    echo '<br>';
+                } else {
+                    echo '<h3>Trier par Montant </h3><br>';
+                    array_push($array_export, show_treasury_all_client(''));
+                    echo '<br>';
+                }
             }
-            elseif($_POST['trie'] == 'Aucun') {
+
+            elseif($_POST['trie_type'] == 'Aucun') {
                 echo '<h3>Solde des clients</h3> <br>';
-                show_treasury_all_client("");
+                array_push($array_export,show_treasury_all_client(''));
                 echo '<br>';
             }
             echo '<br>';
         }
     }
-	
-    320367139
-    ?>
+?>
+
+<script src="/src/scripts/app.js?v=<?= sha1(rand()) ?>" defer></script>
 </body>
 
 </html>
