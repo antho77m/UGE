@@ -213,7 +213,7 @@ include ROOT . "/includes/cnx.inc.php";
                 foreach ($motifs as $ligne) { // ajoute le nombre de motifs dans array_motifs
                     $array_motifs[$ligne['libelle']] = $ligne['nb_motifs'];
                 }
-                include("graphics/circular.php");
+                include("graphics/circular_unpaids_user.php");
             } else {
                 // récupère la somme des montants et la date de vente des chiffre d'affaires entre deux dates
                 $chiffre_affaires = $cnx->prepare("SELECT SUM(montant) AS montant, date_vente FROM Commercant NATURAL JOIN Transaction WHERE SIREN = :siren AND date_vente BETWEEN :dd AND :df GROUP BY date_vente ORDER BY date_vente");
@@ -290,9 +290,9 @@ include ROOT . "/includes/cnx.inc.php";
                 }
 
                 if ($GRAPHIQUE == "lr") { // si la variable $graphique est égale à lr (linéaire), on include un graphique linéaire, sinon on include un graphique histogramme
-                    include("graphics/linear.php");
+                    include("graphics/linear_graphics.php");
                 } else {
-                    include("graphics/histogram.php");
+                    include("graphics/histogram_graphics.php");
                 }
             }
         }

@@ -44,45 +44,57 @@ if (isset($_GET['error']) && $_GET['error'] == 1) {
 
 <body>
 
-    <?php include ROOT . "/includes/components/logo.php";
+    <div class="pc_logo__wrapper">
 
-    // setcookie('blocked', '', 1);
+        <div class="PClogo">
+            <picture>
+                <source srcset="/src/img/logoUGEfull.svg" type="image/svg">
+                <img src="/src/img/logoUGEfull.svg" alt="Logo UGE">
+            </picture>
+            <p>Toutes vos finances, à <span class="important">un seul</span> endroit.</p>
+        </div>
 
-    if (!isset($_COOKIE['blocked'])) {
+        <?php include ROOT . "/includes/components/logo.php";
 
-    ?>
+        // setcookie('blocked', '', 1);
 
-        <form class="connection__form" action="/pages/verify_login.php" method="post">
+        if (!isset($_COOKIE['blocked'])) {
 
-            <div class="form__group">
-                <label for="id">Identifiant</label>
-                <div class="input__container">
-                    <span class="material-symbols-outlined icon">Login</span>
-                    <input type="text" name="login" id="id" placeholder="monidentifiant" required>
+        ?>
+
+            <form class="connection__form" action="/pages/verify_login.php" method="post">
+
+                <div class="form__group">
+                    <label for="id">Identifiant</label>
+                    <div class="input__container">
+                        <span class="material-symbols-outlined icon">Login</span>
+                        <input type="text" name="login" id="id" placeholder="monidentifiant" required>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form__group pass__group">
-                <label for="password">Mot de passe</label>
-                <div class="input__container">
-                    <span class="material-symbols-outlined icon">key</span>
-                    <input type="password" name="password" id="password" placeholder="Mot de passe" autocomplete="true" required>
-                    <span class="material-symbols-outlined icon" id="togglePassword">Visibility</span>
+                <div class="form__group pass__group">
+                    <label for="password">Mot de passe</label>
+                    <div class="input__container">
+                        <span class="material-symbols-outlined icon">key</span>
+                        <input type="password" name="password" id="password" placeholder="Mot de passe" autocomplete="true" required>
+                        <span class="material-symbols-outlined icon" id="togglePassword">Visibility</span>
+                    </div>
                 </div>
-                <a href="/forgot-password" class="forgot__password">Mot de passe oublié ?</a>
-            </div>
 
-            <div class="form__group">
-                <button type="submit" class="btn connection" disabled>CONNEXION</button>
-            </div>
+                <div class="form__group">
+                    <button type="submit" class="btn connection" disabled>CONNEXION</button>
+                </div>
 
 
-        </form>
-    <?php
-    } else {
-        echo '<p class="blocked">Vous avez été bloqué pour 1 heure</p>';
-    }
-    ?>
+            </form>
+
+
+        <?php
+        } else {
+            echo '<p class="blocked">Vous avez été bloqué pour 1 heure</p>';
+        }
+        ?>
+    </div>
 
     <script>
         const inputs = document.querySelectorAll("input");

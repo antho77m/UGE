@@ -64,39 +64,66 @@ body {
 #togglePassword {
     display: none;
 }
-@media (min-width: 1300px){
 
-    img{
-        height: 150px;
-        width: 150px;
+.PClogo {
+    display: none;
+}
+
+@media (min-width: 1300px) {
+
+
+    .pc_logo__wrapper {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        height: 100%;
     }
-    .logo{
-        margin-top:10%;
-        margin-right: 55%;
+
+    .PClogo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 30px;
     }
-    
-    .connection__form{
-        padding-left: 50%;
-        padding-bottom: 23%;
+
+    .PClogo p {
+        font-size: 1.5em;
+    }
+
+    img {
+        height: fit-content;
+        width: 300px;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    .connection__form {
+        padding: 0;
         height: 400px;
+        width: 30%;
+        position: relative;
     }
 
-    .form__group{
-        width: 60%;
-        margin: 0.25em;
-    }
-
-    .input__container{
+    .input__container {
         height: 45px;
     }
 
-    .btn{
+    /* .btn {
         position: relative;
         top: 100%;
         width: 75%;
-    }
-    .incorrect_pass{
+    } */
+
+    .incorrect_pass {
         text-align: center;
+    }
+
+    .connection {
+        /* position: relative; */
+
     }
 
 
