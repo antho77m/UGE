@@ -3,8 +3,12 @@
 session_start();
 include(dirname(__FILE__, 2) . "/router.php");
 
-if (!isset($_SESSION['niveau'])) {
-    exit("Erreur 401");
+if (isset($_SESSION['niveau'])) {
+    if ($_SESSION['niveau'] == 2) {
+        header("Location: login.php");
+    }
+} else {
+    header("Location: login.php");
 }
 
 include ROOT . "/includes/cnx.inc.php";
@@ -127,7 +131,7 @@ include ROOT . "/includes/cnx.inc.php";
         $df = $_POST['df'];
         if ($_SESSION['niveau'] == 3) {
             if (!isset($_POST['siren']) || !isset($_POST['rsociale'])) {
-                exit("Erreur 401");
+                header("Location: login.php");
             }
             if (!empty($_POST['siren'])) {
                 $SIREN = $_POST['siren'];
@@ -141,12 +145,10 @@ include ROOT . "/includes/cnx.inc.php";
             }
         } else if ($_SESSION['niveau'] == 1) {
             if (!isset($_SESSION['SIREN'])) {
-                exit("Erreur 401");
+                header("Location: login.php");
             }
             $SIREN = $_SESSION['SIREN'];
-        } else {
-            exit("Erreur 401");
-        }
+        } 
         if (!empty($_POST['remise'])) {
             $num_remise = $_POST['remise'];
         } else {

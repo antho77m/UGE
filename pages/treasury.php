@@ -3,8 +3,12 @@
 session_start();
 include(dirname(__FILE__, 2) . "/router.php");
 
-if (!isset($_SESSION['niveau'])) {
-    exit("Erreur 401");
+if (isset($_SESSION['niveau'])) {
+    if ($_SESSION['niveau'] == 2) {
+        header("Location: login.php");
+    }
+} else {
+    header("Location: login.php");
 }
 
 include ROOT . "/includes/cnx.inc.php";
@@ -58,6 +62,9 @@ include ROOT . "/includes/cnx.inc.php";
     <?php
     $array_export = array();
     if ($_SESSION['niveau'] == 1) {
+        if (!isset($_SESSION['SIREN'])) {
+            header("Location: login.php");
+        }
         $SIREN = $_SESSION['SIREN'];
         include("treasury_user.php");
     } else if ($_SESSION['niveau'] == 3) {

@@ -3,8 +3,12 @@
 session_start();
 include(dirname(__FILE__, 2) . "/router.php");
 
-if (!isset($_SESSION['niveau'])) {
-    exit("Erreur 401");
+if (isset($_SESSION['niveau'])) {
+    if ($_SESSION['niveau'] == 2) {
+        header("Location: login.php");
+    }
+} else {
+    header("Location: login.php");
 }
 
 include ROOT . "/includes/cnx.inc.php";
@@ -116,15 +120,13 @@ include ROOT . "/includes/cnx.inc.php";
             $SENS = $_POST['sens'];
             if ($_SESSION['niveau'] == 1) {
                 if (!isset($_SESSION['SIREN'])) {
-                    exit("Erreur 401");
+                    header("Location: login.php");
                 }
                 $SIREN = $_SESSION['SIREN'];
                 $ORDER = "montant";
             } else if ($_SESSION['niveau'] == 3) {
                 $SIREN = "%";
                 $ORDER = "SIREN";
-            } else {
-                exit("Erreur 401");
             }
 
             $impayes = $cnx->prepare("SELECT SIREN, date_vente, date_traitement, num_carte, reseau, num_dos, montant, libelle FROM Commercant NATURAL JOIN Transaction NATURAL JOIN Impaye JOIN Motifs_Impaye ON Impaye.code_motif = Motifs_Impaye.code WHERE SIREN LIKE :siren AND date_traitement BETWEEN :dd AND :df ORDER BY $ORDER $SENS");

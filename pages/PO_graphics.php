@@ -2,11 +2,11 @@
 // TODO: redirect vers cette page quand clic sur graphs navbar
 session_start();
 if (isset($_SESSION['niveau'])) {
-    if ($_SESSION['niveau'] != 1) {
+    if ($_SESSION['niveau'] != 3) {
         header("Location: login.php");
     }
 } else {
-    exit("Erreur 401");
+    header("Location: login.php");
 }
 include(dirname(__FILE__, 2) . "/router.php");
 
