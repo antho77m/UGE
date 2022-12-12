@@ -2,11 +2,11 @@
 
 session_start();
 if (isset($_SESSION['niveau']) && isset($_SESSION['SIREN'])) {
-    if ($_SESSION['niveau'] != 1) {
-        header("Location: login.php");
+    if ($_SESSION['niveau'] != 1) { // si pas connecté en tant que Commerçant
+        header("Location: login.php"); // redirige vers la page de connexion
     }
 } else {
-    header("Location: login.php");
+    header("Location: login.php"); // redirige vers la page de connexion
 }
 include(dirname(__FILE__, 2) . "/router.php");
 

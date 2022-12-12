@@ -3,11 +3,11 @@
 session_start();
 include(dirname(__FILE__, 2) . "/router.php");
 if (isset($_SESSION['niveau'])) {
-    if ($_SESSION['niveau'] != 3) {
-        header("Location: login.php");
+    if ($_SESSION['niveau'] != 3) { // si pas connecté en tant que PO
+        header("Location: login.php"); // redirige vers la page de connexion
     }
 } else {
-    header("Location: login.php");
+    header("Location: login.php"); // redirige vers la page de connexion
 }
 
 include ROOT . "/includes/cnx.inc.php";
