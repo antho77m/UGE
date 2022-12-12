@@ -755,9 +755,9 @@ input[type="date"] {
     .highcharts-figure {
         position: absolute;
         width: 50% !important;
-        height: 51% !important;
+        height: 50% !important;
         margin-top: 110px !important;
-        right: 0;
+        right: 20px;
     }
 
     .options_text {
