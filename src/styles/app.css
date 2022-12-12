@@ -749,12 +749,15 @@ input[type="date"] {
 
     #container {
         height: 100%;
+
     }
 
     .highcharts-figure {
+        position: absolute;
         width: 50% !important;
-        height: 50% !important;
-        margin-top: 90px !important;
+        height: 51% !important;
+        margin-top: 110px !important;
+        right: 0;
     }
 
     .options_text {
