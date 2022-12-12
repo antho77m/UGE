@@ -52,6 +52,7 @@ function add_account($name, $siren, $password, $id)
                 echo "Erreur lors de l'ajout du commercant";
             }
             echo "Compte ajouté avec succès";
+            header("Refresh: 2; url=/pages/home.php");
             $cnx->exec("COMMIT");
         }
     }
@@ -117,6 +118,7 @@ function delete_account($name, $siren, $id)
             }
             $cnx->exec("COMMIT");
             echo "Compte supprimé avec succès";
+            header("Refresh: 2; url=/pages/home.php");
         }
     }
 }

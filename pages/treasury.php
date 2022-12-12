@@ -37,16 +37,47 @@ include ROOT . "/includes/cnx.inc.php";
 
     <?php include ROOT . "/includes/components/nav.php"; ?>
 
+    <div class="navbar mobile-nav">
+        <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
+            <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
+        </div>
+
+        <?php if ($_SESSION['niveau'] == 1) : ?>
+            <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
+                <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
+            </div>
+        <?php elseif ($_SESSION['niveau'] == 3) : ?>
+            <div class="icon_container" onclick="window.location.href='/pages/PO_graphics.php'">
+                <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
+            </div>
+        <?php endif; ?>
+
+        <div class="icon_container" onclick="window.location.href='/pages/search_unpaid.php'">
+            <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
+        </div>
+
+        <div class="icon_container" onclick="window.location.href='/pages/search_remittance.php'">
+            <img src="<?= $basepath ?>/src/img/remittanceIcon.svg" alt="Remittance icon">
+        </div>
+    </div>
+    
     <section class="graphics_section pcnav_treasury">
         <div style="display: flex; justify-content: space-between; align-items: center;">
+            <p style="font-size: 24px;">Trésorerie</p>
             <div class="logos pc-nav">
                 <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
                     <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
                 </div>
 
-                <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
-                    <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
-                </div>
+                <?php if ($_SESSION['niveau'] == 1) : ?>
+                    <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
+                        <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
+                    </div>
+                <?php elseif ($_SESSION['niveau'] == 3) : ?>
+                    <div class="icon_container" onclick="window.location.href='/pages/PO_graphics.php'">
+                        <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
+                    </div>
+                <?php endif; ?>
 
                 <div class="icon_container" onclick="window.location.href='/pages/search_unpaid.php'">
                     <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
@@ -75,27 +106,6 @@ include ROOT . "/includes/cnx.inc.php";
     $_SESSION['tab_treasury'] = $array_export;
     ?>
 
-    <div class="navbar mobile-nav">
-        <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
-            <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
-        </div>
-
-        <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
-            <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
-        </div>
-
-        <div class="icon_container" onclick="window.location.href='/pages/search_unpaid.php'">
-            <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
-        </div>
-
-
-        <div class="icon_container" onclick="window.location.href='/pages/search_remittance.php'">
-            <img src="<?= $basepath ?>/src/img/remittanceIcon.svg" alt="Remittance icon">
-        </div>
-    </div>
-    <?php
-
-    ?>
     <script src="/src/scripts/app.js?v=<?= sha1(rand()) ?>" defer></script>
 </body>
 

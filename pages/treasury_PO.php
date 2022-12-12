@@ -106,40 +106,51 @@
     }
     ?>
 
-    <form action="" method="post" class="client_form">
-        <div class="form_group">
-            <label for="">Date : </label>
-            <input type="date" name="date" id="date">
-        </div>
-
-        <div class="form_group">
-            <label for="">SIREN :</label>
-            <input type="text" name="SIREN" id="SIREN" maxlength="9">
-        </div>
-
-        <div class="form_group">
-            <label for="">Afficher les soldes des clients :</label>
-            <select id="trie_type" name="trie_type">
-                <option value="Aucun">Aucun</option>
-                <option value="SIREN">SIREN</option>
-                <option value="Montant">Montant</option>
-            </select>
-        </div>
-
-        <div class="form_radio">
-            <div class="form_select">
-                <input type="radio" id="croissant" name="sens" value="croissant">
-                <label for="">Croissant</label>
+    <section class="graphics_section">
+        <form action="" method="post" class="client_form">
+            <div class="form_group" style="width: 100%;">
+                <label for="">Date : </label>
+                <div class="input__container">
+                    <input type="date" name="date" id="date">
+                </div>
             </div>
 
-            <div class="form_select">
-                <input type="radio" id="decroissant" name="sens" value="decroissant">
-                <label for="">Décroissant</label>
+            <div class="form_group" style="width: 100%;">
+                <label for="">SIREN :</label>
+                <div class="input__container">
+                    <input type="text" name="SIREN" id="SIREN" maxlength="9">
+                </div>
             </div>
 
-        </div>
-        <input type="submit" name="submit" value="Envoyer">
-    </form>
+            <div class="form_group" style="width: 100%; margin-bottom: 10px;">
+                <label for="">Afficher les soldes des clients :</label>
+                <select id="trie_type" name="trie_type">
+                    <option value="Aucun">Aucun</option>
+                    <option value="SIREN">SIREN</option>
+                    <option value="Montant">Montant</option>
+                </select>
+            </div>
+
+            <div class="form_group" style="width: 100%;">
+                <div class="form_radio">
+                    <div class="form_select">
+                        <input type="radio" id="croissant" name="sens" value="croissant">
+                        <label for="">Croissant</label>
+                    </div>
+
+                    <div class="form_select">
+                        <input type="radio" id="decroissant" name="sens" value="decroissant">
+                        <label for="">Décroissant</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form_group" style="margin-top: 30px;">
+                <button class="btn" type="submit" name="submit" value="Envoyer">Envoyer</button>
+            </div>
+        </form>
+    </section>
+
     <?php
     if (isset($_POST['submit'])) {
         $date = date('Y-m-d');

@@ -100,17 +100,20 @@
             <p class="big_text">Nombre de transactions</p>
             <p class="blue75"><?= showFields($SIREN)->nbT ?></p>
         </div>
-    </div>
 
-    <!-- <form action="" method="post">
-        <div>
-            <div>
-                <label for="date">Date</label>
-                <input type="date" id="date" name="date" value="<?= date('Y-m-d') ?>">
+        <form action="" method="post" class="treasury_user__form">
+            <div class="form__group">
+                <label for="date">Date :</label>
+                <div class="input__container">
+                    <input type="date" id="date" name="date" value="<?= date('Y-m-d') ?>">
+
+                </div>
             </div>
-        </div>
-        <input type="submit" name="submit" value="Valider" />
-    </form> -->
+            <div class="form__group">
+                <button type="submit" name="submit" value="Valider" class="btn">Valider</button>
+            </div>
+        </form>
+    </div>
 
     <?php
     if (isset($_POST['submit'])) {

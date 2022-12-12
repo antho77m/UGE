@@ -42,9 +42,15 @@ include ROOT . "/includes/cnx.inc.php";
             <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
         </div>
 
-        <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
-            <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
-        </div>
+        <?php if ($_SESSION['niveau'] == 1) : ?>
+            <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
+                <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
+            </div>
+        <?php elseif ($_SESSION['niveau'] == 3) : ?>
+            <div class="icon_container" onclick="window.location.href='/pages/PO_graphics.php'">
+                <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
+            </div>
+        <?php endif; ?>
 
         <div class="icon_container" onclick="window.location.href='/pages/search_unpaid.php'">
             <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
@@ -54,19 +60,24 @@ include ROOT . "/includes/cnx.inc.php";
             <img src="<?= $basepath ?>/src/img/remittanceIcon.svg" alt="Remittance icon">
         </div>
     </div>
-    <section class="remittance_sect">
 
+    <section class="remittance_sect">
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <p style="font-size: 24px;">Consultation des remises</p>
             <div class="logos pc-nav">
-
                 <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
                     <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
                 </div>
 
-                <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
-                    <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
-                </div>
+                <?php if ($_SESSION['niveau'] == 1) : ?>
+                    <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
+                        <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
+                    </div>
+                <?php elseif ($_SESSION['niveau'] == 3) : ?>
+                    <div class="icon_container" onclick="window.location.href='/pages/PO_graphics.php'">
+                        <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
+                    </div>
+                <?php endif; ?>
 
                 <div class="icon_container" onclick="window.location.href='/pages/search_unpaid.php'">
                     <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
@@ -77,50 +88,50 @@ include ROOT . "/includes/cnx.inc.php";
                 </div>
             </div>
         </div>
+    </section>
 
+    <form action="/pages/search_remittance.php" method="post" class="client__form">
 
-        <form action="/pages/search_remittance.php" method="post" class="client__form">
-
-            <?php if ($_SESSION['niveau'] == 3) : ?>
-                <div class="form__group">
-                    <label for="name">N° de SIREN</label>
-                    <div class="input__container">
-                        <input type="number" name="siren" id="siren" placeholder="SIREN" autocomplete="off">
-                    </div>
-                </div>
-
-                <div class="form__group">
-                    <label for="name">Nom du client</label>
-                    <div class="input__container">
-                        <input type="text" name="rsociale" id="rsociale" placeholder="Raison sociale" autocomplete="off">
-                    </div>
-                </div>
-            <?php endif; ?>
-
+        <?php if ($_SESSION['niveau'] == 3) : ?>
             <div class="form__group">
-                <label for="name">N° de REMISE</label>
+                <label for="name">N° de SIREN</label>
                 <div class="input__container">
-                    <input type="number" name="remise" id="remise" placeholder="numéro de remise" autocomplete="off">
+                    <input type="number" name="siren" id="siren" placeholder="SIREN" autocomplete="off">
                 </div>
             </div>
 
             <div class="form__group">
-                <label for="name">Date de début</label>
+                <label for="name">Nom du client</label>
                 <div class="input__container">
-                    <input type="date" name="dd" id="dd" value="2010-01-01">
+                    <input type="text" name="rsociale" id="rsociale" placeholder="Raison sociale" autocomplete="off">
                 </div>
             </div>
+        <?php endif; ?>
 
-            <div class="form__group">
-                <label for="name">Date de fin</label>
-                <div class="input__container">
-                    <input type="date" name="df" id="df" value="<?php echo date('Y-m-d'); ?>">
-                </div>
+        <div class="form__group">
+            <label for="name">N° de REMISE</label>
+            <div class="input__container">
+                <input type="number" name="remise" id="remise" placeholder="numéro de remise" autocomplete="off">
             </div>
+        </div>
 
-            <button type="submit" name="submit" value="Validez" class="btn" style="margin-top: 30px;">Confirmer</button>
+        <div class="form__group">
+            <label for="name">Date de début</label>
+            <div class="input__container">
+                <input type="date" name="dd" id="dd" value="2010-01-01">
+            </div>
+        </div>
 
-        </form>
+        <div class="form__group">
+            <label for="name">Date de fin</label>
+            <div class="input__container">
+                <input type="date" name="df" id="df" value="<?php echo date('Y-m-d'); ?>">
+            </div>
+        </div>
+
+        <button type="submit" name="submit" value="Validez" class="btn" style="margin-top: 30px;">Confirmer</button>
+
+    </form>
     </section>
 
     <?php
@@ -148,7 +159,7 @@ include ROOT . "/includes/cnx.inc.php";
                 header("Location: login.php");
             }
             $SIREN = $_SESSION['SIREN'];
-        } 
+        }
         if (!empty($_POST['remise'])) {
             $num_remise = $_POST['remise'];
         } else {

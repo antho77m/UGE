@@ -1,8 +1,10 @@
 :root {
     --blue: #20234A;
+    --blue25: #20234A25;
     --blue50: #20234A50;
     --blue75: #20234A75;
     --red: #D6404E;
+    --red25: #D6404E25;
     --red50: #D6404E50;
 }
 
@@ -231,44 +233,69 @@ nav .privileges__title {
     font-size: 18px;
 }
 
-.actions_btn {
-    border-radius: 50px;
+.actions__wrapper {
+    display: grid;
+    gap: 30px;
+    /* border: 1px solid #000; */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.action__self {
+    border: 2px solid var(--blue75);
+    padding: 20px;
+    border-radius: 10px;
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: column;
+    gap: 10px;
+    transition: all 0.1s ease;
+}
+
+.action__self:hover {
+    box-shadow: 0 0 10px 0 rgba(32, 35, 74, 0.2);
+}
+
+.action__self_title {
+    font-size: 24px;
+}
+
+.action__self_desc {
+    font-size: 18px;
+    color: var(--blue75);
+}
+
+.action_btn {
+    border: 1px solid var(--blue);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
     align-items: center;
-    color: #fff;
-    padding: 0px 10px;
+    padding: 5px 10px;
     gap: 5px;
-    height: 40px;
-    width: 230px;
-    font-size: 16px;
+    cursor: pointer;
     font-weight: bold;
-    border: none;
+    background: none;
 }
 
-.btn__add {
-    background: var(--blue);
+.action_btn:hover {
+    background: var(--blue25);
 }
 
-.btn__edit {
-    background: #f9f9f9;
-    border: 2px solid var(--blue);
+.btn_del:hover {
+    background: var(--red25);
+}
+
+.btn_add {
     color: var(--blue);
 }
 
-.btn__delete {
-    background: var(--red)
+.action_btn.btn_del {
+    border: 1px solid var(--red);
 }
 
-.actions_btn .icon {
-    font-size: 32px;
+.btn_del {
+    color: var(--red);
 }
 
-.actions__wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
 
 .form__group {
     width: 100%;
@@ -318,6 +345,32 @@ nav .privileges__title {
     background: #F9F9F9;
     color: var(--blue);
     border: 2px solid var(--blue);
+}
+
+.actions_btn {
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 5px;
+    padding: 0px 10px;
+    height: 40px;
+    width: 150px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.form__action .btn__confirm {
+    background: var(--blue);
+    color: #fff;
+    border: none;
+}
+
+.form__action .btn__delete {
+    background: var(--red);
+    color: #fff;
+    border: none;
 }
 
 .form__action .actions_btn .icon {
@@ -465,10 +518,6 @@ input[type="date"] {
     display: flex;
     flex-direction: column;
     gap: 30px;
-}
-
-.pcnav_treasury {
-    display: none;
 }
 
 .export_wrap {
@@ -622,11 +671,27 @@ input[type="date"] {
     gap: 5px;
 }
 
+.treasury_user__form {
+    align-items: inherit;
+    width: inherit;
+}
+
+.highcharts-figure {
+    border: 1px solid var(--blue);
+    border-radius: 10px;
+    padding: 5px;
+    width: 90% !important;
+}
+
 
 @media (min-width: 1300px) {
+    .actions__wrapper {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 
-    .pcnav_treasury {
-        display: flex;
+    .treasury_user__form {
+        align-items: flex-start;
+        width: 50%;
     }
 
     .privileges {
@@ -749,15 +814,19 @@ input[type="date"] {
 
     #container {
         height: 100%;
-
     }
 
     .highcharts-figure {
-        position: absolute;
+        /* position: absolute;
         width: 50% !important;
         height: 50% !important;
         margin-top: 110px !important;
-        right: 20px;
+        right: 20px; */
+
+        border: 1px solid var(--blue);
+        border-radius: 10px;
+        padding: 20px;
+        width: 60% !important;
     }
 
     .options_text {

@@ -18,6 +18,7 @@ if ($action == 'add') {
         add_account($_POST["name"], $_POST["siren"], $_POST["password"], $_POST["id"]);
     }
 }
+
 if ($action == 'delete') {
     if (isset($_POST["name"]) && isset($_POST["siren"]) && isset($_POST["id"])) {
         delete_account($_POST["name"], $_POST["siren"], $_POST["id"]);
@@ -87,8 +88,6 @@ if ($action == 'delete') {
                 <button class="btn__cancel actions_btn"><span class="material-symbols-outlined icon">close</span>Annuler</button>
                 <?php if ($action === 'add') : ?>
                     <button type="sumbit" class="btn__confirm actions_btn"><span class="material-symbols-outlined icon">add</span>Confirmer</button>
-                <?php elseif ($action === 'edit') : ?>
-                    <button type="sumbit" class="btn__confirm actions_btn"><span class="material-symbols-outlined icon">edit</span>Modification</button>
                 <?php elseif ($action === 'delete') : ?>
                     <button type="sumbit" class="btn__delete actions_btn"><span class="material-symbols-outlined icon">delete</span>Suppression</button>
                 <?php endif; ?>

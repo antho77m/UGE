@@ -42,9 +42,15 @@ include ROOT . "/includes/cnx.inc.php";
             <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
         </div>
 
-        <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
-            <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
-        </div>
+        <?php if ($_SESSION['niveau'] == 1) : ?>
+            <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
+                <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
+            </div>
+        <?php elseif ($_SESSION['niveau'] == 3) : ?>
+            <div class="icon_container" onclick="window.location.href='/pages/PO_graphics.php'">
+                <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Home icon">
+            </div>
+        <?php endif; ?>
 
         <div class="icon_container" onclick="window.location.href='/pages/search_unpaid.php'">
             <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
@@ -64,10 +70,16 @@ include ROOT . "/includes/cnx.inc.php";
                 <div class="icon_container" onclick="window.location.href='/pages/treasury.php'">
                     <img src="<?= $basepath ?>/src/img/home.svg" alt="Home icon">
                 </div>
-
-                <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
-                    <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Graphics icon">
-                </div>
+                
+                <?php if ($_SESSION['niveau'] == 1) : ?>
+                    <div class="icon_container" onclick="window.location.href='/pages/user_graphics.php'">
+                        <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Graphics icon">
+                    </div>
+                <?php elseif ($_SESSION['niveau'] == 3) : ?>
+                    <div class="icon_container" onclick="window.location.href='/pages/PO_graphics.php'">
+                        <img src="<?= $basepath ?>/src/img/leaderboard.svg" alt="Graphics icon">
+                    </div>
+                <?php endif; ?>
 
                 <div class="icon_container" onclick="window.location.href='/pages/search_unpaid.php'">
                     <img src="<?= $basepath ?>/src/img/unpaid.svg" alt="Unpaid icon">
