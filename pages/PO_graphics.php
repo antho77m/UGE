@@ -2,11 +2,11 @@
 // TODO: redirect vers cette page quand clic sur graphs navbar
 session_start();
 if (isset($_SESSION['niveau'])) {
-    if ($_SESSION['niveau'] != 3) {
-        header("Location: login.php");
+    if ($_SESSION['niveau'] != 3) { // si pas connecté en tant que PO
+        header("Location: login.php"); // redirige vers la page de connexion
     }
 } else {
-    header("Location: login.php");
+    header("Location: login.php"); // redirige vers la page de connexion
 }
 include(dirname(__FILE__, 2) . "/router.php");
 
@@ -37,9 +37,8 @@ include ROOT . "/includes/cnx.inc.php";
 if (isset($_POST['dd']) && isset($_POST['df'])) {
     // récupère la somme des motifs des impayés entre deux dates  
     $motifs = $cnx->prepare("SELECT libelle, count(libelle) AS nb_motifs FROM Commercant NATURAL JOIN Transaction NATURAL JOIN Impaye JOIN Motifs_Impaye ON Impaye.code_motif = Motifs_Impaye.code WHERE date_vente BETWEEN :dd AND :df GROUP BY libelle");
-    $motifs->bindParam(':dd', $dd);
-    $motifs->bindParam(':df', $df);
-    $motifs->bindParam(':siren', $SIREN);
+    $motifs->bindParam(':dd', $dd); // date début
+    $motifs->bindParam(':df', $df); // date fin
     $verif = $motifs->execute();
     if (empty($verif)) {
         exit("Erreur lors de la sélection");

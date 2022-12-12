@@ -3,18 +3,17 @@
 session_start();
 include(dirname(__FILE__, 2) . "/router.php");
 
-if (isset($_SESSION['niveau'])) {
-    if ($_SESSION['niveau'] == 2) {
-        header("Location: login.php");
+if (isset($_SESSION['niveau'])) { 
+    if ($_SESSION['niveau'] == 2) { // si connecté en tant qu'admin
+        header("Location: login.php"); // redirige vers la page de connexion
     }
 } else {
-    header("Location: login.php");
+    header("Location: login.php"); // redirige vers la page de connexion
 }
 
 include ROOT . "/includes/cnx.inc.php";
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -129,45 +128,46 @@ include ROOT . "/includes/cnx.inc.php";
         $Raison_Sociale;
         $dd = $_POST['dd'];
         $df = $_POST['df'];
-        if ($_SESSION['niveau'] == 3) {
+        if ($_SESSION['niveau'] == 3) { // si connecté en tant que PO
             if (!isset($_POST['siren']) || !isset($_POST['rsociale'])) {
                 header("Location: login.php");
             }
             if (!empty($_POST['siren'])) {
                 $SIREN = $_POST['siren'];
             } else {
-                $SIREN = "%";
+                $SIREN = '%';
             }
             if (!empty($_POST['rsociale'])) {
                 $Raison_Sociale = $_POST['rsociale'];
             } else {
-                $Raison_Sociale = "%";
+                $Raison_Sociale = '%';
             }
-        } else if ($_SESSION['niveau'] == 1) {
+        } else if ($_SESSION['niveau'] == 1) { // si connecté en tant que Commerçant
             if (!isset($_SESSION['SIREN'])) {
                 header("Location: login.php");
             }
             $SIREN = $_SESSION['SIREN'];
         } 
-        if (!empty($_POST['remise'])) {
+        if (!empty($_POST['remise'])) { 
             $num_remise = $_POST['remise'];
         } else {
             $num_remise = '%';
         }
 
         if (isset($_POST['rsociale'])) {
+            // récupère tous les siren et dates de traitement de remises présente entre les dates dd et df 
             $remises = $cnx->prepare("SELECT DISTINCT SIREN, date_traitement FROM Commercant NATURAL JOIN Transaction WHERE SIREN LIKE :siren AND num_remise LIKE :num_remise AND Raison_sociale LIKE :raison_sociale AND date_traitement BETWEEN :dd AND :df");
-            $remises->bindParam(':siren', $SIREN);
-            $remises->bindParam(':raison_sociale', $Raison_Sociale);
-            $remises->bindParam(':num_remise', $num_remise);
-            $remises->bindParam(':dd', $dd);
-            $remises->bindParam(':df', $df);
+            $remises->bindParam(':siren', $SIREN); // SIREN, '%' si aucun siren renseigné, permettant de rechercher tous les sirens
+            $remises->bindParam(':raison_sociale', $Raison_Sociale); // Raison_sociale, '%' si aucune raison sociale renseigné, permettant de rechercher toutes les raisons sociales
+            $remises->bindParam(':num_remise', $num_remise); // num_remise, '%' si aucun numéro de remise renseigné, permettant de rechercher tous les numéros de remises
+            $remises->bindParam(':dd', $dd); // date début
+            $remises->bindParam(':df', $df); // date fin
         } else {
             $remises = $cnx->prepare("SELECT DISTINCT SIREN, date_traitement FROM Commercant NATURAL JOIN Transaction WHERE SIREN LIKE :siren AND num_remise LIKE :num_remise AND date_traitement BETWEEN :dd AND :df");
-            $remises->bindParam(':siren', $SIREN);
-            $remises->bindParam(':num_remise', $num_remise);
-            $remises->bindParam(':dd', $dd);
-            $remises->bindParam(':df', $df);
+            $remises->bindParam(':siren', $SIREN); // SIREN, '%' si aucun siren renseigné, permettant de rechercher tous les sirens
+            $remises->bindParam(':num_remise', $num_remise); // num_remise, '%' si aucun numéro de remise renseigné, permettant de rechercher tous les numéros de remises
+            $remises->bindParam(':dd', $dd); // date début
+            $remises->bindParam(':df', $df); // date fin
         }
         $verif = $remises->execute();
         $remises = $remises->fetchAll();
@@ -207,9 +207,7 @@ include ROOT . "/includes/cnx.inc.php";
             $total_remises = $total_remises->fetch();
 
             if (!empty($total_remises)) {
-                // echo "<b>" . $total_remises['SIREN'] . " " . $total_remises['Raison_sociale'] . " " . $total_remises['num_remise'] . " " . $total_remises['date_traitement'] . " " . $total_remises['nb_transactions'] . " EUR ";
-                $montant_total = $total_remises['montant_total'] - $total_remises['montant_impayes'];
-
+                $montant_total = $total_remises['montant_total'] - $total_remises['montant_impayes']; // calcul du montant total
                 echo '
                 <section class="remittance_results_wrap">
                     <div class="remittance_results">
@@ -244,12 +242,9 @@ include ROOT . "/includes/cnx.inc.php";
                         </div>
                     </div>';
 
-                // if ($montant_total >= 0) {
-                //     echo "+";
-                // }
-                // echo "$montant_total</b><br>";
-                array_push($array_remises, [$total_remises['SIREN'], $total_remises['Raison_sociale'], $total_remises['num_remise'], $total_remises['date_traitement'], $total_remises['nb_transactions'], "EUR", $montant_total]);
+                array_push($array_remises, [$total_remises['SIREN'], $total_remises['Raison_sociale'], $total_remises['num_remise'], $total_remises['date_traitement'], $total_remises['nb_transactions'], "EUR", $montant_total]); // ajoute dans array_remises les caractéristiques de la remise (SIREN, num_remise, ..)
 
+                // récupère le détail des transactions de la remise (SIREN, date_vente, date_traitement, num_carte, reseau, num_autorisation, montant, sens)
                 $details_remises = $cnx->prepare("SELECT SIREN, date_vente, date_traitement, num_carte, reseau, num_autorisation, montant, sens FROM Commercant NATURAL JOIN Transaction WHERE SIREN = :siren AND num_remise LIKE :num_remise AND date_traitement = :date");
                 $details_remises->bindParam(':siren', $ligne['SIREN']);
                 $details_remises->bindParam(':date', $ligne['date_traitement']);
@@ -259,10 +254,8 @@ include ROOT . "/includes/cnx.inc.php";
                     exit("Erreur lors de la sélection");
                 }
                 $details_remises = $details_remises->fetchAll();
-                array_push($array_remises_detailles, $details_remises);
+                array_push($array_remises_detailles, $details_remises); // ajoute dans array_remises_detailles details_remises contenant les transactions de la remise
                 foreach ($details_remises as $ligne) {
-                    // echo $ligne['SIREN'] . " " . $ligne['date_vente'] . " " . $ligne['num_carte'] . " " . $ligne['reseau'] . " " . $ligne['num_autorisation'] . " EUR " . $ligne['sens'] . $ligne['montant'] . "<br>";
-
                     echo '
                         <div class="remittance_results__details hidden">
                             <div class="remittance_result">
@@ -305,8 +298,9 @@ include ROOT . "/includes/cnx.inc.php";
             }
         }
         echo '<div style="display: block; margin-top: 15vh; visibility: hidden;">ecart</div>';
-        $_SESSION['tab_remises'] = $array_remises;
-        $_SESSION['tab_remises_detailles'] = $array_remises_detailles;
+        // VARIABLES SESSIONS pour l'export de données
+        $_SESSION['tab_remises'] = $array_remises; // créer la variable de session tab_remises pour stocker le tableau des remises
+        $_SESSION['tab_remises_detailles'] = $array_remises_detailles; // créer une variable tab_remises_detailles pour stocker le tableau des remises avec le détail de chaque transaction
     }
     ?>
 

@@ -3,12 +3,12 @@
 session_start();
 include(dirname(__FILE__, 2) . "/router.php");
 
-if (isset($_SESSION['niveau'])) {
-    if ($_SESSION['niveau'] == 2) {
-        header("Location: login.php");
+if (isset($_SESSION['niveau'])) { 
+    if ($_SESSION['niveau'] == 2) { // si connecté en tant qu'admin
+        header("Location: login.php"); // redirige vers la page de connexion
     }
 } else {
-    header("Location: login.php");
+    header("Location: login.php"); // redirige vers la page de connexion
 }
 
 include ROOT . "/includes/cnx.inc.php";
@@ -34,7 +34,6 @@ include ROOT . "/includes/cnx.inc.php";
 </head>
 
 <body>
-
     <?php include ROOT . "/includes/components/nav.php"; ?>
 
     <div class="navbar mobile-nav">
@@ -118,21 +117,22 @@ include ROOT . "/includes/cnx.inc.php";
             $df = $_POST['df'];
             $ORDER;
             $SENS = $_POST['sens'];
-            if ($_SESSION['niveau'] == 1) {
+            if ($_SESSION['niveau'] == 1) { // si connecté en tant que Commerçant
                 if (!isset($_SESSION['SIREN'])) {
                     header("Location: login.php");
                 }
                 $SIREN = $_SESSION['SIREN'];
                 $ORDER = "montant";
-            } else if ($_SESSION['niveau'] == 3) {
+            } else if ($_SESSION['niveau'] == 3) { // si connecté en tant que PO
                 $SIREN = "%";
                 $ORDER = "SIREN";
             }
 
+            // récupère les informations d'un impayé (SIREN, date_vente, date_traitement, num_carte, reseau, num_dos, montant et libelle)
             $impayes = $cnx->prepare("SELECT SIREN, date_vente, date_traitement, num_carte, reseau, num_dos, montant, libelle FROM Commercant NATURAL JOIN Transaction NATURAL JOIN Impaye JOIN Motifs_Impaye ON Impaye.code_motif = Motifs_Impaye.code WHERE SIREN LIKE :siren AND date_traitement BETWEEN :dd AND :df ORDER BY $ORDER $SENS");
-            $impayes->bindParam(':siren', $SIREN);
-            $impayes->bindParam(':dd', $dd);
-            $impayes->bindParam(':df', $df);
+            $impayes->bindParam(':siren', $SIREN); // SIREN, '%' si aucun siren renseigné, permettant de rechercher tous les sirens
+            $impayes->bindParam(':dd', $dd); // date début
+            $impayes->bindParam(':df', $df); // date fin
             $verif = $impayes->execute();
             if (empty($verif)) {
                 exit("Erreur lors de la sélection");
@@ -198,7 +198,8 @@ include ROOT . "/includes/cnx.inc.php";
                 </div>
                 </div>';
             }
-            $_SESSION['tab_unpaids'] = $impayes;
+            // VARIABLES SESSIONS pour l'export de données
+            $_SESSION['tab_unpaids'] = $impayes; // créer la variable session tab_unpaids pour stocker le tableau des impayés
             echo '</section> <div style="display: block; margin-top: 15vh; visibility: hidden;">ecart</div>';
         }
         ?>
