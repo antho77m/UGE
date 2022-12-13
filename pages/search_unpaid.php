@@ -122,7 +122,7 @@ include ROOT . "/includes/cnx.inc.php";
         </form>
 
         <?php
-        if ((isset($_POST['dd']) && isset($_POST['df'])) && isset($_POST['sens']) && isset($_SESSION['niveau'])) { // 
+        if ((isset($_POST['dd']) && isset($_POST['df'])) && isset($_POST['sens']) && isset($_SESSION['niveau'])) { 
             $SIREN;
             $Raison_Sociale;
             $dd = $_POST['dd'];

@@ -115,7 +115,6 @@ include ROOT . "/includes/cnx.inc.php";
         $motifs = $cnx->prepare("SELECT libelle, count(libelle) AS nb_motifs FROM Commercant NATURAL JOIN Transaction NATURAL JOIN Impaye JOIN Motifs_Impaye ON Impaye.code_motif = Motifs_Impaye.code WHERE date_vente BETWEEN :dd AND :df GROUP BY libelle");
         $motifs->bindParam(':dd', $dd);
         $motifs->bindParam(':df', $df);
-        $motifs->bindParam(':siren', $SIREN);
         $verif = $motifs->execute();
         if (empty($verif)) {
             exit("Erreur lors de la sélection");
