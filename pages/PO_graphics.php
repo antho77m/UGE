@@ -17,12 +17,11 @@ include ROOT . "/includes/cnx.inc.php";
 <!DOCTYPE html>
 <html lang="fr">
 
-<head>
-    <meta charset="UTF-8">
+<head><meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Graphiques</title>
-    <meta property="og:description" content="Graphiques">
+    <title>Graphique</title>
+    <meta property="og:description" content="Graphique">
     <link rel="stylesheet" href="/src/styles/app.css?<?= sha1(rand()) ?>">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,6 +29,53 @@ include ROOT . "/includes/cnx.inc.php";
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="shortcut icon" type="image/svg+xml" href="/src/img/Logo UGE.svg" id="js-favicon" />
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+
+    <style type="text/css">
+        .highcharts-figure,
+        .highcharts-data-table table {
+            width: 100%;
+            margin: 1em auto;
+            z-index: 1;
+        }
+
+        .highcharts-data-table table {
+            font-family: Verdana, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #ebebeb;
+            margin: 10px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .highcharts-data-table caption {
+            padding: 1em 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .highcharts-data-table th {
+            font-weight: 600;
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table td,
+        .highcharts-data-table th,
+        .highcharts-data-table caption {
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table thead tr,
+        .highcharts-data-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .highcharts-data-table tr:hover {
+            background: #f1f7ff;
+        }
+    </style>
 </head>
 
 <body>

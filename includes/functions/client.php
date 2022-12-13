@@ -3,7 +3,7 @@
 function add_account($name, $siren, $password, $id)
 {
 
-    //verify if the $siren have 9 digits
+    //verifie que le siren est bien un nombre et qu'il fait 9 chiffres
     if (strlen($siren) != 9 || is_int($siren)) {
         echo "Le numéro de SIREN doit contenir 9 chiffres";
     } else {
@@ -23,8 +23,8 @@ function add_account($name, $siren, $password, $id)
             echo "Le numéro de SIREN ou l'identifiant est déjà utilisé";
         } else { //on peut ajouter le compte
 
-            //insertion dans la base de données du compte
-            //hash password with sha256
+            
+            //hash du mot de passe avec sha256
             $password = hash("sha256", $password);
             $password = strtoupper($password);
             $cnx->exec("START TRANSACTION");
