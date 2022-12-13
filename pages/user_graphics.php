@@ -289,11 +289,14 @@ include ROOT . "/includes/cnx.inc.php";
                     $array_dates = $array_tmp3; // remplace array_dates par array_tmp3 contenant la liste des mois où il y a eu des transactions
                 }
 
+                echo '<div class="graphics">'; 
+
                 if ($GRAPHIQUE == "lr") { // si la variable $graphique est égale à lr (linéaire), on include un graphique linéaire, sinon on include un graphique histogramme
                     include("graphics/linear_graphics.php");
                 } else {
                     include("graphics/histogram_graphics.php");
                 }
+                echo '</div>';
             }
         }
         echo '<div style="display: block; margin-top: 15vh; visibility: hidden;">ecart</div>';
