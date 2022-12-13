@@ -32,13 +32,13 @@
         $result = $sql->fetchAll(PDO::FETCH_OBJ);
         $ligne = $result;
 
-        // if (!empty($ligne)) {
-        //     if ($ligne[0]->montant_total >= 0) {
-        //         echo '<p>SIREN : ' . $ligne[0]->SIREN . ' Raison sociale : ' . $ligne[0]->Raison_sociale . ' Nombre de transactions : ' . $ligne[0]->nbT . ' Montant total : <span style="color : green;">' . $ligne[0]->montant_total . '</span> Date : ' . $date . '</p><br>';
-        //     } else {
-        //         echo '<p>SIREN : ' . $ligne[0]->SIREN . ' Raison sociale : ' . $ligne[0]->Raison_sociale . ' Nombre de transactions : ' . $ligne[0]->nbT . ' Montant total : <span style="color : red;">' . $ligne[0]->montant_total . '</span> Date : ' . $date . '</p><br>';
-        //     }
-        // }
+        if (!empty($ligne)) {
+            if ($ligne[0]->montant_total >= 0) {
+                echo '<p>SIREN : ' . $ligne[0]->SIREN . ' Raison sociale : ' . $ligne[0]->Raison_sociale . ' Nombre de transactions : ' . $ligne[0]->nbT . ' Montant total : <span style="color : green;">' . $ligne[0]->montant_total . '</span> Date : ' . $date . '</p><br>';
+            } else {
+                echo '<p>SIREN : ' . $ligne[0]->SIREN . ' Raison sociale : ' . $ligne[0]->Raison_sociale . ' Nombre de transactions : ' . $ligne[0]->nbT . ' Montant total : <span style="color : red;">' . $ligne[0]->montant_total . '</span> Date : ' . $date . '</p><br>';
+            }
+        }
 
 
         return $result;
@@ -57,21 +57,10 @@
         $result = $sql->fetch(PDO::FETCH_OBJ);
         $ligne = $result;
 
-        // debug($ligne);
-
-        // if (!empty($ligne)) {
-        //     if ($ligne->montant_total >= 0) {
-        //         echo '<p>SIREN : ' . $ligne->SIREN . ' Raison sociale : ' . $ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : green;">' . $ligne->montant_total . '</span> Date : ' . date('Y-m-d', time()) . '</p><br>';
-        //     } else {
-        //         echo '<p>SIREN : ' . $ligne->SIREN . ' Raison sociale : ' . $ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : red;">' . $ligne->montant_total . '</span> Date : ' . date('Y-m-d', time()) . '</p><br>';
-        //     }
-        // }
-
-
         return $result;
     }
 
-    function showFields($SIREN) // Affiche la raison sociale du client
+    function showFields($SIREN) // Show 
     {
         global $cnx;
 
@@ -82,7 +71,7 @@
         GROUP BY SIREN");
         $sql->execute();
         $result = $sql->fetch(PDO::FETCH_OBJ);
-
+        
         return $result;
     }
 

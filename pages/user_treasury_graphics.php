@@ -49,10 +49,11 @@
 $includegraph = false;
 $array_date = array();
 $array_montant = array();
-array_push($array_date, $date);
+$date1 = date('Y-m-d');
+array_push($array_date, $date1);
 for ($i = 0; $i < 14; $i++) {
-    $date = date('Y-m-d', strtotime('-1 day', strtotime($date)));
-    array_push($array_date, $date);
+    $date1 = date('Y-m-d', strtotime('-1 day', strtotime($date1)));
+    array_push($array_date, $date1);
 }
 $array_date = array_reverse($array_date);
 foreach ($array_date as $date_array) {
