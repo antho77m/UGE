@@ -157,6 +157,8 @@ include ROOT . "/includes/cnx.inc.php";
 
     <?php
     if (isset($_POST['dd']) && isset($_POST['df'])) {
+        $dd = $_POST['dd'];
+        $df = $_POST['df'];
         // récupère la somme des motifs des impayés entre deux dates  
         $motifs = $cnx->prepare("SELECT libelle, count(libelle) AS nb_motifs FROM Commercant NATURAL JOIN Transaction NATURAL JOIN Impaye JOIN Motifs_Impaye ON Impaye.code_motif = Motifs_Impaye.code WHERE date_vente BETWEEN :dd AND :df GROUP BY libelle");
         $motifs->bindParam(':dd', $dd);
