@@ -685,6 +685,7 @@ input[type="date"] {
 
 
 @media (min-width: 1300px) {
+
     .actions__wrapper {
         grid-template-columns: 1fr 1fr 1fr;
     }
@@ -752,10 +753,33 @@ input[type="date"] {
     }
 
     .graphics__form {
-        position: absolute;
-        left: 0px;
-        margin-top: 155px;
-        width: 60%;
+        align-items: flex-start;
+        flex: auto;
+    }
+
+    .PO_graphs_sect {
+        position: relative;
+    }
+    
+    .PO_graphs_sect .graphcontainerPO .highcharts-figure {
+        margin: 0;
+        width: 50%;
+        flex: auto;
+    }
+
+    .PO_graphs_sect .graphcontainerPO {
+        display: flex;
+        align-items: flex-start;
+        height: 500px;
+    }
+
+    .graphcontainerPO form {
+        width: 50%;
+        flex: auto;
+    }
+
+    .graphcontainerPO .form__group {
+        width: 100%;
     }
 
     .form__group,

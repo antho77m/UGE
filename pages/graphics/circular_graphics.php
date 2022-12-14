@@ -1,8 +1,10 @@
 <script src="exports/exporting.js"></script>
 <script src="exports/export-data.js"></script>
-<figure class="highcharts-figure">
+<figure class="highcharts-figure POGraph__graph">
     <div id="container"></div>
 </figure>
+<div style="display: block; margin-top: 15vh; visibility: hidden;">ecart</div>
+
 <script type="text/javascript">
     Highcharts.chart('container', {
         chart: {
