@@ -34,18 +34,71 @@
 
         if (!empty($ligne)) {
             if ($ligne[0]->montant_total >= 0) {
-                echo '  <div style="height: fit-content; visibility: hidden;"
-                            <p>SIREN : ' . $ligne[0]->SIREN . ' Raison sociale : ' . $ligne[0]->Raison_sociale . ' Nombre de transactions : ' . $ligne[0]->nbT . ' Montant total : <span style="color : green;">' . $ligne[0]->montant_total . '</span> Date : ' . $date . '
-                            </p>
-                        </div><br>';
+                echo ' 
+                    <section class="remittance_results_wrap">
+                        <div class="remittance_results">
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne[0]->SIREN . '</p>
+                            </div>
+                            
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne[0]->Raison_sociale . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Nombre de transactions</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne[0]->nbT . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
+                                <p style="font-size: 18px; font-weight: 500; color: var(--red75);"><span style="color: green;">' . $ligne[0]->montant_total . '</span></p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Date</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $date . '</p>
+                            </div>
+                        </div>
+                    </section>
+                ';
             } else {
-                echo '  <div style="height: fit-content; visibility: hidden;"
-                            <p>SIREN : ' . $ligne[0]->SIREN . ' Raison sociale : ' . $ligne[0]->Raison_sociale . ' Nombre de transactions : ' . $ligne[0]->nbT . ' Montant total : <span style="color : red;">' . $ligne[0]->montant_total . '</span> Date : ' . $date . '
-                            </p>
-                        </div><br>';
+                echo '  
+                    <section class="remittance_results_wrap">
+                        <div class="remittance_results">
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne[0]->SIREN . '</p>
+                            </div>
+                            
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne[0]->Raison_sociale . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Nombre de transactions</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne[0]->nbT . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
+                                <p style="font-size: 18px; font-weight: 500; color: var(--red75);"><span style="color: red;">' . $ligne[0]->montant_total . '</span></p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Date</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $date . '</p>
+                            </div>
+                        </div>
+                    </section>
+                ';
             }
         }
 
+        
 
         return $result;
     }

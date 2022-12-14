@@ -33,15 +33,67 @@
         $result = $sql->fetchAll(PDO::FETCH_OBJ);
         foreach ($result as $ligne) {
             if ($ligne->montant_total >= 0) {
-                echo '  <div style="height: fit-content; visibility: hidden;"
-                            <p>SIREN : ' . $ligne->SIREN . ' Raison sociale : ' . $ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : green;">' . $ligne->montant_total . '</span> Date : ' . $date . '
-                            </p>
-                        </div><br>';
+                echo ' 
+                    <section class="remittance_results_wrap">
+                        <div class="remittance_results">
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->SIREN . '</p>
+                            </div>
+                            
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->Raison_sociale . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Nombre de transactions</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->nbT . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
+                                <p style="font-size: 18px; font-weight: 500; color: var(--red75);"><span style="color: green;">' . $ligne->montant_total . '</span></p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Date</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $date . '</p>
+                            </div>
+                        </div>
+                    </section>
+                ';
             } else {
-                echo '  <div style="height: fit-content; visibility: hidden;"
-                            <p>SIREN : ' . $ligne->SIREN . ' Raison sociale : ' . $ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : red;">' . $ligne->montant_total . '</span> Date : ' . $date . '
-                            </p>
-                        </div><br>';
+                echo ' 
+                    <section class="remittance_results_wrap">
+                        <div class="remittance_results">
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->SIREN . '</p>
+                            </div>
+                            
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->Raison_sociale . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Nombre de transactions</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->nbT . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
+                                <p style="font-size: 18px; font-weight: 500; color: var(--red75);"><span style="color: red;">' . $ligne->montant_total . '</span></p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Date</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $date . '</p>
+                            </div>
+                        </div>
+                    </section>
+                ';
             }
         }
         return $result;
@@ -60,9 +112,67 @@
         $result = $sql->fetchAll(PDO::FETCH_OBJ);
         foreach ($result as $ligne) {
             if ($ligne->montant_total >= 0) {
-                echo '<p>SIREN : ' . $ligne->SIREN . ' Raison sociale : ' . $ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : green;">' . $ligne->montant_total . '</span> Date : ' . $date . '</p><br>';
+                echo ' 
+                    <section class="remittance_results_wrap">
+                        <div class="remittance_results">
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->SIREN . '</p>
+                            </div>
+                            
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->Raison_sociale . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Nombre de transactions</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->nbT . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
+                                <p style="font-size: 18px; font-weight: 500; color: var(--red75);"><span style="color: green;">' . $ligne->montant_total . '</span></p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Date</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $date . '</p>
+                            </div>
+                        </div>
+                    </section>
+                ';
             } else {
-                echo '<p>SIREN : ' . $ligne->SIREN . ' Raison sociale : ' . $ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : red;">' . $ligne->montant_total . '</span> Date : ' . $date . '</p><br>';
+                echo ' 
+                    <section class="remittance_results_wrap">
+                        <div class="remittance_results">
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->SIREN . '</p>
+                            </div>
+                            
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->Raison_sociale . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Nombre de transactions</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->nbT . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
+                                <p style="font-size: 18px; font-weight: 500; color: var(--red75);"><span style="color: red;">' . $ligne->montant_total . '</span></p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Date</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $date . '</p>
+                            </div>
+                        </div>
+                    </section>
+                ';
             }
         }
         return $result;
@@ -81,9 +191,67 @@
         $result = $sql->fetchAll(PDO::FETCH_OBJ);
         foreach ($result as $ligne) {
             if ($ligne->montant_total >= 0) {
-                echo '<p>SIREN : ' . $ligne->SIREN . ' Raison sociale : ' . $ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : green;">' . $ligne->montant_total . '</span> Date : ' . date('m-d-Y', time()) . '</p><br>';
+                echo ' 
+                    <section class="remittance_results_wrap">
+                        <div class="remittance_results">
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->SIREN . '</p>
+                            </div>
+                            
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->Raison_sociale . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Nombre de transactions</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->nbT . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
+                                <p style="font-size: 18px; font-weight: 500; color: var(--red75);"><span style="color: green;">' . $ligne->montant_total . '</span></p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Date</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . date('m-d-Y', time()) . '</p>
+                            </div>
+                        </div>
+                    </section>
+                ';
             } else {
-                echo '<p>SIREN : ' . $ligne->SIREN . ' Raison sociale : ' . $ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : red;">' . $ligne->montant_total . '</span> Date : ' . date('m-d-Y', time()) . '</p><br>';
+                echo ' 
+                    <section class="remittance_results_wrap">
+                        <div class="remittance_results">
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->SIREN . '</p>
+                            </div>
+                            
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->Raison_sociale . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Nombre de transactions</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->nbT . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
+                                <p style="font-size: 18px; font-weight: 500; color: var(--red75);"><span style="color: red;">' . $ligne->montant_total . '</span></p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Date</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . date('m-d-Y', time()) . '</p>
+                            </div>
+                        </div>
+                    </section>
+                ';
             }
         }
         return $result;
@@ -103,9 +271,67 @@
         $result = $sql->fetchAll(PDO::FETCH_OBJ);
         foreach ($result as $ligne) {
             if ($ligne->montant_total >= 0) {
-                echo '<p>SIREN : ' . $ligne->SIREN . ' Raison sociale : ' . $ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : green;">' . $ligne->montant_total . '</span> Date : ' . date('Y-m-d', time()) . '</p><br>';
+                echo ' 
+                    <section class="remittance_results_wrap">
+                        <div class="remittance_results">
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->SIREN . '</p>
+                            </div>
+                            
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->Raison_sociale . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Nombre de transactions</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->nbT . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
+                                <p style="font-size: 18px; font-weight: 500; color: var(--red75);"><span style="color: green;">' . $ligne->montant_total . '</span></p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Date</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . date('m-d-Y', time()) . '</p>
+                            </div>
+                        </div>
+                    </section>
+                ';
             } else {
-                echo '<p>SIREN : ' . $ligne->SIREN . 'Raison sociale : ' . $ligne->Raison_sociale . 'Nombre de transactions : ' . $ligne->nbT . 'Montant total : <span style="color : red;">' . $ligne->montant_total . '</span> Date : ' . date('Y-m-d', time()) . '</p><br>';
+                echo ' 
+                    <section class="remittance_results_wrap">
+                        <div class="remittance_results">
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->SIREN . '</p>
+                            </div>
+                            
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->Raison_sociale . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Nombre de transactions</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->nbT . '</p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
+                                <p style="font-size: 18px; font-weight: 500; color: var(--red75);"><span style="color: red;">' . $ligne->montant_total . '</span></p>
+                            </div>
+
+                            <div class="remittance_result">
+                                <p style="font-size: 14px; color: var(--blue75);">Date</p>
+                                <p style="font-size: 18px; font-weight: 500;">' . date('m-d-Y', time()) . '</p>
+                            </div>
+                        </div>
+                    </section>
+                ';
             }
         }
         return $result;
