@@ -34,9 +34,15 @@
 
         if (!empty($ligne)) {
             if ($ligne[0]->montant_total >= 0) {
-                echo '<p>SIREN : ' . $ligne[0]->SIREN . ' Raison sociale : ' . $ligne[0]->Raison_sociale . ' Nombre de transactions : ' . $ligne[0]->nbT . ' Montant total : <span style="color : green;">' . $ligne[0]->montant_total . '</span> Date : ' . $date . '</p><br>';
+                echo '  <div style="height: fit-content; visibility: hidden;"
+                            <p>SIREN : ' . $ligne[0]->SIREN . ' Raison sociale : ' . $ligne[0]->Raison_sociale . ' Nombre de transactions : ' . $ligne[0]->nbT . ' Montant total : <span style="color : green;">' . $ligne[0]->montant_total . '</span> Date : ' . $date . '
+                            </p>
+                        </div><br>';
             } else {
-                echo '<p>SIREN : ' . $ligne[0]->SIREN . ' Raison sociale : ' . $ligne[0]->Raison_sociale . ' Nombre de transactions : ' . $ligne[0]->nbT . ' Montant total : <span style="color : red;">' . $ligne[0]->montant_total . '</span> Date : ' . $date . '</p><br>';
+                echo '  <div style="height: fit-content; visibility: hidden;"
+                            <p>SIREN : ' . $ligne[0]->SIREN . ' Raison sociale : ' . $ligne[0]->Raison_sociale . ' Nombre de transactions : ' . $ligne[0]->nbT . ' Montant total : <span style="color : red;">' . $ligne[0]->montant_total . '</span> Date : ' . $date . '
+                            </p>
+                        </div><br>';
             }
         }
 

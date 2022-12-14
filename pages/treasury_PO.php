@@ -33,9 +33,15 @@
         $result = $sql->fetchAll(PDO::FETCH_OBJ);
         foreach ($result as $ligne) {
             if ($ligne->montant_total >= 0) {
-                echo '<p>SIREN : ' . $ligne->SIREN . ' Raison sociale : ' . $ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : green;">' . $ligne->montant_total . '</span> Date : ' . $date . '</p><br>';
+                echo '  <div style="height: fit-content; visibility: hidden;"
+                            <p>SIREN : ' . $ligne->SIREN . ' Raison sociale : ' . $ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : green;">' . $ligne->montant_total . '</span> Date : ' . $date . '
+                            </p>
+                        </div><br>';
             } else {
-                echo '<p>SIREN : ' . $ligne->SIREN . ' Raison sociale : ' . $ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : red;">' . $ligne->montant_total . '</span> Date : ' . $date . '</p><br>';
+                echo '  <div style="height: fit-content; visibility: hidden;"
+                            <p>SIREN : ' . $ligne->SIREN . ' Raison sociale : ' . $ligne->Raison_sociale . ' Nombre de transactions : ' . $ligne->nbT . ' Montant total : <span style="color : red;">' . $ligne->montant_total . '</span> Date : ' . $date . '
+                            </p>
+                        </div><br>';
             }
         }
         return $result;
