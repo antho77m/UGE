@@ -378,7 +378,7 @@
             </div>
 
             <div class="form_group" style="margin-top: 30px;">
-                <button class="btn" type="submit" name="submit" value="Envoyer">Envoyer</button>
+                <button class="btn" type="submit" name="submit" value="Valider">Envoyer</button>
             </div>
         </form>
     </section>

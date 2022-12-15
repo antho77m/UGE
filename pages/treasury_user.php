@@ -142,7 +142,7 @@
             <p class="blue75"><?= showFields($SIREN)->SIREN ?></p>
         </div>
         <div class="treasury_sep">
-            <p class="important big_text"><?= number_format(showFields($SIREN)->montant_total, 0, ',', ' ') ?> €</p>
+            <p class="important big_text"><span style="color:<?= showFields($SIREN)->montant_total > 0 ? 'green;' : 'inherit'?>"> <?= number_format(showFields($SIREN)->montant_total, 0, ',', ' ') ?> € </span></p>
         </div>
         <div class="treasury_sep">
             <p class="big_text">Nombre de transactions</p>
