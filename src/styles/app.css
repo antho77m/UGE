@@ -218,6 +218,23 @@ nav .privileges__title {
     justify-content: center;
     align-items: center;
     background: #BDEEB4;
+    position: relative;
+}
+
+.user__pic:hover::after {
+    background: var(--blue75);
+    cursor: pointer;
+    content: "Deconnexion";
+    position: absolute;
+    top: 60px;
+    left: 100%;
+    transform: translateX(-100%);
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    z-index: 10;
 }
 
 .user__pic p {
@@ -760,7 +777,7 @@ input[type="date"] {
     .PO_graphs_sect {
         position: relative;
     }
-    
+
     .PO_graphs_sect .graphcontainerPO .highcharts-figure {
         margin: 0;
         width: 50%;
@@ -847,15 +864,15 @@ input[type="date"] {
         width: 60% !important;
     }
 
-    .graphics{
+    .graphics {
         position: absolute;
         width: 50% !important;
         height: 50% !important;
         margin-top: 110px !important;
-        right: 20px; 
+        right: 20px;
     }
 
-    .graphics .highcharts-figure{
+    .graphics .highcharts-figure {
         width: 100% !important;
     }
 
