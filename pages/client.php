@@ -8,6 +8,7 @@ $actions_title = [
     'add' => 'Ajout de compte',
     'edit' => 'Modification de compte',
     'delete' => 'Suppression de compte',
+    'display' => 'Liste des comptes'
 ];
 
 include ROOT . "/includes/cnx.inc.php";
@@ -53,6 +54,10 @@ if ($action == 'delete') {
 
         <p style="font-size: 24px; margin: 10px 0;"><?= $actions_title[$action] ?></p>
 
+        <?php if ($action === 'display'){
+            display_clients();    
+        }else{
+        ?>
         <form action="" method="POST" class="client__form">
             <div class="form__group">
                 <label for="name">Nom du client</label>
@@ -93,9 +98,12 @@ if ($action == 'delete') {
                 <?php endif; ?>
             </div>
         </form>
+        <?php } ?>
 
 
     </section>
+
+    
 
     <script>
         const btnCancel = document.querySelector('.btn__cancel');

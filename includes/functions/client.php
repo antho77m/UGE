@@ -154,3 +154,18 @@ function load_clients() {
     return $result;
 }
 
+function display_clients(){
+    
+    require (dirname(__FILE__, 2) . '/cnx.inc.php');
+
+    $req = $cnx->prepare("SELECT SIREN,Raison_sociale,id FROM commercant");
+    $req->execute();
+    while ($result = $req->fetch()) {
+        echo $result['SIREN'] . " " . $result['Raison_sociale'] . " " . $result['id'] . "<br>";
+    }
+
+
+
+}
+
+

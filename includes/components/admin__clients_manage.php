@@ -33,12 +33,27 @@
                 </button>
             </div>
         </div>
+
+        <div class="action__self">
+            <p class="action__self_title">Liste de compte</p>
+            <p class="action__self_desc">Permet d'afficher la liste des compte commerçant de la base de données.</p>
+            <div class="action__self_btn dis">
+                <button class="action_btn btn_dis">
+                    <span class="material-symbols-outlined icon">display</span>
+                    Afficher
+                </button>
+            </div>
+        </div>
     </div>
+
+    
+
 </section>
 
 <script>
     const btnAdd = document.querySelector('.add');
     const btnDelete = document.querySelector('.del');
+    const btnDisplay = document.querySelector('.dis');
 
     btnAdd.addEventListener('click', () => {
         window.location.href = "<?= $basepath ?>/pages/client.php?add";
@@ -46,5 +61,9 @@
 
     btnDelete.addEventListener('click', () => {
         window.location.href = "<?= $basepath ?>/pages/client.php?delete";
+    });
+
+    btnDisplay.addEventListener('click', () => {
+        window.location.href = "<?= $basepath ?>/pages/client.php?display";
     });
 </script>
