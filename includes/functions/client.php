@@ -10,19 +10,19 @@ function add_account($name, $siren, $password, $id)
         
         include ROOT . "/includes/cnx.inc.php";
 
-        $req = $cnx->prepare("SELECT * FROM commercant WHERE siren = :siren");
-        $req->bindParam(":siren", $siren);
-        $resultSIREN = $req->execute();
+        $req_co = $cnx->prepare("SELECT * FROM commercant WHERE siren = :siren");
+        $req_co->bindParam(":siren", $siren);
+        $req_co->execute();
 
-        $req = $cnx->prepare("SELECT * FROM compte WHERE id = :id");
-        $req->bindParam(":id", $siren);
-        $resultID = $req->execute();
+        $req_id = $cnx->prepare("SELECT * FROM compte WHERE id = :id");
+        $req_id->bindParam(":id", $id);
+        $req_id->execute();
 
 
-        if (!$resultSIREN || !$resultID) {
+        if ($req_id->rowCount() != 0 || $req_co->rowCount() != 0) { //le siren ou l'id est déjà utilisé
             echo "Le numéro de SIREN ou l'identifiant est déjà utilisé";
         } else { //on peut ajouter le compte
-
+            
             
             //hash du mot de passe avec sha256
             $password = hash("sha256", $password);

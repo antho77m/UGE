@@ -130,6 +130,9 @@
         GROUP BY SIREN");
         $sql->execute();
         $result = $sql->fetch(PDO::FETCH_OBJ);
+        if (empty($result)) {
+            exit();
+        }
         
         return $result;
     }
