@@ -144,7 +144,7 @@ include ROOT . "/includes/cnx.inc.php";
                 </div>
             </div>
 
-            <div class="radio__container">
+            <!-- <div class="radio__container">
                 <p class="options_text"> Ou une option </p>
                 <div class="radio__graphics">
                     <label for="4m">Sur 4 mois glissants</label>
@@ -153,7 +153,28 @@ include ROOT . "/includes/cnx.inc.php";
                     <input type="radio" id="12mois" name="mg" value="12">
 
                 </div>
+            </div> -->
+
+            <div class="form__group radioformgroup">
+                <input type="radio" id="4mois" name="mg" value="4" style="margin-right: 10px;" class="radioinput">
+                <label for="4m">Sur 4 mois glissants</label>
             </div>
+
+            <div class="form__group radioformgroup">
+                <input type="radio" id="12mois" name="mg" value="12" style="margin-right: 10px;" class="radioinput">
+                <label for="12m">Sur 12 mois glissants</label>
+            </div>
+
+            <script>
+                // selectionne la radio quand on clique sur le form__group
+                const radioformgroup = document.querySelectorAll('.radioformgroup');
+                radioformgroup.forEach((formgroup) => {
+                    formgroup.addEventListener('click', () => {
+                        formgroup.querySelector('input').checked = true;
+                    })
+                })
+
+            </script>
 
             <div class="select__group" id="select_graphics" style="margin-top:30px;">
                 <label for="graphiques">Type de graphique:</label>
@@ -165,7 +186,6 @@ include ROOT . "/includes/cnx.inc.php";
                     </select>
                 </div>
             </div>
-
 
             <input type="submit" name="submit" value="Générer un graphique" class="btn" style="margin-top:30px;" id="button_graphics" />
         </form>
@@ -289,7 +309,7 @@ include ROOT . "/includes/cnx.inc.php";
                     $array_dates = $array_tmp3; // remplace array_dates par array_tmp3 contenant la liste des mois où il y a eu des transactions
                 }
 
-                echo '<div class="graphics">'; 
+                echo '<div class="graphics">';
 
                 if ($GRAPHIQUE == "lr") { // si la variable $graphique est égale à lr (linéaire), on include un graphique linéaire, sinon on include un graphique histogramme
                     include("graphics/linear_graphics.php");

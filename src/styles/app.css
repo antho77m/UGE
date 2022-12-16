@@ -829,24 +829,12 @@ input[type="date"] {
         margin-bottom: 40px;
     }
 
-    input[type="radio"][id="12mois"],
+    /* input[type="radio"][id="12mois"],
     input[type="radio"][id="4mois"] {
         width: 0.6vw;
         height: 0.6vw;
         margin-top: 4.5%;
-    }
-
-    #select_graphics,
-    #button_graphics {
-        margin-right: 8%;
-    }
-
-    input[type="radio"][id="12mois"],
-    input[type="radio"][id="4mois"] {
-        width: 0.6vw;
-        height: 0.6vw;
-        margin-top: 4.5%;
-    }
+    } */
 
     #select_graphics,
     #button_graphics {
@@ -874,6 +862,27 @@ input[type="date"] {
 
     .graphics .highcharts-figure {
         width: 100% !important;
+    }
+
+    input[type="radio"] {
+        -ms-transform: scale(1.5);
+        /* IE 9 */
+        -webkit-transform: scale(1.5);
+        /* Chrome, Safari, Opera */
+        transform: scale(1.5);
+        accent-color: var(--red);
+    }
+
+    .radioformgroup {
+        display: flex;
+        align-items: center;
+        width: fit-content;
+        margin-bottom: 10px;
+    }
+
+    .radioformgroup:hover label {
+        text-decoration: underline;
+        color: var(--blue);
     }
 
     .options_text {
