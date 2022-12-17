@@ -232,7 +232,9 @@ include ROOT . "/includes/cnx.inc.php";
                 foreach ($motifs as $ligne) { // ajoute le nombre d'itérations de chaque motif d'impayé dans array_motifs
                     $array_motifs[$ligne['libelle']] = $ligne['nb_motifs'];
                 }
+                echo '<div class="graphics">';
                 include("graphics/circular_graphics.php");
+                echo '</div>';
             } else {
                 // récupère la somme des montants et la date de vente des chiffre d'affaires entre deux dates
                 $chiffre_affaires = $cnx->prepare("SELECT SUM(montant) AS montant, date_vente FROM Commercant NATURAL JOIN Transaction WHERE SIREN = :siren AND date_vente BETWEEN :dd AND :df GROUP BY date_vente ORDER BY date_vente");
@@ -310,7 +312,6 @@ include ROOT . "/includes/cnx.inc.php";
                 }
 
                 echo '<div class="graphics">';
-
                 if ($GRAPHIQUE == "lr") { // si la variable $graphique est égale à lr (linéaire), on include un graphique linéaire, sinon on include un graphique histogramme
                     include("graphics/linear_graphics.php");
                 } else {

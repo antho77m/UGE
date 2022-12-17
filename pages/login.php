@@ -68,7 +68,7 @@ if (isset($_GET['error']) && $_GET['error'] == 1) {
                     <label for="id">Identifiant</label>
                     <div class="input__container">
                         <span class="material-symbols-outlined icon">Login</span>
-                        <input type="text" name="login" id="id" placeholder="monidentifiant" required>
+                        <input type="text" name="login" id="id" placeholder="Mon identifiant" required>
                     </div>
                 </div>
 

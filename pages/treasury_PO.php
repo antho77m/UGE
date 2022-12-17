@@ -19,16 +19,17 @@
 <body>
 
     <?php
-    function show_treasury_all_client_date($date)
-    { // Show the solde of all client has a date
+    function showTreasuryAllClients($SIREN, $date, $ORDER, $SENS)
+    { // Show the solde of all client with options like order and sens and/or date
         global $cnx;
-
-        //require_once("commercant.php");
-        $sql = $cnx->prepare("SELECT SIREN, Raison_sociale, count(num_autorisation) AS nbT, 
-        COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='+' AND date_traitement <= '$date'), 0) - COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='-' AND date_traitement <= '$date'), 0) AS montant_total
-        FROM Commercant AS R NATURAL JOIN Transaction
-        WHERE date_traitement <= '$date' AND SIREN LIKE '%'
-        GROUP BY SIREN ORDER BY ''");
+        $sql = $cnx->prepare("SELECT SIREN, Raison_sociale, 
+        COALESCE((SELECT count(num_autorisation) FROM Transaction WHERE SIREN = R.SIREN), 0) AS nbT, 
+        COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='+' AND date_traitement <= :date), 0) - COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='-' AND date_traitement <= :date), 0) AS montant_total
+        FROM Commercant AS R
+        WHERE SIREN LIKE :siren
+        GROUP BY SIREN ORDER BY $ORDER $SENS");
+        $sql->bindParam(':siren', $SIREN);
+        $sql->bindParam(':date', $date);
         $sql->execute();
         $result = $sql->fetchAll(PDO::FETCH_OBJ);
         foreach ($result as $ligne) {
@@ -90,244 +91,6 @@
                             <div class="remittance_result">
                                 <p style="font-size: 14px; color: var(--blue75);">Date</p>
                                 <p style="font-size: 18px; font-weight: 500;">' . $date . '</p>
-                            </div>
-                        </div>
-                    </section>
-                ';
-            }
-        }
-        return $result;
-    }
-
-    function show_treasury_client_date($SIREN, $date)
-    { // Show the solde of a client has a date
-        global $cnx;
-
-        $sql = $cnx->prepare("SELECT SIREN, Raison_sociale, count(num_autorisation) AS nbT, 
-        COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='+' AND date_traitement <= '$date'), 0) - COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='-' AND date_traitement <= '$date'), 0) AS montant_total
-        FROM Commercant AS R NATURAL JOIN Transaction
-        WHERE date_traitement <= '$date' AND SIREN LIKE '%$SIREN'
-        GROUP BY SIREN");
-        $sql->execute();
-        $result = $sql->fetchAll(PDO::FETCH_OBJ);
-        foreach ($result as $ligne) {
-            if ($ligne->montant_total >= 0) {
-                echo ' 
-                    <section class="remittance_results_wrap">
-                        <div class="remittance_results">
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->SIREN . '</p>
-                            </div>
-                            
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->Raison_sociale . '</p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Nombre de transactions</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->nbT . '</p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
-                                <p style="font-size: 18px; font-weight: 500; color: var(--red75);"><span style="color: green;">' . $ligne->montant_total . '</span></p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Date</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $date . '</p>
-                            </div>
-                        </div>
-                    </section>
-                ';
-            } else {
-                echo ' 
-                    <section class="remittance_results_wrap">
-                        <div class="remittance_results">
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->SIREN . '</p>
-                            </div>
-                            
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->Raison_sociale . '</p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Nombre de transactions</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->nbT . '</p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
-                                <p style="font-size: 18px; font-weight: 500; color: var(--red75);"><span style="color: red;">' . $ligne->montant_total . '</span></p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Date</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $date . '</p>
-                            </div>
-                        </div>
-                    </section>
-                ';
-            }
-        }
-        return $result;
-    }
-
-
-    function show_treasury_client($SIREN)
-    { // Show the solde of a client
-        global $cnx;
-        $sql = $cnx->prepare("SELECT SIREN, Raison_sociale, count(num_autorisation) AS nbT, 
-        COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='+'), 0) - COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='-'), 0) AS montant_total
-        FROM Commercant AS R NATURAL JOIN Transaction
-        WHERE SIREN LIKE '%$SIREN'
-        GROUP BY SIREN ORDER BY ''");
-        $sql->execute();
-        $result = $sql->fetchAll(PDO::FETCH_OBJ);
-        foreach ($result as $ligne) {
-            if ($ligne->montant_total >= 0) {
-                echo ' 
-                    <section class="remittance_results_wrap">
-                        <div class="remittance_results">
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->SIREN . '</p>
-                            </div>
-                            
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->Raison_sociale . '</p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Nombre de transactions</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->nbT . '</p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
-                                <p style="font-size: 18px; font-weight: 500; color: var(--red75);"><span style="color: green;">' . $ligne->montant_total . '</span></p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Date</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . date('m-d-Y', time()) . '</p>
-                            </div>
-                        </div>
-                    </section>
-                ';
-            } else {
-                echo ' 
-                    <section class="remittance_results_wrap">
-                        <div class="remittance_results">
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->SIREN . '</p>
-                            </div>
-                            
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->Raison_sociale . '</p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Nombre de transactions</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->nbT . '</p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
-                                <p style="font-size: 18px; font-weight: 500; color: var(--red75);"><span style="color: red;">' . $ligne->montant_total . '</span></p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Date</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . date('m-d-Y', time()) . '</p>
-                            </div>
-                        </div>
-                    </section>
-                ';
-            }
-        }
-        return $result;
-    }
-
-
-    function show_treasury_all_client($trie)
-    { // Fonction qui affiche le solde des transactions totale de la trésorerie de tout client
-        global $cnx;
-
-        $sql = $cnx->prepare("SELECT SIREN, Raison_sociale, count(num_autorisation) AS nbT, 
-        COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='+'), 0) - COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='-'), 0) AS montant_total
-        FROM Commercant AS R NATURAL JOIN Transaction
-        WHERE SIREN LIKE '%'
-        GROUP BY SIREN $trie");
-        $sql->execute();
-        $result = $sql->fetchAll(PDO::FETCH_OBJ);
-        foreach ($result as $ligne) {
-            if ($ligne->montant_total >= 0) {
-                echo ' 
-                    <section class="remittance_results_wrap">
-                        <div class="remittance_results">
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->SIREN . '</p>
-                            </div>
-                            
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->Raison_sociale . '</p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Nombre de transactions</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->nbT . '</p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
-                                <p style="font-size: 18px; font-weight: 500; color: var(--red75);"><span style="color: green;">' . $ligne->montant_total . '</span></p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Date</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . date('m-d-Y', time()) . '</p>
-                            </div>
-                        </div>
-                    </section>
-                ';
-            } else {
-                echo ' 
-                    <section class="remittance_results_wrap">
-                        <div class="remittance_results">
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->SIREN . '</p>
-                            </div>
-                            
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->Raison_sociale . '</p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Nombre de transactions</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->nbT . '</p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
-                                <p style="font-size: 18px; font-weight: 500; color: var(--red75);"><span style="color: red;">' . $ligne->montant_total . '</span></p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Date</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . date('m-d-Y', time()) . '</p>
                             </div>
                         </div>
                     </section>
@@ -343,7 +106,7 @@
             <div class="form_group" style="width: 100%;">
                 <label for="">Date : </label>
                 <div class="input__container">
-                    <input type="date" name="date" id="date">
+                    <input type="date" name="date" id="date" value=<?= date('Y-m-d') ?>>
                 </div>
             </div>
 
@@ -357,21 +120,20 @@
             <div class="form_group" style="width: 100%; margin-bottom: 10px;">
                 <label for="">Afficher les soldes des clients :</label>
                 <select id="trie_type" name="trie_type">
-                    <option value="Aucun">Aucun</option>
                     <option value="SIREN">SIREN</option>
-                    <option value="Montant">Montant</option>
+                    <option value="montant_total">Montant</option>
                 </select>
             </div>
 
             <div class="form_group" style="width: 100%;">
                 <div class="form_radio">
                     <div class="form_select">
-                        <input type="radio" id="croissant" name="sens" value="croissant">
+                        <input type="radio" id="croissant" name="sens" value="ASC">
                         <label for="">Croissant</label>
                     </div>
 
                     <div class="form_select">
-                        <input type="radio" id="decroissant" name="sens" value="decroissant">
+                        <input type="radio" id="decroissant" name="sens" value="DESC">
                         <label for="">Décroissant</label>
                     </div>
                 </div>
@@ -386,64 +148,20 @@
     <?php
     if (isset($_POST['submit'])) {
         $date = date('Y-m-d');
-        if (!empty($_POST['date'])) {
-            $date = $_POST['date'];
-            if (!empty($_POST['SIREN'])) {
-                echo '<h3>Solde d\'un client à une date donné</h3> <br>';
-                $date = $_POST['date'];
-                $SIREN = $_POST['SIREN'];
-                array_push($array_export, show_treasury_client_date($SIREN, $date));
-                echo '<br>';
-            } else {
-                $date = $_POST['date'];
-                echo '<h3>Solde des clients à une date donné</h3> <br>';
-                array_push($array_export, show_treasury_all_client_date($date));
-                echo '<br>';
-            }
-        } else if (!empty($_POST['SIREN'])) {
-            echo '<h3>Solde d\'un client</h3> <br>';
+        $SIREN = '%';
+        $ORDER = '';
+        $SENS = 'ASC';
+        if (isset($_POST['date'])) {
+            $date = $_POST['date']; 
+        }
+        if (!empty($_POST['SIREN'])) {
             $SIREN = $_POST['SIREN'];
-            array_push($array_export, show_treasury_client($SIREN));
-            echo '<br>';
-        } else if (!empty($_POST['trie_type']) != '') {
-            if ($_POST['trie_type'] == 'SIREN') {
-                if (isset($_POST['sens'])) {
-                    if ($_POST['sens'] == 'croissant') {
-                        echo '<h3>Trier par SIREN croissant</h3><br>';
-                        array_push($array_export, show_treasury_all_client("ORDER BY SIREN ASC"));
-                        echo '<br>';
-                    } elseif ($_POST['sens'] == 'decroissant') {
-                        echo '<h3>Trier par SIREN décroissant</h3><br>';
-                        array_push($array_export, show_treasury_all_client("ORDER BY SIREN DESC"));
-                        echo '<br>';
-                    }
-                } else {
-                    echo '<h3>Solde clients </h3><br>';
-                    array_push($array_export, show_treasury_all_client(''));
-                    echo '<br>';
-                }
-            } else if ($_POST['trie_type'] == 'Montant') {
-                if (isset($_POST['sens'])) {
-                    if ($_POST['sens'] == 'croissant') {
-                        echo '<h3>Trier par Montant croissant</h3><br>';
-                        array_push($array_export, show_treasury_all_client("ORDER BY montant_total ASC"));
-                        echo '<br>';
-                    } elseif ($_POST['sens'] == 'decroissant') {
-                        echo '<h3>Trier par Montant décroissant</h3><br>';
-                        array_push($array_export, show_treasury_all_client("ORDER BY montant_total DESC"));
-                        echo '<br>';
-                    }
-                } else {
-                    echo '<h3>Trier par Montant </h3><br>';
-                    array_push($array_export, show_treasury_all_client(''));
-                    echo '<br>';
-                }
-            } elseif ($_POST['trie_type'] == 'Aucun') {
-                echo '<h3>Solde des clients</h3> <br>';
-                array_push($array_export, show_treasury_all_client(''));
-                echo '<br>';
-            }
-            echo '<br>';
+        }
+        if (isset($_POST['trie_type'])) {
+            $ORDER = $_POST['trie_type'];
+        }
+        if (isset($_POST['sens'])) {
+            $SENS = $_POST['sens'];
         }
         echo '
         <p style="margin-left: 18px;">Exporter les résultats en :</p>
@@ -453,6 +171,7 @@
         <button class="export" onclick="window.open(\'/pages/exports/export_treasury.php?format=PDF&date=' . $date . '\', \'_blank\');">PDF</button>
         </div>
         ';
+        array_push($array_export, showTreasuryAllClients($SIREN, $date, $ORDER, $SENS));
     }
     ?>
 
