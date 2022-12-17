@@ -121,17 +121,17 @@
     ?>
 
     <?php
-    if (isset($_POST['submit'])) {
-        if (isset($_POST['date'])) {
+    if (isset($_POST['submit'])) { // si le formulaire a été validé
+        if (isset($_POST['date'])) { // si une date a été choisi
             $date = $_POST['date'];
-            array_push($array_export, showTreasury($SIREN, $date));
+            array_push($array_export, showTreasury($SIREN, $date)); // ajoute le tableau du compte et son solde à la date choisi dans array_export
         } else {
             $date = date('Y-m-d');
-            array_push($array_export, showTreasury($SIREN, $date));
+            array_push($array_export, showTreasury($SIREN, $date)); // ajoute le tableau du compte et son solde dans array_export
         }
-    } else {
+    } else { // si le formulaire n'a pas été vaidé
         $date = date('Y-m-d');
-        array_push($array_export, showTreasury($SIREN, $date));
+        array_push($array_export, showTreasury($SIREN, $date)); // ajoute le tableau du compte et son solde dans array_export
     }
     echo '
         <p style="margin-left: 18px;">Exporter les résultats en :</p>
@@ -141,7 +141,7 @@
         <button class="export" onclick="window.open(\'/pages/exports/export_treasury.php?format=PDF&date=' . $date . '\', \'_blank\');">PDF</button>
         </div>
         ';
-    include("user_treasury_graphics.php");
+    include("user_treasury_graphics.php"); // include le code du graphique linéaire
     echo '<div style="display: block; margin-top: 15vh; visibility: hidden;">ecart</div>';
     ?>
     <script src="/src/scripts/app.js?v=<?= sha1(rand()) ?>" defer></script>

@@ -91,19 +91,19 @@ include ROOT . "/includes/cnx.inc.php";
     </section>
 
     <?php
-    $array_export = array();
-    if ($_SESSION['niveau'] == 1) {
+    $array_export = array(); // création du tableau qui va prendre en valeurs les éléments à exporter (comptes et soldes)
+    if ($_SESSION['niveau'] == 1) { // Si connecté en tant que Commerçant
         if (!isset($_SESSION['SIREN'])) {
-            header("Location: login.php");
+            header("Location: login.php"); // redirige vers la page de connexion
         }
         $SIREN = $_SESSION['SIREN'];
         include("treasury_user.php");
-    } else if ($_SESSION['niveau'] == 3) {
+    } else if ($_SESSION['niveau'] == 3) { // Si connecté en tant que Product Owner
         include("treasury_PO.php");
     } else {
-        echo "redirection to page connexion!!!";
+        header("Location: login.php"); // redirige vers la page de connexion
     }
-    $_SESSION['tab_treasury'] = $array_export;
+    $_SESSION['tab_treasury'] = $array_export; // mise en variable de session de array_export
     ?>
 
     <script src="/src/scripts/app.js?v=<?= sha1(rand()) ?>" defer></script>
