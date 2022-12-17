@@ -54,56 +54,56 @@ if ($action == 'delete') {
 
         <p style="font-size: 24px; margin: 10px 0;"><?= $actions_title[$action] ?></p>
 
-        <?php if ($action === 'display'){
-            display_clients();    
-        }else{
+        <?php if ($action === 'display') {
+            display_clients();
+        } else {
         ?>
-        <form action="" method="POST" class="client__form">
-            <div class="form__group">
-                <label for="name">Nom du client</label>
-                <div class="input__container">
-                    <input type="text" name="name" id="name" placeholder="Raison sociale" autocomplete="off">
-                </div>
-            </div>
-
-            <div class="form__group">
-                <label for="name">N° de SIREN</label>
-                <div class="input__container">
-                    <input type="number" name="siren" id="siren" placeholder="SIREN" autocomplete="off">
-                </div>
-            </div>
-
-            <div class="form__group">
-                <label for="name">Identifiant du compte</label>
-                <div class="input__container">
-                    <input type="number" name="id" id="id" placeholder="Identifiant du compte" autocomplete="off">
-                </div>
-            </div>
-
-            <?php if ($action !== 'delete') : ?>
+            <form action="" method="POST" class="client__form">
                 <div class="form__group">
-                    <label for="name">Mot de passe</label>
+                    <label for="name">Nom du client</label>
                     <div class="input__container">
-                        <input type="password" name="password" id="password" placeholder="Mot de passe" autocomplete="off">
+                        <input type="text" name="name" id="name" placeholder="Raison sociale" autocomplete="off">
                     </div>
                 </div>
-            <?php endif; ?>
 
-            <div class="form__group form__action">
-                <button class="btn__cancel actions_btn"><span class="material-symbols-outlined icon">close</span>Annuler</button>
-                <?php if ($action === 'add') : ?>
-                    <button type="sumbit" class="btn__confirm actions_btn"><span class="material-symbols-outlined icon">add</span>Confirmer</button>
-                <?php elseif ($action === 'delete') : ?>
-                    <button type="sumbit" class="btn__delete actions_btn"><span class="material-symbols-outlined icon">delete</span>Suppression</button>
+                <div class="form__group">
+                    <label for="name">N° de SIREN</label>
+                    <div class="input__container">
+                        <input type="number" name="siren" id="siren" placeholder="SIREN" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="form__group">
+                    <label for="name">Identifiant du compte</label>
+                    <div class="input__container">
+                        <input type="number" name="id" id="id" placeholder="Identifiant du compte" autocomplete="off">
+                    </div>
+                </div>
+
+                <?php if ($action !== 'delete') : ?>
+                    <div class="form__group">
+                        <label for="name">Mot de passe</label>
+                        <div class="input__container">
+                            <input type="password" name="password" id="password" placeholder="Mot de passe" autocomplete="off">
+                        </div>
+                    </div>
                 <?php endif; ?>
-            </div>
-        </form>
+
+                <div class="form__group form__action">
+                    <button class="btn__cancel actions_btn"><span class="material-symbols-outlined icon">close</span>Annuler</button>
+                    <?php if ($action === 'add') : ?>
+                        <button type="sumbit" class="btn__confirm actions_btn"><span class="material-symbols-outlined icon">add</span>Confirmer</button>
+                    <?php elseif ($action === 'delete') : ?>
+                        <button type="sumbit" class="btn__delete actions_btn"><span class="material-symbols-outlined icon">delete</span>Suppression</button>
+                    <?php endif; ?>
+                </div>
+            </form>
         <?php } ?>
 
 
     </section>
 
-    
+
 
     <script>
         const btnCancel = document.querySelector('.btn__cancel');

@@ -56,7 +56,6 @@ if (isset($_GET['error']) && $_GET['error'] == 1) {
 
         <?php include ROOT . "/includes/components/logo.php";
 
-        // setcookie('blocked', '', 1);
 
         if (!isset($_COOKIE['blocked'])) {
 

@@ -24,7 +24,7 @@
         </div>
 
         <div class="action__self">
-            <p class="action__self_title">Supression de compte</p>
+            <p class="action__self_title">Suppression de compte</p>
             <p class="action__self_desc">Permet la suppression d’un compte commerçant de la base de données suite aux informations transmises par le Product Owner.</p>
             <div class="action__self_btn del">
                 <button class="action_btn btn_del">
@@ -35,11 +35,11 @@
         </div>
 
         <div class="action__self">
-            <p class="action__self_title">Liste de compte</p>
-            <p class="action__self_desc">Permet d'afficher la liste des compte commerçant de la base de données.</p>
+            <p class="action__self_title">Affichage des comptes</p>
+            <p class="action__self_desc">Permet l'affichage de la liste des compte commerçant de la base de données avec leur SIREN, leur raison sociale et leur identifiant.</p>
             <div class="action__self_btn dis">
                 <button class="action_btn btn_dis">
-                    <span class="material-symbols-outlined icon">display</span>
+                    <span class="material-symbols-outlined icon">patient_list</span>
                     Afficher
                 </button>
             </div>

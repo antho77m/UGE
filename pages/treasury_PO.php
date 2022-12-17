@@ -34,73 +34,45 @@
         $result = $sql->fetchAll(PDO::FETCH_OBJ);
         foreach ($result as $ligne) {
             if ($ligne->montant_total >= 0) {
-                echo ' 
-                    <section class="remittance_results_wrap">
-                        <div class="remittance_results">
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->SIREN . '</p>
-                            </div>
-                            
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->Raison_sociale . '</p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Nombre de transactions</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->nbT . '</p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
-                                <p style="font-size: 18px; font-weight: 500; color: var(--red75);"><span style="color: green;">' . $ligne->montant_total . '</span></p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Date</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $date . '</p>
-                            </div>
-                        </div>
-                    </section>
-                ';
+                $green = 'green';
             } else {
-                echo ' 
-                    <section class="remittance_results_wrap">
-                        <div class="remittance_results">
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->SIREN . '</p>
-                            </div>
-                            
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->Raison_sociale . '</p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Nombre de transactions</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $ligne->nbT . '</p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
-                                <p style="font-size: 18px; font-weight: 500; color: var(--red75);"><span style="color: red;">' . $ligne->montant_total . '</span></p>
-                            </div>
-
-                            <div class="remittance_result">
-                                <p style="font-size: 14px; color: var(--blue75);">Date</p>
-                                <p style="font-size: 18px; font-weight: 500;">' . $date . '</p>
-                            </div>
-                        </div>
-                    </section>
-                ';
+                $green = 'red';
             }
+            echo '
+                <section class="remittance_results_wrap">
+                    <div class="remittance_results">
+                        <div class="remittance_result">
+                            <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
+                            <p style="font-size: 18px; font-weight: 500;">' . $ligne->SIREN . '</p>
+                        </div>
+                        
+                        <div class="remittance_result">
+                            <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
+                            <p style="font-size: 18px; font-weight: 500;">' . $ligne->Raison_sociale . '</p>
+                        </div>
+
+                        <div class="remittance_result">
+                            <p style="font-size: 14px; color: var(--blue75);">Nombre de transactions</p>
+                            <p style="font-size: 18px; font-weight: 500;">' . $ligne->nbT . '</p>
+                        </div>
+
+                        <div class="remittance_result">
+                            <p style="font-size: 14px; color: var(--blue75);">Montant total</p>
+                            <p style="font-size: 18px; font-weight: 500; color: var(--red75);"><span style="color:' .$green. ';">' . $ligne->montant_total . '</span></p>
+                        </div>
+
+                        <div class="remittance_result">
+                            <p style="font-size: 14px; color: var(--blue75);">Date</p>
+                            <p style="font-size: 18px; font-weight: 500;">' . $date . '</p>
+                        </div>
+                    </div>
+                </section>
+            ';
         }
         return $result;
     }
     ?>
-
+    
     <section class="graphics_section">
         <form action="" method="post" class="client_form">
             <div class="form_group" style="width: 100%;">
@@ -152,7 +124,7 @@
         $ORDER = '';
         $SENS = 'ASC';
         if (isset($_POST['date'])) {
-            $date = $_POST['date']; 
+            $date = $_POST['date'];
         }
         if (!empty($_POST['SIREN'])) {
             $SIREN = $_POST['SIREN'];
@@ -176,7 +148,7 @@
     ?>
 
     <div style="display: block; margin-top: 15vh; visibility: hidden;">ecart</div>
-    
+
 
     <script src="/src/scripts/app.js?v=<?= sha1(rand()) ?>" defer></script>
 </body>

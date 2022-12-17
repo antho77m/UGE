@@ -7,7 +7,7 @@ function add_account($name, $siren, $password, $id)
     if (strlen($siren) != 9 || is_int($siren)) {
         echo "Le numéro de SIREN doit contenir 9 chiffres";
     } else {
-        
+
         include ROOT . "/includes/cnx.inc.php";
 
         $req_co = $cnx->prepare("SELECT * FROM commercant WHERE siren = :siren");
@@ -22,8 +22,8 @@ function add_account($name, $siren, $password, $id)
         if ($req_id->rowCount() != 0 || $req_co->rowCount() != 0) { //le siren ou l'id est déjà utilisé
             echo "Le numéro de SIREN ou l'identifiant est déjà utilisé";
         } else { //on peut ajouter le compte
-            
-            
+
+
             //hash du mot de passe avec sha256
             $password = hash("sha256", $password);
             $password = strtoupper($password);
@@ -97,7 +97,7 @@ function delete_account($name, $siren, $id)
                 $cnx->exec("ROLLBACK");
                 echo "Erreur lors de la suppression des transactions";
             }
-            
+
 
             //suppression du commerçant
             $req = $cnx->prepare("DELETE FROM commercant WHERE id = :id AND siren = :siren AND raison_sociale = :name");
@@ -125,23 +125,18 @@ function delete_account($name, $siren, $id)
 
 function count_clients()
 {
-    require (dirname(__FILE__, 2) . '/cnx.inc.php');
+    require(dirname(__FILE__, 2) . '/cnx.inc.php');
     $sql = "SELECT COUNT(id) FROM commercant";
-    
+
     $req = $cnx->prepare($sql);
     $req->execute();
     $result = $req->fetch();
     return $result[0];
 }
 
-function load_clients() {
-    require (dirname(__FILE__, 2) . '/cnx.inc.php');
-    // $sql = "SELECT ANY_VALUE(SIREN), ANY_VALUE(Raison_sociale), count(num_autorisation) AS nb_transactions, SUM(montant) AS montant_p, (SELECT SUM(montant)*2 FROM Transaction WHERE num_remise = R.num_remise AND sens = '-') AS montant_n
-    // FROM Commercant 
-    // NATURAL JOIN percevoir 
-    // NATURAL JOIN Transaction AS R
-    // GROUP BY num_remise";
-
+function load_clients()
+{
+    require(dirname(__FILE__, 2) . '/cnx.inc.php');
     $sql = "SELECT SIREN, Raison_sociale, count(num_autorisation) AS nbTransactions, SUM(montant) AS montant_total, (SELECT SUM(montant)*2 FROM Commercant NATURAL JOIN percevoir NATURAL JOIN Transaction WHERE SIREN = T.SIREN AND sens = '-') AS montant_impayes
     FROM Commercant
     NATURAL JOIN percevoir AS T
@@ -154,18 +149,30 @@ function load_clients() {
     return $result;
 }
 
-function display_clients(){
-    
-    require (dirname(__FILE__, 2) . '/cnx.inc.php');
+function display_clients()
+{
 
-    $req = $cnx->prepare("SELECT SIREN,Raison_sociale,id FROM commercant");
+    require(dirname(__FILE__, 2) . '/cnx.inc.php');
+
+    $req = $cnx->prepare("SELECT SIREN, Raison_sociale, id FROM commercant");
     $req->execute();
     while ($result = $req->fetch()) {
-        echo $result['SIREN'] . " " . $result['Raison_sociale'] . " " . $result['id'] . "<br>";
+        echo '
+        <div class="remittance_results__details">
+            <div class="remittance_result">
+                <p style="font-size: 14px; color: var(--blue75);">SIREN</p>
+                <p style="font-size: 16px;">' . $result['SIREN'] . '</p>
+            </div>
+
+            <div class="remittance_result">
+                <p style="font-size: 14px; color: var(--blue75);">Raison sociale</p>
+                <p style="font-size: 16px;">' . $result['Raison_sociale'] . '</p>
+            </div>
+
+            <div class="remittance_result">
+                <p style="font-size: 14px; color: var(--blue75);">Identifiant</p>
+                <p style="font-size: 16px;">' . $result['id'] . '</p>
+            </div>
+        </div>';
     }
-
-
-
 }
-
-

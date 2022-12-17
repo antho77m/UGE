@@ -65,46 +65,50 @@
 <body>
 
     <?php
-        function showTreasury($SIREN, $date) // fonction profil client
-        { // Fonction qui affiche le solde des transactions du jour de la trésorerie du client à une date donnée
-            global $cnx;
+    function showTreasury($SIREN, $date) // fonction profil client
+    { // Fonction qui affiche le solde des transactions du jour de la trésorerie du client à une date donnée
+        global $cnx;
 
-            $sql = $cnx->prepare("SELECT SIREN, Raison_sociale, 
+        $sql = $cnx->prepare("SELECT SIREN, Raison_sociale, 
             COALESCE((SELECT count(num_autorisation) FROM Transaction WHERE SIREN = R.SIREN), 0) AS nbT, 
             COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='+' AND date_traitement <= :date), 0) - COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='-' AND date_traitement <= :date), 0) AS montant_total
             FROM Commercant AS R NATURAL JOIN Transaction
             WHERE SIREN LIKE :siren
             GROUP BY SIREN");
-            $sql->bindParam(':siren', $SIREN);
-            $sql->bindParam(':date', $date);
-            $sql->execute();
-            $result = $sql->fetchAll(PDO::FETCH_OBJ);
-            $ligne = $result;
+        $sql->bindParam(':siren', $SIREN);
+        $sql->bindParam(':date', $date);
+        $sql->execute();
+        $result = $sql->fetchAll(PDO::FETCH_OBJ);
+        $ligne = $result;
 
-            if (!empty($ligne)) {
-                displayInterface($ligne[0]->SIREN, $ligne[0]->Raison_sociale, $ligne[0]->montant_total, $ligne[0]->nbT, $date);
-            }
-            return $result;
+        if (!empty($ligne)) {
+            displayInterface($ligne[0]->SIREN, $ligne[0]->Raison_sociale, $ligne[0]->montant_total, $ligne[0]->nbT, $date);
         }
+        return $result;
+    }
 
-        function displayInterface($SIREN, $RSociale, $Montant, $nbT, $date) { // fonction qui affiche les informations
-            echo '<div class="treasury_sect">
+    function displayInterface($SIREN, $RSociale, $Montant, $nbT, $date)
+    { // fonction qui affiche les informations
+        echo '<div class="treasury_sect">
                 <div class="treasury_sep">
-                    <p class="big_text">Bonsoir <span class="bold">'.$RSociale.'</span></p>
-                    <p class="blue75"><?= '.$SIREN.' ?></p>
+                    <p class="big_text">Bonsoir <span class="bold">' . $RSociale . '</span></p>
+                    <p class="blue75">' . $SIREN . '</p>
                 </div>
                 <div class="treasury_sep">
-                    <p class="important big_text"><span style="color:<?= '.$Montant.' > 0 ? \'green;\' : \'inherit\'?>"> <?= number_format('.$Montant.', 0, \',\', \' \') ?> € </span></p>
+                    <p class="important big_text">
+                        <span style="color:' . ($Montant > 0 ? 'green;' : 'inherit') . ';">' . number_format($Montant, 0, ',', ' ') . ' €</span>
+                    </p>
+
                 <div class="treasury_sep">
                     <p class="big_text">Nombre de transactions</p>
-                    <p class="blue75">'.$nbT.'</p>
+                    <p class="blue75">' . $nbT . '</p>
                 </div>
 
                 <form action="" method="post" class="treasury_user__form">
                     <div class="form__group">
                         <label for="date">Date :</label>
                         <div class="input__container">
-                            <input type="date" id="date" name="date" value="'.$date.'">
+                            <input type="date" id="date" name="date" value="' . $date . '">
 
                         </div>
                     </div>
@@ -113,7 +117,7 @@
                     </div>
                 </form>
             </div>';
-        }
+    }
     ?>
 
     <?php
@@ -137,7 +141,7 @@
         <button class="export" onclick="window.open(\'/pages/exports/export_treasury.php?format=PDF&date=' . $date . '\', \'_blank\');">PDF</button>
         </div>
         ';
-        include("user_treasury_graphics.php");
+    include("user_treasury_graphics.php");
     echo '<div style="display: block; margin-top: 15vh; visibility: hidden;">ecart</div>';
     ?>
     <script src="/src/scripts/app.js?v=<?= sha1(rand()) ?>" defer></script>

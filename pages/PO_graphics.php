@@ -1,5 +1,5 @@
 <?php
-// TODO: redirect vers cette page quand clic sur graphs navbar
+
 session_start();
 include(dirname(__FILE__, 2) . "/router.php");
 if (isset($_SESSION['niveau'])) {
