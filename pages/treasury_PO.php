@@ -175,6 +175,9 @@
     }
     ?>
 
+    <div style="display: block; margin-top: 15vh; visibility: hidden;">ecart</div>
+    
+
     <script src="/src/scripts/app.js?v=<?= sha1(rand()) ?>" defer></script>
 </body>
 

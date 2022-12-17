@@ -156,12 +156,12 @@ include ROOT . "/includes/cnx.inc.php";
             </div> -->
 
             <div class="form__group radioformgroup">
-                <input type="radio" id="4mois" name="mg" value="4" style="margin-right: 10px;" class="radioinput">
+                <input type="radio" id="4mois" name="mg" value="4" class="radioinput">
                 <label for="4m">Sur 4 mois glissants</label>
             </div>
 
             <div class="form__group radioformgroup">
-                <input type="radio" id="12mois" name="mg" value="12" style="margin-right: 10px;" class="radioinput">
+                <input type="radio" id="12mois" name="mg" value="12" class="radioinput">
                 <label for="12m">Sur 12 mois glissants</label>
             </div>
 
