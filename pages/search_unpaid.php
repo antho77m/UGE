@@ -141,7 +141,7 @@ include ROOT . "/includes/cnx.inc.php";
             }
 
             // récupère les informations d'un impayé (SIREN, date_vente, date_traitement, num_carte, reseau, num_dos, montant et libelle)
-            $impayes = $cnx->prepare("SELECT SIREN, date_vente, date_traitement, num_carte, reseau, num_dos, montant, libelle FROM Commercant NATURAL JOIN Transaction NATURAL JOIN Impaye JOIN Motifs_Impaye ON Impaye.code_motif = Motifs_Impaye.code WHERE SIREN LIKE :siren AND date_traitement BETWEEN :dd AND :df ORDER BY $ORDER $SENS");
+            $impayes = $cnx->prepare("SELECT SIREN, date_vente, date_traitement, num_carte, reseau, num_dos, montant, libelle FROM tran_Commercant NATURAL JOIN tran_Transaction NATURAL JOIN tran_Impaye JOIN tran_Motifs_Impaye ON tran_Impaye.code_motif = tran_Motifs_Impaye.code WHERE SIREN LIKE :siren AND date_traitement BETWEEN :dd AND :df ORDER BY $ORDER $SENS");
             $impayes->bindParam(':siren', $SIREN); // SIREN, '%' si aucun siren renseigné, permettant de rechercher tous les sirens
             $impayes->bindParam(':dd', $dd); // date début
             $impayes->bindParam(':df', $df); // date fin

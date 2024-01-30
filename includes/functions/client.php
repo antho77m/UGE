@@ -10,11 +10,11 @@ function add_account($name, $siren, $password, $id)
 
         include ROOT . "/includes/cnx.inc.php";
 
-        $req_co = $cnx->prepare("SELECT * FROM commercant WHERE siren = :siren");
+        $req_co = $cnx->prepare("SELECT * FROM tran_commercant WHERE siren = :siren");
         $req_co->bindParam(":siren", $siren);
         $req_co->execute();
 
-        $req_id = $cnx->prepare("SELECT * FROM compte WHERE id = :id");
+        $req_id = $cnx->prepare("SELECT * FROM tran_compte WHERE id = :id");
         $req_id->bindParam(":id", $id);
         $req_id->execute();
 
@@ -32,7 +32,7 @@ function add_account($name, $siren, $password, $id)
 
             //ajout du compte
 
-            $req = $cnx->prepare("INSERT INTO compte VALUES (:id, :password, 1)");
+            $req = $cnx->prepare("INSERT INTO tran_compte VALUES (:id, :password, 1)");
             $req->bindParam(":id", $id);
             $req->bindParam(":password", $password);
 
@@ -43,7 +43,7 @@ function add_account($name, $siren, $password, $id)
 
             //ajout du commercant
 
-            $req = $cnx->prepare("INSERT INTO commercant VALUES (:siren,:name,:id)");
+            $req = $cnx->prepare("INSERT INTO tran_commercant VALUES (:siren,:name,:id)");
             $req->bindParam(":siren", $siren);
             $req->bindParam(":name", $name);
             $req->bindParam(":id", $id);
@@ -64,7 +64,7 @@ function delete_account($name, $siren, $id)
         echo "Le numéro de SIREN doit contenir 9 chiffres";
     } else {
         include ROOT . "/includes/cnx.inc.php";
-        $req = $cnx->prepare("SELECT * FROM commercant WHERE id = :id AND siren = :siren AND raison_sociale = :name");
+        $req = $cnx->prepare("SELECT * FROM tran_commercant WHERE id = :id AND siren = :siren AND raison_sociale = :name");
         $req->bindParam(":id", $id);
         $req->bindParam(":siren", $siren);
         $req->bindParam(":name", $name);
@@ -76,12 +76,12 @@ function delete_account($name, $siren, $id)
             $cnx->exec("START TRANSACTION");
 
             //suppression impayés
-            $req = $cnx->prepare("DELETE impaye FROM commercant             
-            INNER JOIN transaction ON transaction.SIREN=commercant.SIREN 
-            INNER JOIN impaye ON impaye.num_autorisation=transaction.num_autorisation 
-            WHERE commercant.id = :id 
-            AND commercant.siren = :siren 
-            AND commercant.raison_sociale = :name;");
+            $req = $cnx->prepare("DELETE impaye FROM tran_commercant             
+            INNER JOIN tran_transaction ON tran_transaction.SIREN=tran_commercant.SIREN 
+            INNER JOIN tran_impaye ON tran_impaye.num_autorisation=tran_transaction.num_autorisation 
+            WHERE tran_commercant.id = :id 
+            AND tran_commercant.siren = :siren 
+            AND tran_commercant.raison_sociale = :name;");
             $req->bindParam(":id", $id);
             $req->bindParam(":siren", $siren);
             $req->bindParam(":name", $name);
@@ -91,7 +91,7 @@ function delete_account($name, $siren, $id)
             }
 
             //suppression des transactions
-            $req = $cnx->prepare("DELETE FROM transaction WHERE SIREN = :SIREN");
+            $req = $cnx->prepare("DELETE FROM tran_transaction WHERE SIREN = :SIREN");
             $req->bindParam(":SIREN", $siren);
             if (!$req->execute()) {
                 $cnx->exec("ROLLBACK");
@@ -100,7 +100,7 @@ function delete_account($name, $siren, $id)
 
 
             //suppression du commerçant
-            $req = $cnx->prepare("DELETE FROM commercant WHERE id = :id AND siren = :siren AND raison_sociale = :name");
+            $req = $cnx->prepare("DELETE FROM tran_commercant WHERE id = :id AND siren = :siren AND raison_sociale = :name");
             $req->bindParam(":id", $id);
             $req->bindParam(":siren", $siren);
             $req->bindParam(":name", $name);
@@ -110,7 +110,7 @@ function delete_account($name, $siren, $id)
             }
 
             //suppression du compte
-            $req = $cnx->prepare("DELETE FROM compte WHERE id = :id");
+            $req = $cnx->prepare("DELETE FROM tran_compte WHERE id = :id");
             $req->bindParam(":id", $id);
             if (!$req->execute()) {
                 $cnx->exec("ROLLBACK");
@@ -126,7 +126,7 @@ function delete_account($name, $siren, $id)
 function count_clients()
 {
     require(dirname(__FILE__, 2) . '/cnx.inc.php');
-    $sql = "SELECT COUNT(id) FROM commercant";
+    $sql = "SELECT COUNT(id) FROM tran_commercant";
 
     $req = $cnx->prepare($sql);
     $req->execute();
@@ -137,10 +137,10 @@ function count_clients()
 function load_clients()
 {
     require(dirname(__FILE__, 2) . '/cnx.inc.php');
-    $sql = "SELECT SIREN, Raison_sociale, count(num_autorisation) AS nbTransactions, SUM(montant) AS montant_total, (SELECT SUM(montant)*2 FROM Commercant NATURAL JOIN percevoir NATURAL JOIN Transaction WHERE SIREN = T.SIREN AND sens = '-') AS montant_impayes
-    FROM Commercant
-    NATURAL JOIN percevoir AS T
-    NATURAL JOIN Transaction
+    $sql = "SELECT SIREN, Raison_sociale, count(num_autorisation) AS nbTransactions, SUM(montant) AS montant_total, (SELECT SUM(montant)*2 FROM tran_Commercant NATURAL JOIN tran_percevoir NATURAL JOIN tran_Transaction WHERE SIREN = T.SIREN AND sens = '-') AS montant_impayes
+    FROM tran_Commercant
+    NATURAL JOIN tran_percevoir AS T
+    NATURAL JOIN tran_Transaction
     GROUP BY SIREN";
 
     $req = $cnx->prepare($sql);
@@ -154,7 +154,7 @@ function display_clients()
 
     require(dirname(__FILE__, 2) . '/cnx.inc.php');
 
-    $req = $cnx->prepare("SELECT SIREN, Raison_sociale, id FROM commercant");
+    $req = $cnx->prepare("SELECT SIREN, Raison_sociale, id FROM tran_commercant");
     $req->execute();
     while ($result = $req->fetch()) {
         echo '

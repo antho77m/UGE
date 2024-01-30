@@ -161,7 +161,7 @@ include ROOT . "/includes/cnx.inc.php";
                 $dd = $_POST['dd'];
                 $df = $_POST['df'];
                 // récupère la somme des motifs des impayés entre deux dates  
-                $motifs = $cnx->prepare("SELECT libelle, count(libelle) AS nb_motifs FROM Commercant NATURAL JOIN Transaction NATURAL JOIN Impaye JOIN Motifs_Impaye ON Impaye.code_motif = Motifs_Impaye.code WHERE date_vente BETWEEN :dd AND :df GROUP BY libelle");
+                $motifs = $cnx->prepare("SELECT libelle, count(libelle) AS nb_motifs FROM tran_Commercant NATURAL JOIN tran_Transaction NATURAL JOIN tran_Impaye JOIN tran_Motifs_Impaye ON tran_Impaye.code_motif = tran_Motifs_Impaye.code WHERE date_vente BETWEEN :dd AND :df GROUP BY libelle");
                 $motifs->bindParam(':dd', $dd);
                 $motifs->bindParam(':df', $df);
                 $verif = $motifs->execute();
