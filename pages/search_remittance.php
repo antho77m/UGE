@@ -167,7 +167,7 @@ include ROOT . "/includes/cnx.inc.php";
 
         if (isset($_POST['rsociale'])) { // si le champ raison sociale existe
             // récupère tous les siren et dates de traitement de remises présente entre les dates dd et df 
-            $remises = $cnx->prepare("SELECT DISTINCT SIREN, date_traitement FROM tran_Commercant NATURAL JOIN tran_Transaction WHERE SIREN LIKE :siren AND num_remise LIKE :num_remise AND Raison_sociale LIKE :raison_sociale AND date_traitement BETWEEN :dd AND :df");
+            $remises = $cnx->prepare("SELECT DISTINCT SIREN, date_traitement FROM Commercant NATURAL JOIN Transaction WHERE SIREN LIKE :siren AND num_remise LIKE :num_remise AND Raison_sociale LIKE :raison_sociale AND date_traitement BETWEEN :dd AND :df");
             $remises->bindParam(':siren', $SIREN); // SIREN, '%' si aucun siren renseigné, permettant de rechercher tous les sirens
             $remises->bindParam(':raison_sociale', $Raison_Sociale); // Raison_sociale, '%' si aucune raison sociale renseigné, permettant de rechercher toutes les raisons sociales
             $remises->bindParam(':num_remise', $num_remise); // num_remise, '%' si aucun numéro de remise renseigné, permettant de rechercher tous les numéros de remises
@@ -175,7 +175,7 @@ include ROOT . "/includes/cnx.inc.php";
             $remises->bindParam(':df', $df); // date fin
         } else {
             // récupère tous les siren et dates de traitement de remises présente entre les dates dd et df
-            $remises = $cnx->prepare("SELECT DISTINCT SIREN, date_traitement FROM tran_Commercant NATURAL JOIN tran_Transaction WHERE SIREN LIKE :siren AND num_remise LIKE :num_remise AND date_traitement BETWEEN :dd AND :df");
+            $remises = $cnx->prepare("SELECT DISTINCT SIREN, date_traitement FROM Commercant NATURAL JOIN Transaction WHERE SIREN LIKE :siren AND num_remise LIKE :num_remise AND date_traitement BETWEEN :dd AND :df");
             $remises->bindParam(':siren', $SIREN); // SIREN, '%' si aucun siren renseigné, permettant de rechercher tous les sirens
             $remises->bindParam(':num_remise', $num_remise); // num_remise, '%' si aucun numéro de remise renseigné, permettant de rechercher tous les numéros de remises
             $remises->bindParam(':dd', $dd); // date début
@@ -205,9 +205,9 @@ include ROOT . "/includes/cnx.inc.php";
         echo '<p style="margin-top: 10px; text-align: center; display: flex; align-items: center; justify-content: center;">Cliquez pour avoir les détails <span class="material-symbols-outlined">touch_app</span></p>';
         foreach ($remises as $ligne) { // un par un
             // récupère les informations de la remise à la date de traitement, le numéro de remise et le SIREN indiqué
-            $total_remises = $cnx->prepare("SELECT SIREN, Raison_sociale, num_remise, date_traitement, count(num_autorisation) AS nb_transactions, SUM(montant) AS montant_total, (SELECT SUM(montant)*2 FROM tran_Transaction WHERE num_remise = R.num_remise AND sens = '-') AS montant_impayes
-            FROM tran_Commercant 
-            NATURAL JOIN tran_Transaction AS R
+            $total_remises = $cnx->prepare("SELECT SIREN, Raison_sociale, num_remise, date_traitement, count(num_autorisation) AS nb_transactions, SUM(montant) AS montant_total, (SELECT SUM(montant)*2 FROM Transaction WHERE num_remise = R.num_remise AND sens = '-') AS montant_impayes
+            FROM Commercant 
+            NATURAL JOIN Transaction AS R
             WHERE SIREN = :siren AND num_remise LIKE :num_remise AND date_traitement = :date
             GROUP BY num_remise");
             $total_remises->bindParam(':siren', $ligne['SIREN']);
@@ -258,7 +258,7 @@ include ROOT . "/includes/cnx.inc.php";
                 array_push($array_remises, [$total_remises['SIREN'], $total_remises['Raison_sociale'], $total_remises['num_remise'], $total_remises['date_traitement'], $total_remises['nb_transactions'], "EUR", $montant_total]); // ajoute dans array_remises les caractéristiques de la remise (SIREN, num_remise, ..)
 
                 // récupère le détail des transactions de la remise (SIREN, date_vente, date_traitement, num_carte, reseau, num_autorisation, montant, sens)
-                $details_remises = $cnx->prepare("SELECT SIREN, date_vente, date_traitement, num_carte, reseau, num_autorisation, montant, sens FROM tran_Commercant NATURAL JOIN tran_Transaction WHERE SIREN = :siren AND num_remise LIKE :num_remise AND date_traitement = :date");
+                $details_remises = $cnx->prepare("SELECT SIREN, date_vente, date_traitement, num_carte, reseau, num_autorisation, montant, sens FROM Commercant NATURAL JOIN Transaction WHERE SIREN = :siren AND num_remise LIKE :num_remise AND date_traitement = :date");
                 $details_remises->bindParam(':siren', $ligne['SIREN']);
                 $details_remises->bindParam(':date', $ligne['date_traitement']);
                 $details_remises->bindParam(':num_remise', $num_remise);

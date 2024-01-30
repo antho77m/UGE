@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 if (isset($_SESSION['niveau']) && isset($_SESSION['SIREN'])) {
     if ($_SESSION['niveau'] != 1) { // si pas connecté en tant que Commerçant
@@ -217,7 +218,7 @@ include ROOT . "/includes/cnx.inc.php";
             $GRAPHIQUE = $_POST['graphique']; // lr pour linéaire, hm pour histogramme
             if ($GRAPHIQUE == "cl") {
                 // récupère la somme des motifs des impayés entre deux dates  
-                $motifs = $cnx->prepare("SELECT libelle, count(libelle) AS nb_motifs FROM tran_Commercant NATURAL JOIN tran_Transaction NATURAL JOIN tran_Impaye JOIN tran_Motifs_Impaye ON tran_Impaye.code_motif = tran_Motifs_Impaye.code WHERE SIREN = :siren AND date_vente BETWEEN :dd AND :df GROUP BY libelle");
+                $motifs = $cnx->prepare("SELECT libelle, count(libelle) AS nb_motifs FROM Commercant NATURAL JOIN Transaction NATURAL JOIN Impaye JOIN Motifs_Impaye ON Impaye.code_motif = Motifs_Impaye.code WHERE SIREN = :siren AND date_vente BETWEEN :dd AND :df GROUP BY libelle");
                 $motifs->bindParam(':dd', $dd);
                 $motifs->bindParam(':df', $df);
                 $motifs->bindParam(':siren', $SIREN);

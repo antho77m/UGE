@@ -11,8 +11,8 @@ for ($i = 0; $i < 14; $i++) {
 $array_date = array_reverse($array_date);
 foreach ($array_date as $date_array) {
     $sql = $cnx->prepare("SELECT 
-        COALESCE((SELECT SUM(montant) FROM tran_Transaction WHERE SIREN=R.SIREN AND sens='+' AND date_traitement <= :date), 0) - COALESCE((SELECT SUM(montant) FROM tran_Transaction WHERE SIREN=R.SIREN AND sens='-' AND date_traitement <= :date), 0) AS montant_total
-        FROM tran_Commercant AS R NATURAL JOIN tran_Transaction
+        COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='+' AND date_traitement <= :date), 0) - COALESCE((SELECT SUM(montant) FROM Transaction WHERE SIREN=R.SIREN AND sens='-' AND date_traitement <= :date), 0) AS montant_total
+        FROM Commercant AS R NATURAL JOIN Transaction
         WHERE SIREN LIKE :siren
         GROUP BY SIREN");
     $sql->bindParam(':siren', $SIREN);

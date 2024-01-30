@@ -14,7 +14,7 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
     //make password uppercase
     $password = strtoupper($password);
 
-    $req = $cnx->prepare("SELECT niveau FROM tran_Compte WHERE id = :login AND mdp = :password");
+    $req = $cnx->prepare("SELECT niveau FROM Compte WHERE id = :login AND mdp = :password");
     $req->bindParam(':login', $login);
     $req->bindParam(':password', $password);
     $req->execute();
@@ -31,7 +31,7 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
     if ($result) {
         $_SESSION['niveau'] = $result[0];
 
-        $req = $cnx->prepare("SELECT SIREN FROM tran_Commercant NATURAL JOIN tran_Compte WHERE Compte.id = :login AND Compte.mdp = :password");
+        $req = $cnx->prepare("SELECT SIREN FROM Commercant NATURAL JOIN Compte WHERE Compte.id = :login AND Compte.mdp = :password");
         $req->bindParam(':login', $login);
         $req->bindParam(':password', $password);
         $req->execute();
